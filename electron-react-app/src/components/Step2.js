@@ -9,8 +9,11 @@ function Step2() {
         <Nav/>
             <h1>Step2</h1>
             <Link to="/">
-            <button type = 'button'>
+            <button type = 'button' className = "button">
                 Back
+            </button>
+            <button type = 'button' className = "button generate">
+                Generate
             </button>
         </Link>
 
