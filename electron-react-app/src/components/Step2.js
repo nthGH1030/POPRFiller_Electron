@@ -2,18 +2,18 @@ import '../Styles.css';
 import React from 'react';
 import { Link } from "react-router-dom";
 
-
-function Home() {
+function Step2() {
     return (
-      <div>
-        <h1>This is the home page</h1>
-        <Link to="/step2">
+        <>
+            <h1>Step2</h1>
+            <Link to="/">
             <button type = 'button'>
-                Next
+                Back
             </button>
         </Link>
-      </div>
+
+        </>
     );
-  }
-  
-  export default Home;
+}
+
+export default Step2

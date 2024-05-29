@@ -1,5 +1,5 @@
 import './Styles.css';
-import Template from './components/Template';
+import Step2 from './components/Step2';
 import Home from './components/Home';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ function App() {
     <>
       <Routes>
         <Route path ="/" element ={<Home/>}/>
-        <Route path = "/template" element = {<Template/>}/>
+        <Route path = "/Step2" element = {<Step2/>}/>
       </Routes>
     </>
     
