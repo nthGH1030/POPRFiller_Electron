@@ -6,12 +6,12 @@ const Navbar = () => {
         
         <nav className = "navbar">
             <div className="navbar-center">
-                <ul className = "nav-steps">
-                    <li>
-                        Step1
+                <ul className = "nav-ul">
+                    <li  className = "nav-il">
+                        Step 1
                     </li>
                     <li>
-                        Step2
+                        Step 2
                     </li>
                 </ul>
             </div>

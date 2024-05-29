@@ -5,10 +5,14 @@
   justify-content: center;
 }
 
-.navbar-center .nav-steps {
+.navbar-center .nav-ul {
   list-style-type: none;
   display: flex;
   align-items: center;
-  margin-right: 1rem;
   padding: 0;
 }
+
+.navbar-center .nav-il {
+  margin-right: 1rem;
+}
+
