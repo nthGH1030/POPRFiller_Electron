@@ -40,73 +40,70 @@ input::-webkit-inner-spin-button {
 
 }
 
-/* Styles for TzoogleSwitch */
-.container {
-  text-align: center;
-}
-.toggle-switch {
-  position: relative;
-  width: 75px;
-  display: inline-block;
-  text-align: left;
-  top: 8px;
-}
-.checkbox {
-  display: none;
-}
-.label {
-  display: block;
-  overflow: hidden;
-  cursor: pointer;
-  border: 0 solid #bbb;
-  border-radius: 20px;
-}
-.inner {
-  display: block;
-  width: 200%;
-  margin-left: -100%;
-  transition: margin 0.3s ease-in 0s;
-}
-.inner:before,
-.inner:after {
-  float: left;
-  width: 50%;
-  height: 36px;
+/* Styles for RaioBtn */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
   padding: 0;
-  line-height: 36px;
-  color: #fff;
-  font-weight: bold;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
 }
-.inner:before {
-  content: "YES";
-  padding-left: 10px;
-  background-color: #060;
-  color: #fff;
+
+.select-theme {
+  margin-top: 20px;
 }
-.inner:after {
-  content: "NO";
-  padding-right: 10px;
-  background-color: #bbb;
-  color: #fff;
-  text-align: right;
+
+.select-theme p {
+  margin: 0 0 5px 0;
+  padding: 0;
 }
-.switch {
-  display: block;
-  width: 24px;
-  margin: 5px;
-  background: #fff;
+
+.radio-label {
+  color: #303030;
+  font-size: 14px;
+  font-weight: 400;
+  margin-right: 7px;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.radio-input {
+  margin: 0;
+  visibility: hidden;
+}
+
+.radio-input:checked + span {
+  border: 2px solid #f4b400;
+}
+
+.radio-input:checked + span:after {
+  opacity: 1;
+}
+
+.custom-radio {
+  left: -8px;
+  top: 6px;
+  cursor: pointer;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #9a9a9a;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+/* for inner filled circle */
+.custom-radio::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: #f4b400;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 40px;
-  border: 0 solid #bbb;
-  border-radius: 20px;
-  transition: all 0.3s ease-in 0s;
-}
-.checkbox:checked + .label .inner {
-  margin-left: 0;
-}
-.checkbox:checked + .label .switch {
-  right: 0px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
 }

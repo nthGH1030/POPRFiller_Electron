@@ -1,17 +1,24 @@
 import '../Styles.css';
-import React from 'react';
+import React , {useState} from 'react';
 import { Link } from "react-router-dom";
 import Nav from "./NavBar";
-import ToogleSwitch from "./ToogleSwitch";
+import RadioBtn from "./RadioBtn";
 
 function Step2() {
+    const [template, setTemplate] = useState('PO');
+
     return (
         <>
         <Nav/>
             <h1>Step2</h1>
 
-        <p>Which template are you going to use?</p>
-        <ToogleSwitch label = "Templates"/>
+        
+        <div className = 'select-theme'>
+            <p>Which template are you going to use?</p>
+            <RadioBtn text = "PO"/>
+            <RadioBtn text = "PR"/>
+        </div>
+        
         
 
         <p>Who is preparing this submission</p>
@@ -30,5 +37,7 @@ function Step2() {
         </>
     );
 }
+
+
 
 export default Step2
