@@ -10,17 +10,17 @@ const RadioBtn = ({text}) => {
 
     return (
       <label htmlFor={text} className="radio-label">
-      <input
-        className="radio-input"
-        type="radio"
-        name= {text}
-        id={text}
-        value={text}
-        onChange={onChange}
-        checked={false}
-      />
-      <span className ="custom-radio"/>
-      {text}
+        <input
+          className="radio-input"
+          type="radio"
+          name= {text}
+          id={text}
+          value={text}
+          onChange={onChange}
+          checked={false}
+        />
+        <span className ="custom-radio"/>
+        {text}
     </label>
     );
   };

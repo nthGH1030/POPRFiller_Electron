@@ -13,10 +13,14 @@ function Step2() {
             <h1>Step2</h1>
 
         
-        <div className = 'select-theme'>
+        <div className = 'template-container'>
             <p>Which template are you going to use?</p>
-            <RadioBtn text = "PO"/>
-            <RadioBtn text = "PR"/>
+            <div className = 'break'></div>
+            <div className = 'template-btn-container'>
+                <RadioBtn text = "PO"/>
+                <RadioBtn text = "PR"/>
+            </div>
+            
         </div>
         
         
