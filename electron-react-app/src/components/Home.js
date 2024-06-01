@@ -8,21 +8,27 @@ function Home() {
     return (
       <div>
         <Navbar/>
-        <h1>This is the home page</h1>
+        <div className = 'Container'>
+          <h1>This is the home page</h1>
+          <div className = 'break'></div>
+          <button type = 'button' className = "button upload">
+              Upload Central File
+          </button>
+        </div>
 
-        <button type = 'button' className = "button upload">
-            Upload Central File
-        </button>
-
-        <p>Which row of data you want to extract ?</p>
-
-        <input type = 'number' min = "1" placeholder = 'Eg. 134'/>
+        <div className = 'Container'>
+          <p>Which row of data you want to extract ?</p>
+          <div className = 'break'></div>
+          <input type = 'number' min = "1" placeholder = 'Eg. 134'/>
+        </div>
         
-        <Link to="/step2">
-        <button type = 'button' className = "button">
-            Next
-        </button>
-        </Link>
+        <div className = 'Next-Btn-Container'>
+          <Link to="/step2">
+          <button type = 'button' className = "button">
+              Next
+          </button>
+          </Link>
+        </div>
       </div>
     );
   }

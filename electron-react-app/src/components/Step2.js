@@ -32,19 +32,21 @@ function Step2() {
         </div>
         
         
+        <div className = 'Container'>
+            <p>Who is preparing this submission</p>
+            <input type = 'text' placeholder = 'John Doe, APM-PM'/>
+        </div>
+        <div className = 'Button-Container'>
+            <Link to="/">
+                <button type = 'button' className = "button">
+                    Back
+                </button>
+            </Link>
 
-        <p>Who is preparing this submission</p>
-        <input type = 'text' placeholder = 'John Doe, APM-PM'/>
-
-        <Link to="/">
-            <button type = 'button' className = "button">
-                Back
+            <button type = 'button' className = "button generate">
+                Generate
             </button>
-        </Link>
-
-        <button type = 'button' className = "button generate">
-            Generate
-        </button>
+        </div>
 
         </>
     );
