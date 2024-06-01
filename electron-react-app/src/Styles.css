@@ -83,11 +83,16 @@ body {
   margin: 5px;
   -webkit-tap-highlight-color: white;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
 }
 
 .radio-input {
   margin: 0;
+  height: 0;
+  width: 0;
   visibility: hidden;
 }
 
@@ -109,6 +114,7 @@ body {
   border-radius: 50%;
   display: inline-block;
   position: relative;
+  display: none;
 }
 
 /* for inner filled circle */
