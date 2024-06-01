@@ -6,7 +6,7 @@ import RadioBtn from "./RadioBtn";
 
 function Step2() {
     const [template, setTemplate] = useState('PO');
-
+    
     return (
         <>
         <Nav/>
@@ -17,8 +17,16 @@ function Step2() {
             <p>Which template are you going to use?</p>
             <div className = 'break'></div>
             <div className = 'template-btn-container'>
-                <RadioBtn text = "PO"/>
-                <RadioBtn text = "PR"/>
+                <RadioBtn 
+                    text = "PO"
+                    onChange = {() => setTemplate('PO')}
+                    isChecked = {template === 'PO'}
+                />
+                <RadioBtn 
+                    text = "PR"
+                    onChange = {() => setTemplate('PR')}
+                    isChecked = {template === 'PR'}
+                />
             </div>
             
         </div>

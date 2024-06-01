@@ -1,15 +1,19 @@
 import React from "react";
 import '../Styles.css';
 
-const RadioBtn = ({text}) => {
-
-  const onChange = (e) => {
-    const { name } = e.target
-    console.log('clicked  ==>', name)
-  }
+const RadioBtn = ({text, onChange , isChecked}) => {
+    
+    if(text === 'PO')
+    {
+      console.log("PO: " + isChecked)
+    }
+    else {
+      console.log("PR: " + isChecked)
+    }
+    
 
     return (
-      <label htmlFor={text} className="radio-label">
+      <label htmlFor={text} className={`radio-label ${isChecked ? 'checked':''}`}>
         <input
           className="radio-input"
           type="radio"
@@ -17,7 +21,7 @@ const RadioBtn = ({text}) => {
           id={text}
           value={text}
           onChange={onChange}
-          checked={false}
+          checked={isChecked}
         />
         <span className ="custom-radio"/>
         {text}
