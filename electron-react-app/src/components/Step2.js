@@ -31,7 +31,6 @@ function Step2() {
             
         </div>
         
-        
         <div className = 'Container'>
             <p>Who is preparing this submission</p>
             <input type = 'text' placeholder = 'John Doe, APM-PM'/>

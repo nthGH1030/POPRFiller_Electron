@@ -1,19 +1,38 @@
 import '../Styles.css';
-import React from 'react';
+import React, {useState ,useEffect} from 'react';
 import { Link } from "react-router-dom";
 import Navbar from './NavBar';
 
 
+
 function Home() {
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  }
+
+  useEffect(() => {
+    console.log(file);
+    const div = document.getElementsByClassName('File-Drop-Zone');
+    console.log(div);
+
+  }, [file]);
+
     return (
       <div>
         <Navbar/>
         <div className = 'Container'>
-          <h1>This is the home page</h1>
+          <h1>Upload your file</h1>
           <div className = 'break'></div>
-          <button type = 'button' className = "button upload">
-              Upload Central File
-          </button>
+
+          <div className = {`File-Drop-Zone ${file ? 'has-file' : ''}`}> 
+            <input  
+              type = 'file' 
+              accept = '.xlsx'
+              onChange = {handleFileChange}
+            />
+          </div>
         </div>
 
         <div className = 'Container'>
