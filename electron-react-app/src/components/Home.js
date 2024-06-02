@@ -35,7 +35,15 @@ function Home() {
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               e.preventDefault();
-              setFile(e.dataTransfer.files[0]);
+              const file = e.dataTransfer.files[0];
+              if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                {
+                  setFile(file);
+                }
+              else
+              {
+                alert('You can only upload and excel file')
+              }
             }}
           > 
             {file ? (
