@@ -22,6 +22,8 @@ input {
   padding: 1em 0.5rem;
 }
 
+
+
 /*Home Page */
 .Container{
   margin-top: 10px;
@@ -131,9 +133,20 @@ body {
   border: 0.3rem;
   border-radius: 5px;
   border-style: dashed;
+  padding: 1rem 5rem 1rem 5rem;
 }
 
 .File-Drop-Zone.has-file {
   border-style: solid;
+}
 
+input[type = 'file']{
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-align: center;
 }

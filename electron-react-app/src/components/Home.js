@@ -27,11 +27,15 @@ function Home() {
           <div className = 'break'></div>
 
           <div className = {`File-Drop-Zone ${file ? 'has-file' : ''}`}> 
-            <input  
-              type = 'file' 
-              accept = '.xlsx'
-              onChange = {handleFileChange}
-            />
+            <label htmlFor="file-upload" className="custom-file-upload">
+              Drop  your File here
+              <input  
+                id = 'file-upload'
+                type = 'file' 
+                accept = '.xlsx'
+                onChange = {handleFileChange}
+              />
+            </label>
           </div>
         </div>
 
