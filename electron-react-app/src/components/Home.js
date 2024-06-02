@@ -20,9 +20,6 @@ function Home() {
 
   useEffect(() => {
     console.log(file);
-    const div = document.getElementsByClassName('File-Drop-Zone');
-    console.log(div);
-
   }, [file]);
 
     return (
@@ -42,9 +39,9 @@ function Home() {
             }}
           > 
             {file ? (
-                  <span>File uploaded: {file.name}</span>
+                  <span className='span-cursor'>File uploaded: {file.name}</span>
                 ) : (
-                  <span>Drop your file here</span>
+                  <span className='span-cursor'>Drop your file here</span>
             )}
             <input  
               ref={fileInputRef}
