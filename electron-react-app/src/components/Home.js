@@ -1,5 +1,5 @@
 import '../Styles.css';
-import React, {useState ,useEffect} from 'react';
+import React, {useState ,useEffect, useRef} from 'react';
 import { Link } from "react-router-dom";
 import Navbar from './NavBar';
 
@@ -7,10 +7,16 @@ import Navbar from './NavBar';
 
 function Home() {
   const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   }
+
+  const handleDropZoneClick = () => {
+    fileInputRef.current.click();
+  };
+
 
   useEffect(() => {
     console.log(file);
@@ -26,20 +32,26 @@ function Home() {
           <h1>Upload your file</h1>
           <div className = 'break'></div>
 
-          <div className = {`File-Drop-Zone ${file ? 'has-file' : ''}`}> 
-            <label htmlFor="file-upload" className="custom-file-upload">
-              {file ? (
-                    <span>File uploaded: {file.name}</span>
-                  ) : (
-                    <span>Drop your file here</span>
-              )}
-              <input  
-                id = 'file-upload'
-                type = 'file' 
-                accept = '.xlsx'
-                onChange = {handleFileChange}
-              />
-            </label>
+          <div 
+            className = {`File-Drop-Zone ${file ? 'has-file' : ''}`}
+            onClick={handleDropZoneClick}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              setFile(e.dataTransfer.files[0]);
+            }}
+          > 
+            {file ? (
+                  <span>File uploaded: {file.name}</span>
+                ) : (
+                  <span>Drop your file here</span>
+            )}
+            <input  
+              ref={fileInputRef}
+              type = 'file' 
+              accept = '.xlsx'
+              onChange = {handleFileChange}
+            />
           </div>
         </div>
 
