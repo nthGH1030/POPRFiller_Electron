@@ -28,7 +28,11 @@ function Home() {
 
           <div className = {`File-Drop-Zone ${file ? 'has-file' : ''}`}> 
             <label htmlFor="file-upload" className="custom-file-upload">
-              Drop  your File here
+              {file ? (
+                    <span>File uploaded: {file.name}</span>
+                  ) : (
+                    <span>Drop your file here</span>
+              )}
               <input  
                 id = 'file-upload'
                 type = 'file' 
