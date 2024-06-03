@@ -1,15 +1,29 @@
 import '../Styles.css';
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import Nav from "./NavBar";
 import RadioBtn from "./RadioBtn";
+import {useLocation} from 'react-router-dom';
 
 function Step2() {
     const [template, setTemplate] = useState('PO');
+    const [activeStep, setActiveStep] = useState(null);
+
+    let location = useLocation();
+    useEffect(() => {
+      if (location.pathname === '/step2') {
+        setActiveStep("/step2")
+        console.log(activeStep)
+      }
+      
+    },[location.pathname])
+  
     
     return (
         <>
-        <Nav/>
+        <Nav
+            activeStep = {activeStep}
+        />
             <h1>Step2</h1>
 
         

@@ -2,12 +2,14 @@ import '../Styles.css';
 import React, {useState ,useEffect, useRef} from 'react';
 import { Link } from "react-router-dom";
 import Navbar from './NavBar';
+import {useLocation} from 'react-router-dom';
 
 
 
 function Home() {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
+  const [activeStep, setActiveStep] = useState(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -17,14 +19,25 @@ function Home() {
     fileInputRef.current.click();
   };
 
-
   useEffect(() => {
-    console.log(file);
+    //console.log(file);
   }, [file]);
+
+  let location = useLocation();
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setActiveStep("/")
+      console.log(activeStep)
+    }
+    
+  },[location.pathname])
+
 
     return (
       <div>
-        <Navbar/>
+        <Navbar
+          activeStep = {activeStep}
+        />
         <div className = 'Container'>
           <h1>Upload your file</h1>
           <div className = 'break'></div>

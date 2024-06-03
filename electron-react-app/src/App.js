@@ -9,7 +9,7 @@ function App() {
     <>
       <Routes>
         <Route path ="/" element ={<Home/>}/>
-        <Route path = "/Step2" element = {<Step2/>}/>
+        <Route path = "/step2" element = {<Step2/>}/>
       </Routes>
     </>
     
