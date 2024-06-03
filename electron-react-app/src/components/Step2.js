@@ -24,11 +24,9 @@ function Step2() {
         <Nav
             activeStep = {activeStep}
         />
-            <h1>Step2</h1>
-
         
         <div className = 'template-container'>
-            <p>Which template are you going to use?</p>
+            <h1>Pick a template</h1>
             <div className = 'break'></div>
             <div className = 'template-btn-container'>
                 <RadioBtn 
