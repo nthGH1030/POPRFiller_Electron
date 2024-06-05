@@ -8,11 +8,17 @@ import {useLocation} from 'react-router-dom';
 
 function Home() {
   const [file, setFile] = useState(null);
-  const fileInputRef = useRef(null);
   const [activeStep, setActiveStep] = useState(null);
+  const [row, setRow] = useState(null);
+
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+  }
+
+  const handleRowChange = (e) => {
+    setRow(e.target.value);
   }
 
   const handleDropZoneClick = () => {
@@ -27,10 +33,12 @@ function Home() {
   useEffect(() => {
     if (location.pathname === '/') {
       setActiveStep("/")
-      console.log(activeStep)
+      //console.log(activeStep)
     }
     
   },[location.pathname])
+
+  const state = {'row': row, 'file' : file};
 
 
     return (
@@ -76,11 +84,18 @@ function Home() {
         <div className = 'Container'>
           <p>Which row of data you want to extract ?</p>
           <div className = 'break'></div>
-          <input type = 'number' min = "1" placeholder = 'Eg. 134'/>
+          <input 
+          type = 'number' 
+          min = "1" 
+          placeholder = 'Eg. 134'
+          onChange = {handleRowChange}
+          />
         </div>
         
         <div className = 'Next-Btn-Container'>
-          <Link to="/step2">
+          <Link to="/step2" 
+          state = {state}
+          >
           <button type = 'button' className = "button">
               Next
           </button>

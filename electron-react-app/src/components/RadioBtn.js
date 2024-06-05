@@ -5,10 +5,10 @@ const RadioBtn = ({text, onChange , isChecked}) => {
     
     if(text === 'PO')
     {
-      console.log("PO: " + isChecked)
+      //console.log("PO: " + isChecked)
     }
     else {
-      console.log("PR: " + isChecked)
+      //console.log("PR: " + isChecked)
     }
     
 
