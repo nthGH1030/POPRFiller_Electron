@@ -20,7 +20,7 @@ function Home() {
   };
 
   useEffect(() => {
-    //console.log(file);
+    console.log(file);
   }, [file]);
 
   let location = useLocation();
@@ -55,7 +55,7 @@ function Home() {
                 }
               else
               {
-                alert('You can only upload and excel file')
+                alert('You can only upload an excel file')
               }
             }}
           > 

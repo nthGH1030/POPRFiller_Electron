@@ -1,69 +1,73 @@
-
 const secrets = require('./secrets.json');
 const ExcelJS = require('exceljs');
 
-//Catch user input
-const args = process.argv.slice(2);
+function Generate() {
 
-if (isNaN(args[0])) {
-    throw new TypeError("The row you typed is not a number");
+  //Catch user input
+  const args = process.argv.slice(2);
+
+  if (isNaN(args[0])) {
+      throw new TypeError("The row you typed is not a number");
+    }
+
+  if (args[1] != 'po' && args[1] != 'pr')
+  {
+      throw new Error("You can only input pr or po");
+  }
+  
+  //Read the excel file 
+  let filename = secrets.Centralpath;
+  let row = args[0];
+  let templatePO = secrets.templatePO;
+  let templatePR = secrets.templatePR;
+  let centralSheet = 'POPR summary';
+
+  readExcelFile(filename, centralSheet)
+  .then((worksheet) => {
+  // Extract the data 
+
+  let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+  let indexRow = "7";
+
+  const extractedObj = {};
+
+  for (let i = 0; i < columns.length; i++) {
+  const column = columns[i];
+
+  const keyAddress = column.concat(indexRow); 
+  const keyValue = worksheet.getCell(keyAddress)?.value || "";
+
+  const cellAddress = column.concat(row);
+  const cellValue = worksheet.getCell(cellAddress)?.value || "";
+
+  extractedObj[keyValue] = cellValue;
   }
 
-if (args[1] != 'po' && args[1] != 'pr')
-{
-    throw new Error("You can only input pr or po");
-}
- 
-//Read the excel file 
-let filename = secrets.Centralpath;
-let row = args[0];
-let templatePO = secrets.templatePO;
-let templatePR = secrets.templatePR;
-let centralSheet = 'POPR summary';
+  //console.log(extractedObj);
+
+  //Call PO or PR
+  args[1] === 'po' ? handlePO(templatePO, extractedObj)
+  : args[1] === 'pr' ? handlePR(templatePR, extractedObj):
+  null;
+  })
+} 
+
 
 async function readExcelFile(filename, sheetName) {
-    try{
-        const workbook = new ExcelJS.Workbook();
-        await workbook.xlsx.readFile(filename);
-        const worksheet = workbook.getWorksheet(sheetName);
-        //console.log(worksheet)
-        return worksheet
-    } catch (error) {
-        console.log('ReadFileError:', error);
-    }
+  try{
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.readFile(filename);
+      const worksheet = workbook.getWorksheet(sheetName);
+      //console.log(worksheet)
+      return worksheet
+  } catch (error) {
+      console.log('ReadFileError:', error);
+  }
 }
 
-readExcelFile(filename, centralSheet)
-    .then((worksheet) => {
-    // Extract the data 
 
-    let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
-    let indexRow = "7";
-
-    const extractedObj = {};
-
-    for (let i = 0; i < columns.length; i++) {
-    const column = columns[i];
-
-    const keyAddress = column.concat(indexRow); 
-    const keyValue = worksheet.getCell(keyAddress)?.value || "";
-
-    const cellAddress = column.concat(row);
-    const cellValue = worksheet.getCell(cellAddress)?.value || "";
-
-    extractedObj[keyValue] = cellValue;
-    }
-
-    //console.log(extractedObj);
-
-    //Call PO or PR
-    args[1] === 'po' ? handlePO(templatePO, extractedObj)
-    : args[1] === 'pr' ? handlePR(templatePR, extractedObj):
-    null;
-})
-    
-
-async function handlePO(templatePO, extractedObj) {
+async function handlePO(templatePO, extractedObj) 
+{
     try {
       let POSheet = 'Purchase Requisition';
   
@@ -97,7 +101,7 @@ async function handlePO(templatePO, extractedObj) {
     } catch (error) {
       console.log('POWriteFileError:', error);
     }
-  }
+}
 
   async function handlePR(templatePR, extractedObj)
   {
@@ -148,3 +152,4 @@ async function handlePO(templatePO, extractedObj) {
     }
   }
 
+export default Generate
