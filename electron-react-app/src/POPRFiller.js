@@ -1,7 +1,9 @@
-const secrets = require('./secrets.json');
+import templatePO from './secrets/template PO.xlsx' 
+import templatePR from './secrets/Template PR.xlsx' 
+//const secrets = require('./secrets.json');
 const ExcelJS = require('exceljs');
 
-function Generate() {
+function Generate(filename) {
 
   //Catch user input
   const args = process.argv.slice(2);
@@ -16,10 +18,10 @@ function Generate() {
   }
   
   //Read the excel file 
-  let filename = secrets.Centralpath;
+  //let filename = secrets.Centralpath;
   let row = args[0];
-  let templatePO = secrets.templatePO;
-  let templatePR = secrets.templatePR;
+  //let templatePO = secrets.templatePO;
+  //let templatePR = secrets.templatePR;
   let centralSheet = 'POPR summary';
 
   readExcelFile(filename, centralSheet)
