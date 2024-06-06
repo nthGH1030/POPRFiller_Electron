@@ -3,8 +3,9 @@ import templatePR from './secrets/Template PR.xlsx'
 //const secrets = require('./secrets.json');
 const ExcelJS = require('exceljs');
 
-function Generate(filename) {
+function Generate(filename, row) {
 
+  /*
   //Catch user input
   const args = process.argv.slice(2);
 
@@ -16,10 +17,11 @@ function Generate(filename) {
   {
       throw new Error("You can only input pr or po");
   }
+  */
   
   //Read the excel file 
   //let filename = secrets.Centralpath;
-  let row = args[0];
+  //let row = args[0];
   //let templatePO = secrets.templatePO;
   //let templatePR = secrets.templatePR;
   let centralSheet = 'POPR summary';
@@ -45,13 +47,15 @@ function Generate(filename) {
   extractedObj[keyValue] = cellValue;
   }
 
-  //console.log(extractedObj);
-
+  console.log(extractedObj);
+  /*
   //Call PO or PR
   args[1] === 'po' ? handlePO(templatePO, extractedObj)
   : args[1] === 'pr' ? handlePR(templatePR, extractedObj):
   null;
+  */
   })
+  
 } 
 
 

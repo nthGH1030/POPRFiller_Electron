@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Nav from "./NavBar";
 import RadioBtn from "./RadioBtn";
 import {useLocation} from 'react-router-dom';
+import Generate from '../POPRFiller';
 
 function Step2() {
     const [template, setTemplate] = useState('PO');
@@ -21,10 +22,9 @@ function Step2() {
       }  
     },[location.pathname])
   
-
-
-    
-
+    const handleClick = (row, file) => {
+        Generate(row, file)
+    }
     return (
         <>
         <p>Row: {row}</p>
@@ -62,7 +62,7 @@ function Step2() {
                 </button>
             </Link>
 
-            <button type = 'button' className = "button generate">
+            <button type = 'button' className = "button generate" onClick={handleClick}>
                 Generate
             </button>
         </div>
