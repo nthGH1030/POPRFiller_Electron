@@ -18,12 +18,18 @@ function Step2() {
     useEffect(() => {
       if (location.pathname === '/step2') {
         setActiveStep("/step2")
-        //console.log(activeStep)
+        //console.log(location)
+        //console.log(row)
+        //console.log(file)
       }  
     },[location.pathname])
   
-    const handleClick = (row, file) => {
-        Generate(row, file)
+    const handleClick = () => {
+        if (file) {
+            Generate(row, file);
+        } else {
+            console.error('File is undefined');
+        }
     }
     return (
         <>

@@ -26,7 +26,7 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(file);
+    //console.log(file);
   }, [file]);
 
   let location = useLocation();
