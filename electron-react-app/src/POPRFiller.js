@@ -1,10 +1,10 @@
 import templatePO from './secrets/template PO.xlsx' 
 import templatePR from './secrets/Template PR.xlsx' 
+
 //const secrets = require('./secrets.json');
 const ExcelJS = require('exceljs');
 
 function Generate(filename, row) {
-
   /*
   //Catch user input
   const args = process.argv.slice(2);
@@ -59,10 +59,35 @@ function Generate(filename, row) {
 } 
 
 
+function readFile(filename) {
+  //Change File object into a bufferArray
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(filename);
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+  });
+}
+
+async function readExcelFile(filename, sheetName) {
+  try{
+    const buffer = await readFile(filename);
+    const workbook = new ExcelJS.Workbook();
+    const file = await workbook.xlsx.load(buffer);
+    const worksheet = await file.getWorksheet(sheetName)
+      return worksheet
+  } catch (error) {
+      console.log('ReadFileError:', error);
+  }
+}
+
+
+/*
 async function readExcelFile(filename, sheetName) {
   try{
       const workbook = new ExcelJS.Workbook();
-      await workbook.xlsx.readFile(filename);
+      await workbook.xlsx.read(filename);
       const worksheet = workbook.getWorksheet(sheetName);
       //console.log(worksheet)
       return worksheet
@@ -70,7 +95,7 @@ async function readExcelFile(filename, sheetName) {
       console.log('ReadFileError:', error);
   }
 }
-
+*/
 
 async function handlePO(templatePO, extractedObj) 
 {

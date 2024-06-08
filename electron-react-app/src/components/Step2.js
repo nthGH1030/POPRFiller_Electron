@@ -20,13 +20,13 @@ function Step2() {
         setActiveStep("/step2")
         //console.log(location)
         //console.log(row)
-        //console.log(file)
+        console.log(file)
       }  
     },[location.pathname])
   
     const handleClick = () => {
         if (file) {
-            Generate(row, file);
+            Generate(file, row);
         } else {
             console.error('File is undefined');
         }
