@@ -58,16 +58,16 @@ function Generate(filename, row) {
   
 } 
 
-
-function readFile(filename) {
-  //Change File object into a bufferArray
-  return new Promise((resolve, reject) => {
+async function readFile(filename) {
+  try {
     const reader = new FileReader();
-    reader.readAsArrayBuffer(filename);
+    reader.readAsArrayBuffer(filename)
     reader.onload = () => {
-      resolve(reader.result);
-    };
-  });
+      return reader.result
+    }
+  } catch(error) {
+    console.log('ReadFileintoBufferArrayError:', error);
+  }
 }
 
 async function readExcelFile(filename, sheetName) {
