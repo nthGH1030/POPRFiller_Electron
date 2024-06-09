@@ -5,6 +5,7 @@ import templatePR from './secrets/Template PR.xlsx'
 const ExcelJS = require('exceljs');
 
 function Generate(filename, row) {
+  readExcelFile(templatePO, 'Purchase Requisition').then ((worksheet) => {console.log(worksheet)})
   /*
   //Catch user input
   const args = process.argv.slice(2);
@@ -59,15 +60,29 @@ function Generate(filename, row) {
 } 
 
 async function readFile(filename) {
-  try {
+  const fileObject = await getFilefromPath(filename)
+  //Change File object into a bufferArray
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsArrayBuffer(filename)
+    
+    if (typeof(filename) == 'object')
+      {
+        reader.readAsArrayBuffer(filename);
+      }
+    else 
+      {
+        console.log('not Object')
+        console.log(fileObject)
+        reader.readAsArrayBuffer(fileObject);
+      }
+    
     reader.onload = () => {
-      return reader.result
-    }
-  } catch(error) {
-    console.log('ReadFileintoBufferArrayError:', error);
-  }
+      resolve(reader.result);
+    };
+    reader.onerror = (error) => {
+      reject(error);
+    };
+  });
 }
 
 async function readExcelFile(filename, sheetName) {
@@ -75,7 +90,7 @@ async function readExcelFile(filename, sheetName) {
     const buffer = await readFile(filename);
     const workbook = new ExcelJS.Workbook();
     const file = await workbook.xlsx.load(buffer);
-    const worksheet = await file.getWorksheet(sheetName)
+    const worksheet = file.getWorksheet(sheetName)
       return worksheet
   } catch (error) {
       console.log('ReadFileError:', error);
@@ -84,7 +99,7 @@ async function readExcelFile(filename, sheetName) {
 
 
 /*
-async function readExcelFile(filename, sheetName) {
+async function readTemplate(filename, sheetName) {
   try{
       const workbook = new ExcelJS.Workbook();
       await workbook.xlsx.read(filename);
@@ -92,10 +107,21 @@ async function readExcelFile(filename, sheetName) {
       //console.log(worksheet)
       return worksheet
   } catch (error) {
-      console.log('ReadFileError:', error);
+      console.log('ReadTemplateError:', error);
   }
 }
 */
+
+async function getFilefromPath(filePath){
+  try {
+    const response = await fetch(filePath);
+    const file = await response.blob();
+    return file;
+  } catch (error) {
+    console.error('Error getting file from path:', error);
+    throw error;
+  }
+}
 
 async function handlePO(templatePO, extractedObj) 
 {
