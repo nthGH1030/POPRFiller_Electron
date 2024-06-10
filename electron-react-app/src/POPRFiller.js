@@ -5,6 +5,7 @@ import templatePR from './secrets/Template PR.xlsx'
 const ExcelJS = require('exceljs');
 
 function Generate(filename, row) {
+  //console.log(typeof(templatePO))
   readExcelFile(templatePO, 'Purchase Requisition').then ((worksheet) => {console.log(worksheet)})
   /*
   //Catch user input
@@ -61,20 +62,24 @@ function Generate(filename, row) {
 
 async function readFile(filename) {
   const fileObject = await getFilefromPath(filename)
-  //Change File object into a bufferArray
+  
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     
-    if (typeof(filename) == 'object')
+    if (filename instanceof File)
       {
+        console.log('This takes in a file Object')
+        //console.log(filename)
         reader.readAsArrayBuffer(filename);
       }
-    else 
+      
+    else if (typeof(filename) === 'string')
       {
-        console.log('not Object')
+        console.log('This takes in a filepath')
         console.log(fileObject)
         reader.readAsArrayBuffer(fileObject);
       }
+      
     
     reader.onload = () => {
       resolve(reader.result);
