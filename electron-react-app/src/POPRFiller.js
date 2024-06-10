@@ -4,28 +4,10 @@ import templatePR from './secrets/Template PR.xlsx'
 //const secrets = require('./secrets.json');
 const ExcelJS = require('exceljs');
 
-function Generate(filename, row) {
+function Generate(filename, row, mode) {
+  console.log(mode)
   //console.log(typeof(templatePO))
-  readExcelFile(templatePO, 'Purchase Requisition').then ((worksheet) => {console.log(worksheet)})
-  /*
-  //Catch user input
-  const args = process.argv.slice(2);
-
-  if (isNaN(args[0])) {
-      throw new TypeError("The row you typed is not a number");
-    }
-
-  if (args[1] != 'po' && args[1] != 'pr')
-  {
-      throw new Error("You can only input pr or po");
-  }
-  */
-  
-  //Read the excel file 
-  //let filename = secrets.Centralpath;
-  //let row = args[0];
-  //let templatePO = secrets.templatePO;
-  //let templatePR = secrets.templatePR;
+  //readExcelFile(templatePO, 'Purchase Requisition').then ((worksheet) => {console.log(worksheet)})
   let centralSheet = 'POPR summary';
 
   readExcelFile(filename, centralSheet)
@@ -50,12 +32,15 @@ function Generate(filename, row) {
   }
 
   console.log(extractedObj);
-  /*
+  
   //Call PO or PR
-  args[1] === 'po' ? handlePO(templatePO, extractedObj)
-  : args[1] === 'pr' ? handlePR(templatePR, extractedObj):
-  null;
-  */
+  if (mode === 'PO'){
+    handlePO(templatePO, extractedObj)
+  }
+  else if (mode === 'PR'){
+    handlePR(templatePR, extractedObj)
+  }
+  
   })
   
 } 
@@ -68,15 +53,15 @@ async function readFile(filename) {
     
     if (filename instanceof File)
       {
-        console.log('This takes in a file Object')
+        //console.log('This takes in a file Object')
         //console.log(filename)
         reader.readAsArrayBuffer(filename);
       }
       
     else if (typeof(filename) === 'string')
       {
-        console.log('This takes in a filepath')
-        console.log(fileObject)
+        //console.log('This takes in a filepath')
+        //console.log(fileObject)
         reader.readAsArrayBuffer(fileObject);
       }
       
@@ -135,6 +120,7 @@ async function handlePO(templatePO, extractedObj)
   
       //Open the template 
       const templateWorksheet = await readExcelFile(templatePO, POSheet);
+      console.log(templateWorksheet)
   
       //Replace the value in the respective field in the template 
       let PO = {
