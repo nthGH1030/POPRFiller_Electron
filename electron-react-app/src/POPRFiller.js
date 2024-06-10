@@ -1,8 +1,9 @@
 import templatePO from './secrets/template PO.xlsx' 
 import templatePR from './secrets/Template PR.xlsx' 
+import * as ExcelJS from "exceljs";
 
 //const secrets = require('./secrets.json');
-const ExcelJS = require('exceljs');
+// const ExcelJS = require('exceljs');
 
 function Generate(filename, row, mode) {
   console.log(mode)
@@ -31,7 +32,7 @@ function Generate(filename, row, mode) {
   extractedObj[keyValue] = cellValue;
   }
 
-  console.log(extractedObj);
+  //console.log(extractedObj);
   
   //Call PO or PR
   if (mode === 'PO'){
@@ -120,7 +121,7 @@ async function handlePO(templatePO, extractedObj)
   
       //Open the template 
       const templateWorksheet = await readExcelFile(templatePO, POSheet);
-      console.log(templateWorksheet)
+      //console.log(templateWorksheet)
   
       //Replace the value in the respective field in the template 
       let PO = {
@@ -139,12 +140,13 @@ async function handlePO(templatePO, extractedObj)
           let cellAddress = value;
           // Replace the cell value
           templateWorksheet.getCell(cellAddress).value = extractedObj[key];
+          //console.log(templateWorksheet.getCell(cellAddress).value)
         }
       }
   
       // Save as a new file 
       const outputFilename = 'PO'+ extractedObj['PO Number'] + '.xlsx';
-      templateWorksheet.workbook.xlsx.writeFile(outputFilename);
+      await templateWorksheet.workbook.xlsx.writeBuffer(outputFilename);
       console.log('Workbook saved as a new file:', outputFilename);
     } catch (error) {
       console.log('POWriteFileError:', error);
@@ -192,7 +194,7 @@ async function handlePO(templatePO, extractedObj)
         }
         // Save as a new file 
         const outputFilename = 'PR'+ extractedObj['PO Number'] + '.xlsx';
-        templateWorksheet.workbook.xlsx.writeFile(outputFilename);
+        templateWorksheet.workbook.xlsx.writeBuffer(outputFilename);
         console.log('Workbook saved as a new file:', outputFilename);
 
     } catch(error) {
