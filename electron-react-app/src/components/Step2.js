@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import Nav from "./NavBar";
 import RadioBtn from "./RadioBtn";
 import {useLocation} from 'react-router-dom';
-import Generate from '../POPRFiller';
+import {Generate, handlePO} from '../POPRFiller';
+import templatePO from '../secrets/template PO.xlsx' 
+import saveAs from 'file-saver'
 
 function Step2() {
     const [template, setTemplate] = useState('PO');
@@ -24,13 +26,26 @@ function Step2() {
       }  
     },[location.pathname])
   
-    const handleClick = () => {
+    const handleClick = async() => {
         if (file) {
-            Generate(file, row, template);
-        } else {
-            console.error('File is undefined');
-        }
-    }
+            try {
+                const data = await Generate(file, row);
+                console.log(data)
+                if (template === 'PO')
+                    {
+                        const { filename, buffer } = await handlePO(templatePO, data);
+                        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        saveAs(blob, filename);
+                    }
+                
+              } catch (error) {
+                console.error('Error:', error);
+              }
+            } else {
+              console.error('File is undefined');
+            }
+          };
+
     return (
         <>
         <p>Row: {row}</p>

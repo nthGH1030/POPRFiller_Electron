@@ -2,16 +2,18 @@ import templatePO from './secrets/template PO.xlsx'
 import templatePR from './secrets/Template PR.xlsx' 
 import * as ExcelJS from "exceljs";
 
+
 //const secrets = require('./secrets.json');
 // const ExcelJS = require('exceljs');
 
-function Generate(filename, row, mode) {
-  console.log(mode)
-  //console.log(typeof(templatePO))
+export async function Generate(filename, row) {
+
+
+    //console.log(typeof(templatePO))
   //readExcelFile(templatePO, 'Purchase Requisition').then ((worksheet) => {console.log(worksheet)})
   let centralSheet = 'POPR summary';
 
-  readExcelFile(filename, centralSheet)
+  return readExcelFile(filename, centralSheet)
   .then((worksheet) => {
   // Extract the data 
 
@@ -31,9 +33,9 @@ function Generate(filename, row, mode) {
 
   extractedObj[keyValue] = cellValue;
   }
+  return extractedObj
 
-  //console.log(extractedObj);
-  
+    /*
   //Call PO or PR
   if (mode === 'PO'){
     handlePO(templatePO, extractedObj)
@@ -41,9 +43,9 @@ function Generate(filename, row, mode) {
   else if (mode === 'PR'){
     handlePR(templatePR, extractedObj)
   }
-  
+  */
   })
-  
+
 } 
 
 async function readFile(filename) {
@@ -114,7 +116,7 @@ async function getFilefromPath(filePath){
   }
 }
 
-async function handlePO(templatePO, extractedObj) 
+export async function handlePO(templatePO, extractedObj) 
 {
     try {
       let POSheet = 'Purchase Requisition';
@@ -146,8 +148,12 @@ async function handlePO(templatePO, extractedObj)
   
       // Save as a new file 
       const outputFilename = 'PO'+ extractedObj['PO Number'] + '.xlsx';
-      await templateWorksheet.workbook.xlsx.writeBuffer(outputFilename);
+      const buffer = await templateWorksheet.workbook.xlsx.writeBuffer(outputFilename);
       console.log('Workbook saved as a new file:', outputFilename);
+      return {
+        filename: outputFilename,
+        buffer: buffer,
+      }
     } catch (error) {
       console.log('POWriteFileError:', error);
     }
@@ -201,5 +207,3 @@ async function handlePO(templatePO, extractedObj)
         console.log('PRWriteFileError:', error);
     }
   }
-
-export default Generate
