@@ -8,14 +8,12 @@ import * as ExcelJS from "exceljs";
 
 export async function Generate(filename, row) {
 
-
-    //console.log(typeof(templatePO))
   //readExcelFile(templatePO, 'Purchase Requisition').then ((worksheet) => {console.log(worksheet)})
   let centralSheet = 'POPR summary';
 
   return readExcelFile(filename, centralSheet)
   .then((worksheet) => {
-  // Extract the data 
+  // Extract the data from the worksheet
 
   let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
   let indexRow = "7";
@@ -35,15 +33,6 @@ export async function Generate(filename, row) {
   }
   return extractedObj
 
-    /*
-  //Call PO or PR
-  if (mode === 'PO'){
-    handlePO(templatePO, extractedObj)
-  }
-  else if (mode === 'PR'){
-    handlePR(templatePR, extractedObj)
-  }
-  */
   })
 
 } 
@@ -159,7 +148,7 @@ export async function handlePO(templatePO, extractedObj)
     }
 }
 
-  async function handlePR(templatePR, extractedObj)
+export async function handlePR(templatePR, extractedObj)
   {
     try{
         let PRSheet = 'Payment Request'
@@ -184,7 +173,7 @@ export async function handlePO(templatePO, extractedObj)
                 // Get the corresponding cell address
                 let cellAddress = value
                 // Replace the cell value
-                if (key == 'Total Payment paid')
+                if (key === 'Total Payment paid')
                 
                 {
                   const formulaResult = extractedObj[key].result;
@@ -200,8 +189,12 @@ export async function handlePO(templatePO, extractedObj)
         }
         // Save as a new file 
         const outputFilename = 'PR'+ extractedObj['PO Number'] + '.xlsx';
-        templateWorksheet.workbook.xlsx.writeBuffer(outputFilename);
+        const buffer = await templateWorksheet.workbook.xlsx.writeBuffer(outputFilename);
         console.log('Workbook saved as a new file:', outputFilename);
+        return {
+          filename: outputFilename,
+          buffer: buffer,
+        }
 
     } catch(error) {
         console.log('PRWriteFileError:', error);

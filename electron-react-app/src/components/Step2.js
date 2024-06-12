@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import Nav from "./NavBar";
 import RadioBtn from "./RadioBtn";
 import {useLocation} from 'react-router-dom';
-import {Generate, handlePO} from '../POPRFiller';
+import {Generate, handlePO, handlePR} from '../POPRFiller';
 import templatePO from '../secrets/template PO.xlsx' 
+import templatePR from '../secrets/template PO.xlsx' 
 import saveAs from 'file-saver'
 
 function Step2() {
@@ -24,7 +25,7 @@ function Step2() {
         //console.log(row)
         console.log(template)
       }  
-    },[location.pathname])
+    }, [location.pathname, template])
   
     const handleClick = async() => {
         if (file) {
@@ -34,6 +35,12 @@ function Step2() {
                 if (template === 'PO')
                     {
                         const { filename, buffer } = await handlePO(templatePO, data);
+                        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        saveAs(blob, filename);
+                    }
+                if (template === 'PR')
+                    {
+                        const { filename, buffer } = await handlePR(templatePR, data);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
