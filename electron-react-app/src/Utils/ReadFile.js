@@ -1,9 +1,8 @@
 import * as ExcelJS from "exceljs";
 
 //This function reads the central excel and extract the data from it
-export async function Generate(filename, row) {
+export async function extractDataFromExcel(filename, row) {
 
-  //readExcelFile(templatePO, 'Purchase Requisition').then ((worksheet) => {console.log(worksheet)})
   let centralSheet = 'POPR summary';
 
   return readExcelFile(filename, centralSheet)
@@ -27,12 +26,10 @@ export async function Generate(filename, row) {
   extractedObj[keyValue] = cellValue;
   }
   return extractedObj
-
   })
-
 } 
 
-//This function that allows reading file from path
+//This function that allows reading file from file path
 async function getFilefromPath(filePath){
   try {
     const response = await fetch(filePath);

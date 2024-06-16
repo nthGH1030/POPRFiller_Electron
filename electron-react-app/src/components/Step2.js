@@ -5,7 +5,7 @@ import Nav from "./NavBar";
 import RadioBtn from "./RadioBtn";
 import {useLocation} from 'react-router-dom';
 import {handlePO, handlePR} from '../Utils/WriteFile';
-import {Generate} from '../Utils/ReadFile';
+import {extractDataFromExcel} from '../Utils/ReadFile';
 import templatePO from '../secrets/template PO.xlsx' 
 import templatePR from '../secrets/template PR.xlsx' 
 import saveAs from 'file-saver'
@@ -31,7 +31,7 @@ function Step2() {
     const handleClick = async() => {
         if (file) {
             try {
-                const data = await Generate(file, row);
+                const data = await extractDataFromExcel(file, row);
                 console.log(data)
                 if (template === 'PO')
                     {
