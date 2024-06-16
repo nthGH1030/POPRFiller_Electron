@@ -6,7 +6,7 @@ import RadioBtn from "./RadioBtn";
 import {useLocation} from 'react-router-dom';
 import {Generate, handlePO, handlePR} from '../POPRFiller';
 import templatePO from '../secrets/template PO.xlsx' 
-import templatePR from '../secrets/template PO.xlsx' 
+import templatePR from '../secrets/template PR.xlsx' 
 import saveAs from 'file-saver'
 
 function Step2() {

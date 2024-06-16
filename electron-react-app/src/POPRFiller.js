@@ -1,5 +1,3 @@
-import templatePO from './secrets/template PO.xlsx' 
-import templatePR from './secrets/Template PR.xlsx' 
 import * as ExcelJS from "exceljs";
 
 
