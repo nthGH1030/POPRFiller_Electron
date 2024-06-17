@@ -13,19 +13,19 @@ import saveAs from 'file-saver'
 function Step2() {
     const [template, setTemplate] = useState('PO');
     
-    const [activeStep, setActiveStep] = useState(null);
+    const [activeStep, setActiveStep] = useState('/step2');
 
     let location = useLocation();
     const {state} = location;
     const {row, file} = state;
     
     useEffect(() => {
-      if (location.pathname === '/step2') {
+        
         setActiveStep("/step2")
+        console.log(activeStep)
         console.log(state)
         console.log(template)
         
-      }  
     }, [location.pathname, template])
   
     const handleClick = async() => {

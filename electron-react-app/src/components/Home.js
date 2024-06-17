@@ -5,10 +5,9 @@ import Navbar from './NavBar';
 import {useLocation} from 'react-router-dom';
 
 
-
 function Home() {
   const [file, setFile] = useState(null);
-  const [activeStep, setActiveStep] = useState(null);
+  const [activeStep, setActiveStep] = useState("/");
   const [row, setRow] = useState(null);
   let location = useLocation();
 
@@ -17,7 +16,6 @@ function Home() {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   }
-
 
   const handleDropZoneClick = () => {
     fileInputRef.current.click();
@@ -46,10 +44,10 @@ function Home() {
   */
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      setActiveStep("/")
-      console.log(activeStep)
-    }
+    
+    setActiveStep(location.pathname)
+    console.log(activeStep)
+    
   },[location.pathname])
 
   const state = {'row': row, 'file' : file};
