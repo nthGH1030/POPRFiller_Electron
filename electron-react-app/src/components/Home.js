@@ -10,6 +10,7 @@ function Home() {
   const [file, setFile] = useState(null);
   const [activeStep, setActiveStep] = useState(null);
   const [row, setRow] = useState(null);
+  let location = useLocation();
 
   const fileInputRef = useRef(null);
 
@@ -17,29 +18,41 @@ function Home() {
     setFile(e.target.files[0]);
   }
 
-  const handleRowChange = (e) => {
-    setRow(e.target.value);
-  }
 
   const handleDropZoneClick = () => {
     fileInputRef.current.click();
   };
 
-  useEffect(() => {
-    //console.log(file);
-  }, [file]);
+  const handleFileDrop = (e) => {
+    e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        {
+          setFile(file);
+        }
+      else
+      {
+        alert('You can only upload an excel file')
+      }
+  }
 
-  let location = useLocation();
+  const handleRowChange = (e) => {
+    setRow(e.target.value);
+  }
+  /*
+  useEffect(() => {
+    console.log(file);
+  }, [file]);
+  */
+
   useEffect(() => {
     if (location.pathname === '/') {
       setActiveStep("/")
-      //console.log(activeStep)
+      console.log(activeStep)
     }
-    
   },[location.pathname])
 
   const state = {'row': row, 'file' : file};
-
 
     return (
       <div>
@@ -54,18 +67,7 @@ function Home() {
             className = {`File-Drop-Zone ${file ? 'has-file' : ''}`}
             onClick={handleDropZoneClick}
             onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              e.preventDefault();
-              const file = e.dataTransfer.files[0];
-              if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-                {
-                  setFile(file);
-                }
-              else
-              {
-                alert('You can only upload an excel file')
-              }
-            }}
+            onDrop={handleFileDrop}
           > 
             {file ? (
                   <span className='span-cursor'>File uploaded: {file.name}</span>

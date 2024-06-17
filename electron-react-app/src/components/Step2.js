@@ -22,9 +22,9 @@ function Step2() {
     useEffect(() => {
       if (location.pathname === '/step2') {
         setActiveStep("/step2")
-        //console.log(location)
-        //console.log(row)
+        console.log(state)
         console.log(template)
+        
       }  
     }, [location.pathname, template])
   
@@ -56,8 +56,6 @@ function Step2() {
 
     return (
         <>
-        <p>Row: {row}</p>
-        <p>File: {file?.name}</p>
         <Nav
             activeStep = {activeStep}
         />

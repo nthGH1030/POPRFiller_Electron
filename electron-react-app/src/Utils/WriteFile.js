@@ -5,9 +5,8 @@ export async function handlePO(templatePO, extractedObj)
     try {
       let POSheet = 'Purchase Requisition';
   
-      //Open the template 
+      //Get tthe template work sheet
       const templateWorksheet = await readExcelFile(templatePO, POSheet);
-      //console.log(templateWorksheet)
   
       //Replace the value in the respective field in the template 
       let PO = {

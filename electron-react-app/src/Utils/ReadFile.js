@@ -33,7 +33,7 @@ export async function extractDataFromExcel(filename, row) {
 async function getFilefromPath(filePath){
   try {
     const response = await fetch(filePath);
-    const file = await response.blob();
+    const file = response.blob();
     return file;
   } catch (error) {
     console.error('Error getting file from path:', error);
@@ -43,18 +43,19 @@ async function getFilefromPath(filePath){
 
 //This function create a filereader and read file in form of file object or path
 async function readFile(filename) {
-  const fileObject = await getFilefromPath(filename)
-  
+    const fileObject = await getFilefromPath(filename)
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     
+    //When a file object is passed into the function
     if (filename instanceof File)
       {
         reader.readAsArrayBuffer(filename);
       }
-      
+    //When a filepath is passed into the function
     else if (typeof(filename) === 'string')
-      {
+      { 
         reader.readAsArrayBuffer(fileObject);
       }
     reader.onload = () => {
