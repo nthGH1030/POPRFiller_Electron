@@ -27,7 +27,7 @@ export async function handlePO(templatePO, extractedObj, staff)
           templateWorksheet.getCell(cellAddress).value = extractedObj[key];
           //console.log(templateWorksheet.getCell(cellAddress).value)
         }
-        if(key === 'staff'){
+        if(key === 'staff' && staff != null){
           templateWorksheet.getCell(cellAddress).value = staff;
         }
       }
@@ -81,7 +81,7 @@ export async function handlePR(templatePR, extractedObj, staff)
                   templateWorksheet.getCell(cellAddress).value = extractedObj[key];
                 }
             }
-            else if(key === 'staff'){
+            else if(key === 'staff' && staff != null){
               templateWorksheet.getCell(cellAddress).value = staff;
             }
         }
