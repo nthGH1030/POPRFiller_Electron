@@ -84,7 +84,9 @@ function Step2() {
         
         <div className = 'Container'>
             <p>Who is preparing this submission</p>
-            <input type = 'text' placeholder = 'John Doe, APM-PM' onChange = {handleStaff}/>
+            <input type = 'text' 
+            placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
+            onChange = {handleStaff}/>
         </div>
         <div className = 'Button-Container'>
             <Link to="/">

@@ -3,6 +3,7 @@ import {readExcelFile} from './ReadFile';
 export async function handlePO(templatePO, extractedObj, staff) 
 {
     try {
+      localStorage.setItem('staff', staff)
       let POSheet = 'Purchase Requisition';
   
       //Get tthe template work sheet
@@ -48,6 +49,7 @@ export async function handlePO(templatePO, extractedObj, staff)
 export async function handlePR(templatePR, extractedObj, staff)
   {
     try{
+        localStorage.setItem('staff', staff)
         let PRSheet = 'Payment Request'
         const templateWorksheet = await readExcelFile(templatePR, PRSheet);
 
