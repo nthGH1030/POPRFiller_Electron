@@ -1,6 +1,6 @@
 import {readExcelFile} from './ReadFile';
 
-export async function handlePO(templatePO, extractedObj) 
+export async function handlePO(templatePO, extractedObj, staff) 
 {
     try {
       let POSheet = 'Purchase Requisition';
@@ -20,12 +20,15 @@ export async function handlePO(templatePO, extractedObj)
       }
   
       for (let [key, value] of Object.entries(PO)) {
+        // Get the corresponding cell address
+        let cellAddress = value;
         if (key in extractedObj) {
-          // Get the corresponding cell address
-          let cellAddress = value;
           // Replace the cell value
           templateWorksheet.getCell(cellAddress).value = extractedObj[key];
           //console.log(templateWorksheet.getCell(cellAddress).value)
+        }
+        if(key === 'staff'){
+          templateWorksheet.getCell(cellAddress).value = staff;
         }
       }
   
@@ -42,7 +45,7 @@ export async function handlePO(templatePO, extractedObj)
     }
 }
 
-export async function handlePR(templatePR, extractedObj)
+export async function handlePR(templatePR, extractedObj, staff)
   {
     try{
         let PRSheet = 'Payment Request'
@@ -59,26 +62,27 @@ export async function handlePR(templatePR, extractedObj)
             'Total Payment paid': 'D42',
             'Paid Requested': 'C19',
             'Delivery date': 'C22',
-            'Invoice number': 'D31'
+            'Invoice number': 'D31',
+            "staff": "C44"
         }
     
         for (let [key, value] of Object.entries(PR)) {
+          // Get the corresponding cell address
+          let cellAddress = value
             if (key in extractedObj) {
-                // Get the corresponding cell address
-                let cellAddress = value
+            
                 // Replace the cell value
-                if (key === 'Total Payment paid')
-                
-                {
+                if (key === 'Total Payment paid') {
                   const formulaResult = extractedObj[key].result;
                   
                   templateWorksheet.getCell(cellAddress).value = formulaResult;
-
                 }
                 else {
                   templateWorksheet.getCell(cellAddress).value = extractedObj[key];
                 }
-                
+            }
+            else if(key === 'staff'){
+              templateWorksheet.getCell(cellAddress).value = staff;
             }
         }
         // Save as a new file 

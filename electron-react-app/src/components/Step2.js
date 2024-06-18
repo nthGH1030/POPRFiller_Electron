@@ -12,8 +12,8 @@ import saveAs from 'file-saver'
 
 function Step2() {
     const [template, setTemplate] = useState('PO');
-    
     const [activeStep, setActiveStep] = useState('/step2');
+    const [staff, setStaff] = useState(null);
 
     let location = useLocation();
     const {state} = location;
@@ -35,13 +35,13 @@ function Step2() {
                 console.log(data)
                 if (template === 'PO')
                     {
-                        const { filename, buffer } = await handlePO(templatePO, data);
+                        const { filename, buffer } = await handlePO(templatePO, data, staff);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
                 if (template === 'PR')
                     {
-                        const { filename, buffer } = await handlePR(templatePR, data);
+                        const { filename, buffer } = await handlePR(templatePR, data, staff);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
@@ -53,6 +53,10 @@ function Step2() {
               console.error('File is undefined');
             }
           };
+
+    const handleStaff = (e) => {
+        setStaff(e.target.value)
+    }
 
     return (
         <>
@@ -80,11 +84,11 @@ function Step2() {
         
         <div className = 'Container'>
             <p>Who is preparing this submission</p>
-            <input type = 'text' placeholder = 'John Doe, APM-PM'/>
+            <input type = 'text' placeholder = 'John Doe, APM-PM' onChange = {handleStaff}/>
         </div>
         <div className = 'Button-Container'>
             <Link to="/">
-                <button type = 'button' className = "button">
+                <button type = 'button' className = "button" >
                     Back
                 </button>
             </Link>
