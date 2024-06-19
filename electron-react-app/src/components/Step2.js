@@ -50,7 +50,7 @@ function Step2() {
                 console.error('Error:', error);
               }
             } else {
-              console.error('File is undefined');
+              alert('You have not uploaded the file ! Go Back to Step 1');
             }
           };
 
@@ -83,7 +83,7 @@ function Step2() {
         </div>
         
         <div className = 'Container'>
-            <p>Who is preparing this submission</p>
+            <p>Who is preparing this submission?</p>
             <input type = 'text' 
             placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
             onChange = {handleStaff}/>
