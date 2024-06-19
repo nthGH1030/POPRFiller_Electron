@@ -3,7 +3,7 @@ import {readExcelFile} from './ReadFile';
 export async function handlePO(templatePO, extractedObj, staff) 
 {
     try {
-      localStorage.setItem('staff', staff)
+      staff !== null && localStorage.setItem('staff', staff);
       let POSheet = 'Purchase Requisition';
   
       //Get tthe template work sheet
@@ -28,8 +28,8 @@ export async function handlePO(templatePO, extractedObj, staff)
           templateWorksheet.getCell(cellAddress).value = extractedObj[key];
           //console.log(templateWorksheet.getCell(cellAddress).value)
         }
-        if(key === 'staff' && staff != null){
-          templateWorksheet.getCell(cellAddress).value = staff;
+        if(key === 'staff'){
+          templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');
         }
       }
   
@@ -49,7 +49,8 @@ export async function handlePO(templatePO, extractedObj, staff)
 export async function handlePR(templatePR, extractedObj, staff)
   {
     try{
-        localStorage.setItem('staff', staff)
+      staff !== null && localStorage.setItem('staff', staff);
+        
         let PRSheet = 'Payment Request'
         const templateWorksheet = await readExcelFile(templatePR, PRSheet);
 
@@ -83,8 +84,8 @@ export async function handlePR(templatePR, extractedObj, staff)
                   templateWorksheet.getCell(cellAddress).value = extractedObj[key];
                 }
             }
-            else if(key === 'staff' && staff != null){
-              templateWorksheet.getCell(cellAddress).value = staff;
+            else if(key === 'staff'){
+              templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');;
             }
         }
         // Save as a new file 
