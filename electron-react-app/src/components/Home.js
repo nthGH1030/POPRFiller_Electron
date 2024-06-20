@@ -47,6 +47,7 @@ function Home() {
     
     setActiveStep(location.pathname)
     console.log(activeStep)
+    console.log(state)
     
   },[location.pathname])
 
