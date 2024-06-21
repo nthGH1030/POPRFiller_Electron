@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "concurrently": "^8.2.2",
     "electron-squirrel-startup": "^1.0.1",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
@@ -17,7 +18,7 @@
   },
   "main": "src/electron-starter.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "concurrently \"react-scripts start\" \"electron-forge start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
