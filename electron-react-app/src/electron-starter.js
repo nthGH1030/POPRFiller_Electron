@@ -1,14 +1,20 @@
 const { app, BrowserWindow } = require('electron/main')
+const path = require('path')
 
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
-    win.loadURL(`file://${__dirname}/../build/index.html`);
-  
+  // Use path.join() to construct the correct path to the built index.html file
+  win.loadFile(path.join(__dirname, '../build', 'index.html'));
 }
+
+
 
 app.whenReady().then(() => {
   createWindow()
@@ -25,3 +31,4 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
