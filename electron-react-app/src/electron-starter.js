@@ -10,6 +10,36 @@ async function checkIsDev() {
   isDev = electronIsDev.default;
 }
 
+const http = require('http');
+
+// Function to check if the development server is ready
+function checkServerReady() {
+  return new Promise((resolve, reject) => {
+    const options = {
+      host: 'localhost',
+      port: 3000,
+      timeout: 2000, // 2 seconds timeout for each request
+    };
+
+    const request = http.get(options, (res) => {
+      if (res.statusCode === 200) {
+        console.log('Development server is ready.');
+        resolve(true);
+      } else {
+        console.log('Server responded, but not with a 200 status. Retrying...');
+        setTimeout(() => resolve(checkServerReady()), 2000); // Retry after 2 seconds
+      }
+    });
+
+    request.on('error', (err) => {
+      console.log('No response from server, retrying...');
+      setTimeout(() => resolve(checkServerReady()), 2000); // Retry after 2 seconds
+    });
+
+    request.end();
+  });
+}
+
 async function createWindow() {
   await checkIsDev();
   if (win) {
@@ -25,18 +55,17 @@ async function createWindow() {
     },
     
   });
-  
-  // Delay loading in development mode to ensure the server is ready
-  if (isDev) {
-    console.log('Waiting for the development server to become ready...');
-    await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
-  }
 
-  const appURL = isDev
-    ? 'http://localhost:3000' // URL for dev server
-    : 'file://' + path.join(__dirname, '../build/index.html'); // Adjust as necessary for production build path
-
-  win.loadURL(appURL);
+if (isDev) {
+  console.log('Checking if the development server is ready...');
+  checkServerReady().then(() => {
+    // Server is ready, load the URL
+    win.loadURL('http://localhost:3000');
+  });
+} else {
+  // Load production URL
+  win.loadURL('file://' + path.join(__dirname, '../build/index.html'));
+}
   
   win.on('closed', () => {
     win = null; // Dereference the window object
