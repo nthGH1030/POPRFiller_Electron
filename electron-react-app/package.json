@@ -23,8 +23,8 @@
     "start": "concurrently \"react-scripts start\" \"electron-forge start\"",
     "build": "react-scripts build",
     "electron-start": "electron .",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
+    "package": "npm run build && electron-forge package",
+    "make": "npm run build && electron-forge make",
     "build-electron": "npm run build && concurrently \"serve -s build\" \"wait-on http://localhost:3000 && electron-forge start\""
   },
   "eslintConfig": {
