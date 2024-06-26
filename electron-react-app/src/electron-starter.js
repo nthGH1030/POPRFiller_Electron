@@ -12,15 +12,15 @@ async function createWindow() {
     },
   });
 
-  const appURL = isDev
-    ? 'http://localhost:3000' // Development URL
-    : `file://${path.join(__dirname, '../build/index.html')}`; // Production path
-  mainWindow.loadURL(appURL).catch(err => console.error('Error loading the URL:', err));
-
-  if (isDev){
+  if (isDev) {
+    // Development URL
+    mainWindow.loadURL('http://localhost:3000').catch(err => console.error('Error loading the URL:', err));
     mainWindow.webContents.openDevTools()
+  } else {
+    // Production path
+    mainWindow.loadFile(path.join(__dirname, '../build/index.html')).catch(err => console.error('Error loading the file:', err));
   }
-  
+
 }
 
 app.whenReady().then(() => {
