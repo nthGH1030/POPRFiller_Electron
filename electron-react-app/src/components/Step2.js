@@ -19,6 +19,7 @@ function Step2() {
     const {state} = location;
     const {row, file} = state;
     
+    
     useEffect(() => {
         
         setActiveStep("/step2")

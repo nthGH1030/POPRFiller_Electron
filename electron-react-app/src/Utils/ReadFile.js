@@ -1,6 +1,6 @@
 import * as ExcelJS from "exceljs";
 
-const { ipcRenderer } = require('electron');
+
 
 //This function reads the central excel and extract the data from it
 export async function extractDataFromExcel(filename, row) {
@@ -34,11 +34,9 @@ export async function extractDataFromExcel(filename, row) {
 //This function that allows reading file from file path
 async function getFilefromPath(filePath){
   try {
-    
-    const data = await ipcRenderer.invoke('read-file', filePath);
-    // If you need a Blob, convert the Buffer to a Blob here
-    return new Blob([data.buffer], { type: 'application/octet-stream' });
-
+    const response = await fetch(filePath);
+    const file = response.blob();
+    return file;
   } catch (error) {
     console.error('Error getting file from path:', error);
     throw error;

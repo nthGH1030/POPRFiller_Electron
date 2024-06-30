@@ -1,12 +1,13 @@
 import {readExcelFile} from './ReadFile';
 
+
 export async function handlePO(templatePO, extractedObj, staff) 
 {
     try {
       staff !== null && localStorage.setItem('staff', staff);
       let POSheet = 'Purchase Requisition';
   
-      //Get tthe template work sheet
+      //Get the template work sheet
       const templateWorksheet = await readExcelFile(templatePO, POSheet);
   
       //Replace the value in the respective field in the template 
