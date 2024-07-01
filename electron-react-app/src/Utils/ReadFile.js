@@ -45,7 +45,7 @@ async function getFilefromPath(filePath){
 
 //This function create a filereader and read file in form of file object or path
 async function readFile(filename) {
-    const fileObject = await getFilefromPath(filename)
+    //const fileObject = await getFilefromPath(filename)
 
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -56,10 +56,13 @@ async function readFile(filename) {
         reader.readAsArrayBuffer(filename);
       }
     //When a filepath is passed into the function
+    /*
     else if (typeof(filename) === 'string')
       { 
         reader.readAsArrayBuffer(fileObject);
       }
+    */
+      
     reader.onload = () => {
       resolve(reader.result);
     };
@@ -75,6 +78,18 @@ export async function readExcelFile(filename, sheetName) {
     const buffer = await readFile(filename);
     const workbook = new ExcelJS.Workbook();
     const file = await workbook.xlsx.load(buffer);
+    const worksheet = file.getWorksheet(sheetName)
+      return worksheet
+  } catch (error) {
+      console.log('ReadFileError:', error);
+  }
+}
+
+//This function read a bufferarray and return an excel worksheet
+export async function readPreloadExcelFile(fileBuffer, sheetName) {
+  try{
+    const workbook = new ExcelJS.Workbook();
+    const file = await workbook.xlsx.load(fileBuffer);
     const worksheet = file.getWorksheet(sheetName)
       return worksheet
   } catch (error) {

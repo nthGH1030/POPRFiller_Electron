@@ -1,4 +1,4 @@
-import {readExcelFile} from './ReadFile';
+import {readExcelFile, readPreloadExcelFile} from './ReadFile';
 
 
 export async function handlePO(templatePO, extractedObj, staff) 
@@ -8,7 +8,7 @@ export async function handlePO(templatePO, extractedObj, staff)
       let POSheet = 'Purchase Requisition';
   
       //Get the template work sheet
-      const templateWorksheet = await readExcelFile(templatePO, POSheet);
+      const templateWorksheet = await readPreloadExcelFile(templatePO, POSheet);
   
       //Replace the value in the respective field in the template 
       let PO = {
