@@ -8,13 +8,14 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: true,
     }
   });
 
   // and load the index.html of the app.
-  const startUrl = process.env.WEB_URL || url.format({
+  const startUrl = process.env.WEB_URL || url({
     pathname: path.join(__dirname, "../build/index.html"),
     protocol: 'file',
     slashes: true
