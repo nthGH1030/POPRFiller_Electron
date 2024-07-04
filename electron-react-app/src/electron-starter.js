@@ -7,7 +7,7 @@ const fs = require('fs').promises;
 // Function to read file content
 async function readFileContent(filePath) {
     try {
-        const content = await fs.readFile(filePath, { encoding: 'utf8' });
+        const content = await fs.readFile(filePath);
         return content;
     } catch (error) {
         console.error('Failed to read file:', error);
@@ -18,13 +18,16 @@ async function readFileContent(filePath) {
 // Handle load-template-po
 ipcMain.handle('load-template-po', async () => {
   const poPath = path.join(__dirname, './secrets/template PO.xlsx');
-  return readFileContent(poPath);
+  console.log(poPath);
+  const PO = await readFileContent(poPath);
+  return PO;
 });
 
 // Handle load-template-pr
 ipcMain.handle('load-template-pr', async () => {
   const prPath = path.join(__dirname, './secrets/template PR.xlsx');
-  return readFileContent(prPath);
+  const PR = await readFileContent(prPath);
+  return PR;
 });
 
 
@@ -35,9 +38,9 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: false,
-      sandbox: false,
       contextIsolation: true,
+      sandbox: true,
+      nodeIntegration: false,
     }
   });
 
@@ -47,7 +50,7 @@ const createWindow = () => {
     protocol: 'file',
     slashes: true
   })
-  console.log(startUrl);
+  //console.log(startUrl);
   mainWindow.loadURL(startUrl);
 
   // Open the DevTools.
