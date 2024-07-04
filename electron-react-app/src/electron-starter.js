@@ -1,6 +1,32 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url')
+const fs = require('fs').promises;
+
+
+// Function to read file content
+async function readFileContent(filePath) {
+    try {
+        const content = await fs.readFile(filePath, { encoding: 'utf8' });
+        return content;
+    } catch (error) {
+        console.error('Failed to read file:', error);
+        throw error; // Rethrow to handle it in the renderer process
+    }
+}
+
+// Handle load-template-po
+ipcMain.handle('load-template-po', async () => {
+  const poPath = path.join(__dirname, './secrets/template PO.xlsx');
+  return readFileContent(poPath);
+});
+
+// Handle load-template-pr
+ipcMain.handle('load-template-pr', async () => {
+  const prPath = path.join(__dirname, './secrets/template PR.xlsx');
+  return readFileContent(prPath);
+});
+
 
 const createWindow = () => {
   // Create the browser window.
@@ -9,7 +35,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
+      nodeIntegration: false,
+      sandbox: false,
       contextIsolation: true,
     }
   });
@@ -27,7 +54,8 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 };
 
-app.on('ready', createWindow);
+//app.on('ready', createWindow);
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -42,3 +70,6 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+
+app.whenReady().then(createWindow);

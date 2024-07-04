@@ -1,7 +1,8 @@
-const { contextBridge, ipcRenderer } = require('electron');
-const fs = require('fs');
+const { contextBridge, ipcRenderer} = require('electron');
+//const fs = require('fs');
 const path = require('path');
 
+/*
 // Function to read file content
 const readFileContent = (filePath) => {
   try {
@@ -12,13 +13,12 @@ const readFileContent = (filePath) => {
     return null;
   }
 };
+*/
 
 // Expose the readFileContent function to the renderer process
 contextBridge.exposeInMainWorld('electronAPI', {
-  loadTemplatePO: () => readFileContent('./secrets/template PO.xlsx'),
-  loadTemplatePR: () => readFileContent('./secrets/template PR.xlsx'),
-  // Expose a method to get the file content as a Buffer
-  getFileBuffer: (filePath) => readFileContent(filePath)
+    loadTemplatePO: () => ipcRenderer.invoke('load-template-po'),
+    loadTemplatePR: () => ipcRenderer.invoke('load-template-pr'),
 });
 
 console.log('the preload script has run')

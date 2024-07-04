@@ -14,12 +14,30 @@ function Step2() {
     const [template, setTemplate] = useState('PO');
     const [activeStep, setActiveStep] = useState('/step2');
     const [staff, setStaff] = useState(null);
+    const [templateContent, setTemplateContent] = useState(null);
 
     let location = useLocation();
     const {state} = location;
     const {row, file} = state;
-    const templatePO = window.electronAPI.getFileBuffer('./secrets/template PO.xlsx');
-    const templatePR = window.electronAPI.getFileBuffer('./secrets/template PR.xlsx');
+    //const templatePO = window.electronAPI.getFileBuffer('./secrets/template PO.xlsx');
+    //const templatePR = window.electronAPI.getFileBuffer('./secrets/template PR.xlsx');
+
+    const loadTemplate = async () => {
+        try {
+            let content;
+            if (template === 'PO') {
+                content = await window.electronAPI.loadTemplatePO();
+            } else {
+                content = await window.electronAPI.loadTemplatePR();
+            }
+            console.log(content);
+            setTemplateContent(content);
+        } catch (error) {
+            console.error('Error loading template:', error);
+        }
+    };
+    
+
     
     useEffect(() => {
         
@@ -27,6 +45,8 @@ function Step2() {
         //console.log(activeStep)
         //console.log(state)
         //console.log(template)
+        loadTemplate();
+        console.log(templateContent)
     }, [location.pathname, template])
   
     const handleClick = async() => {
@@ -36,13 +56,13 @@ function Step2() {
                 console.log(data)
                 if (template === 'PO')
                     {
-                        const { filename, buffer } = await handlePO(templatePO, data, staff);
+                        const { filename, buffer } = await handlePO(templateContent, data, staff);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
                 if (template === 'PR')
                     {
-                        const { filename, buffer } = await handlePR(templatePR, data, staff);
+                        const { filename, buffer } = await handlePR(templateContent, data, staff);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
