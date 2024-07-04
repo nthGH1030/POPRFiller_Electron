@@ -15,7 +15,7 @@ async function readFileContent(filePath) {
     }
 }
 
-// Handle load-template-po
+// Handle load-template-poii
 ipcMain.handle('load-template-po', async () => {
   const poPath = path.join(__dirname, './secrets/template PO.xlsx');
   console.log(poPath);
@@ -39,8 +39,7 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
-      sandbox: true,
-      nodeIntegration: false,
+      
     }
   });
 
