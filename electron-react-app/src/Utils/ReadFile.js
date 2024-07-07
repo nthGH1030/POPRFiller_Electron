@@ -1,7 +1,5 @@
 import * as ExcelJS from "exceljs";
 
-
-
 //This function reads the central excel and extract the data from it
 export async function extractDataFromExcel(filename, row) {
 
@@ -31,21 +29,8 @@ export async function extractDataFromExcel(filename, row) {
   })
 } 
 
-//This function that allows reading file from file path
-async function getFilefromPath(filePath){
-  try {
-    const response = await fetch(filePath);
-    const file = response.blob();
-    return file;
-  } catch (error) {
-    console.error('Error getting file from path:', error);
-    throw error;
-  }
-}
-
-//This function create a filereader and read file in form of file object or path
+//This function create a filereader and read file in form of file object
 async function readFile(filename) {
-    //const fileObject = await getFilefromPath(filename)
 
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -55,13 +40,6 @@ async function readFile(filename) {
       {
         reader.readAsArrayBuffer(filename);
       }
-    //When a filepath is passed into the function
-    /*
-    else if (typeof(filename) === 'string')
-      { 
-        reader.readAsArrayBuffer(fileObject);
-      }
-    */
       
     reader.onload = () => {
       resolve(reader.result);
@@ -75,21 +53,18 @@ async function readFile(filename) {
 //This function read a bufferarray and return an excel worksheet
 export async function readExcelFile(filename, sheetName) {
   try{
-    const buffer = await readFile(filename);
     const workbook = new ExcelJS.Workbook();
-    const file = await workbook.xlsx.load(buffer);
-    const worksheet = file.getWorksheet(sheetName)
-      return worksheet
-  } catch (error) {
-      console.log('ReadFileError:', error);
-  }
-}
+    let file;
 
-//This function read a bufferarray and return an excel worksheet
-export async function readPreloadExcelFile(fileBuffer, sheetName) {
-  try{
-    const workbook = new ExcelJS.Workbook();
-    const file = await workbook.xlsx.load(fileBuffer);
+    if (filename instanceof File)
+      {
+        const buffer = await readFile(filename);
+        file = await workbook.xlsx.load(buffer);
+      }
+      else {
+        file = await workbook.xlsx.load(filename);
+      }
+    
     const worksheet = file.getWorksheet(sheetName)
       return worksheet
   } catch (error) {
