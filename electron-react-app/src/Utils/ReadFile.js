@@ -29,23 +29,19 @@ export async function extractDataFromExcel(filename, row) {
   })
 } 
 
-//This function create a filereader and read file in form of file object
+//This function create a filereader and read file as a bufferArray
 async function readFile(filename) {
 
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     
-    //When a file object is passed into the function
-    if (filename instanceof File)
-      {
-        reader.readAsArrayBuffer(filename);
-      }
+    reader.readAsArrayBuffer(filename);
       
     reader.onload = () => {
       resolve(reader.result);
     };
     reader.onerror = (error) => {
-      reject(error);
+      reject(new Error(`Failed to read file: ${error}`));
     };
   });
 }
