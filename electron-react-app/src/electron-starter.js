@@ -1,8 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const url = require('url')
 const fs = require('fs').promises;
 
+let isDev;
+import("electron-is-dev").then ((module)=> {
+  isDev = module.default;
+}). catch(error => console.error("failed to load electron-is-dev", error));
 
 // Function to read file content
 async function readFileContent(filePath) {
@@ -14,9 +17,6 @@ async function readFileContent(filePath) {
         throw error; 
     }
 }
-
-
-
 
 const createWindow = () => {
   // Create the browser window.
@@ -31,7 +31,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  const startUrl = process.env.WEB_URL ||  `file://${path.join(__dirname, "../build/index.html")}`;
+  const startUrl = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, "../build/index.html")}`;
 
   mainWindow.loadURL(startUrl);
 
