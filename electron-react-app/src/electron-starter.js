@@ -31,7 +31,9 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  const startUrl = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, "../build/index.html")}`;
+  const startUrl = isDev 
+  ? 'http://localhost:3000' 
+  : `file://${path.join(__dirname, "../build/index.html")}`;
 
   mainWindow.loadURL(startUrl);
 
@@ -54,6 +56,7 @@ app.whenReady().then(() => {
     const PR = await readFileContent(prPath);
     return PR;
   });
+  
   createWindow()
 
   app.on('activate', () => {
