@@ -37,11 +37,6 @@ function Home() {
   const handleRowChange = (e) => {
     setRow(e.target.value);
   }
-  /*
-  useEffect(() => {
-    console.log(file);
-  }, [file]);
-  */
 
   useEffect(() => {
     

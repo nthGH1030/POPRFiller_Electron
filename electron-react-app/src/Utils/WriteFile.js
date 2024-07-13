@@ -67,7 +67,7 @@ export async function handlePR(templatePR, extractedObj, staff)
             'Paid Requested': 'C19',
             'Delivery date': 'C22',
             'Invoice number': 'D31',
-            "staff": "C44"
+            "staff": "C50"
         }
     
         for (let [key, value] of Object.entries(PR)) {
