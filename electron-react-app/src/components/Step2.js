@@ -1,6 +1,6 @@
 import '../Styles.css';
 import React , {useState, useEffect} from 'react';
-import { Link , useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Nav from "./NavBar";
 import RadioBtn from "./RadioBtn";
 import {useLocation} from 'react-router-dom';
@@ -47,15 +47,19 @@ function Step2() {
             try {
                 const data = await extractDataFromExcel(file, row);
                 console.log(data)
+                if(localStorage.getItem('staff') == null) {
+                    alert('Please enter the name of the staff preparing the submission')
+                    return;
+                }
                 if (template === 'PO')
                     {
-                        const { filename, buffer } = await handlePO(templateContent, data, staff);
+                        const { filename, buffer } = await handlePO(templateContent, data);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
                 if (template === 'PR')
                     {
-                        const { filename, buffer } = await handlePR(templateContent, data, staff);
+                        const { filename, buffer } = await handlePR(templateContent, data);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
@@ -69,7 +73,7 @@ function Step2() {
           };
 
     const handleStaff = (e) => {
-        setStaff(e.target.value)
+        localStorage.setItem('staff', e.target.value)
     }
 
     return (
