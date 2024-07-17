@@ -56,16 +56,16 @@ export async function handlePR(templatePR, extractedObj)
 
         //Replace the value in the respective field in the template 
         let PR = {        
-            'Entity': 'C7',
-            'PO Number': 'D13',
-            'Vendor': 'C16',
-            'Capex Nature': 'C36',
-            'Purchase description / Payment Certification reason': 'C25',
-            'Approved PO amount': 'D39',
-            'Total Payment paid': 'D42',
-            'Paid Requested': 'C19',
-            'Delivery date': 'C22',
-            'Invoice number': 'D31',
+            "Entity": "C7",
+            "PO Number": "D13",
+            "Vendor": "C16",
+            "Capex Nature": "C36",
+            "Purchase description / Payment Certification reason": "C25",
+            "Approved PO amount": "D39",
+            "Total Payment paid": "D42",
+            "Paid Requested": "C19",
+            "Delivery date": "C22",
+            "Invoice number": "D31",
             "staff": "C50"
         }
     
@@ -84,8 +84,8 @@ export async function handlePR(templatePR, extractedObj)
                   templateWorksheet.getCell(cellAddress).value = extractedObj[key];
                 }
             }
-            else if(key === 'staff'){
-              templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');;
+            if(key === 'staff'){
+              templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');
             }
         }
         // Save as a new file 

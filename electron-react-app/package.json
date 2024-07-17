@@ -19,13 +19,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron .",
+    "electron": "WEB_URL=http://localhost:3000 electron .",
     "electron-prd": "electron .",
-    "electron-forge": "electron-forge start",
+    "electron-forge": "WEB_URL=http://localhost:3000 electron-forge start",
     "electron-forge-prd": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",

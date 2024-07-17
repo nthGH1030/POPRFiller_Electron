@@ -11,7 +11,6 @@ import saveAs from 'file-saver'
 function Step2() {
     const [template, setTemplate] = useState('PO');
     const [activeStep, setActiveStep] = useState('/step2');
-    const [staff, setStaff] = useState(null);
     const [templateContent, setTemplateContent] = useState(null);
 
     let location = useLocation();
@@ -27,19 +26,18 @@ function Step2() {
                 content = await window.electronAPI.loadTemplatePR();
             }
             console.log(content);
+            console.log(localStorage.getItem('staff'));
             setTemplateContent(content);
         } catch (error) {
             console.error('Error loading template:', error);
         }
     };
     
-
-    
     useEffect(() => {
         
         setActiveStep("/step2")
         loadTemplate();
-        console.log(templateContent)
+        
     }, [location.pathname, template])
   
     const handleClick = async() => {
