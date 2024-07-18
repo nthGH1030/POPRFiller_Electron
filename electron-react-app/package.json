@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "cross-env": "^7.0.3",
     "electron-is-dev": "^3.0.1",
     "electron-squirrel-startup": "^1.0.1",
     "exceljs": "^4.4.0",
@@ -19,11 +20,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
+    "start": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "WEB_URL=http://localhost:3000 electron .",
+    "electron": "cross-env WEB_URL=http://localhost:3000 electron .",
     "electron-prd": "electron .",
     "electron-forge": "WEB_URL=http://localhost:3000 electron-forge start",
     "electron-forge-prd": "electron-forge start",
@@ -73,7 +74,7 @@
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "POPR_Filler",
-            "authors": "K Ngan" ,
+            "authors": "K Ngan",
             "description": "an automatic excel talbe filler for PO and PR"
           }
         },
