@@ -67,6 +67,7 @@
       "packagerConfig": {
         "name": "POPRFiller",
         "executableName": "POPRFiller",
+        "ignore": "/node_modules/",
         "asar": true
       },
       "makers": [

@@ -1,8 +1,7 @@
 import '../Styles.css';
-import React, {useState ,useEffect, useRef} from 'react';
-import { Link } from "react-router-dom";
+import React, {useState ,useEffect, useRef } from 'react';
 import Navbar from './NavBar';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 
 function Home() {
@@ -48,6 +47,28 @@ function Home() {
 
   const state = {'row': row, 'file' : file};
 
+  const handleCheckInput = () => {
+    let allFieldFilled = true;
+    if (!state.row) {
+      alert('Please input the row number');
+      allFieldFilled = false;
+    }
+    else if (!state.file) {
+      alert('Please upload the file');
+      allFieldFilled = false;
+    }
+      return allFieldFilled
+    }
+
+    const navigate = useNavigate();
+    const handleNextClick= () => {
+      if(handleCheckInput())
+      {
+        navigate('/step2', {state:state});
+      }
+  }
+
+  
     return (
       <div>
         <Navbar
@@ -89,16 +110,15 @@ function Home() {
         </div>
         
         <div className = 'Next-Btn-Container'>
-          <Link to="/step2" 
-          state = {state}
-          >
-          <button type = 'button' className = "button">
+          <button 
+            type = 'button' 
+            className = "button"
+            onClick = {handleNextClick}
+            >
               Next
           </button>
-          </Link>
         </div>
       </div>
     );
-  }
-  
+}
   export default Home;
