@@ -15,6 +15,7 @@ export async function handlePO(templatePO, extractedObj)
         "Entity": "C9",
         "Purchase description / Payment Certification reason": "C14",
         "Type of expense": "C17",
+        "Capex Nature": "E17",
         "Approved PO amount": "C19",
         "Vendor": "C37",
         "staff": "C44"
@@ -60,7 +61,7 @@ export async function handlePR(templatePR, extractedObj)
             'Vendor': 'C16',
             'Capex Nature': 'C36',
             'Purchase description / Payment Certification reason': 'C25',
-            'Approved PO amount': 'D39',
+            'Approved PO amount': 'D41',
             'Total Payment paid': 'D42',
             'Paid Requested': 'C19',
             'Delivery date': 'C22',
