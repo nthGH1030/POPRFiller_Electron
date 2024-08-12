@@ -5,6 +5,8 @@ This is an electron application that allow user to read a master table in an exc
 
 A central table shall be uploaded by user to the application and the application will read it, then extract a specific row of its data and write it onto either `template PO` or `template PR`.
 
+Most calculations are done in excel, the app merely extract the data from an excel table and write it onto a separate excel file with a different format
+
 The application is written using React and Electron. It is supported on both Windows and MacOS.
 
 In order to properly utilize the app, you must create both `./secrets/template PO.xlsx` and `'./secrets/template PR.xlsx'` yourself. 
