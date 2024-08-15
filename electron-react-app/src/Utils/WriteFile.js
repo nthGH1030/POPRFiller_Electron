@@ -11,7 +11,7 @@ export async function handlePO(templatePO, extractedObj)
   
       //Replace the value in the respective field in the template 
       let PO = {
-        "PO Number": "F3",
+        "PO Number": "G3",
         "Entity": "C9",
         "Purchase description / Payment Certification reason": "C14",
         "Type of expense": "C17",
