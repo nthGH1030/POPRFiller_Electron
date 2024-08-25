@@ -65,8 +65,17 @@
         "version": "1.0",
         "name": "POPRFiller",
         "executableName": "POPRFiller",
-        "ignore": "/node_modules/",
-        "asar": true
+        "ignore": [
+          "node_modules/",
+          "test/",
+          ".git/",
+          "README.md"
+      ],
+        "asar": {
+          "unpack": "**/node_modules/**"
+        },
+
+        "prune": true
       },
       "makers": [
         {
@@ -74,14 +83,18 @@
           "config": {
             "name": "POPR_Filler",
             "authors": "K Ngan",
-            "description": "an automatic excel table filler for PO and PR"
+            "description": "an automatic excel table filler for PO and PR",
+            "noMsi": true
           }
         },
         {
           "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
+          "config": {
+            "name": "POPR_Filler",
+            "authors": "K Ngan",
+            "description": "an automatic excel table filler for PO and PR",
+            "noMsi": true
+          }
         },
         {
           "name": "@electron-forge/maker-deb",
