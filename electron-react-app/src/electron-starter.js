@@ -4,6 +4,7 @@ const url = require('url')
 const fs = require('fs').promises;
 
 
+
 // Function to read file content
 async function readFileContent(filePath) {
     try {
@@ -15,7 +16,24 @@ async function readFileContent(filePath) {
     }
 }
 
-const createWindow = () => {
+
+// Handle load-template-po
+ipcMain.handle('load-template-po', async () => {
+  const poPath = path.join(__dirname, './secrets/template PO.xlsx');
+  console.log(poPath);
+  const PO = await readFileContent(poPath);
+  return PO;
+});
+
+// Handle load-template-pr
+ipcMain.handle('load-template-pr', async () => {
+  const prPath = path.join(__dirname, './secrets/template PR.xlsx');
+  const PR = await readFileContent(prPath);
+  return PR;
+});
+
+
+function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -25,49 +43,34 @@ const createWindow = () => {
       contextIsolation: true,
       
     }
+    
   });
+    // and load the index.html of the app.
+    const startUrl = process.env.WEB_URL || 
+    url.format({
+      pathname: path.join(__dirname, "../build/index.html"),
+      protocol: 'file',
+      slashes: true
+    })
+    console.log(startUrl)
 
-  // and load the index.html of the app.
-  const startUrl = process.env.WEB_URL || 
-  url.format({
-    pathname: path.join(__dirname, "../build/index.html"),
-    protocol: 'file',
-    slashes: true
-  })
-  console.log(startUrl)
+    mainWindow.loadURL(startUrl).then(() => {
+      console.timeEnd('load-url');
+    });
+  
 
-  mainWindow.loadURL(startUrl);
-
-  // Open the DevTools. 
-  //mainWindow.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {
-  // Handle load-template-poii
-  ipcMain.handle('load-template-po', async () => {
-    const poPath = path.join(__dirname, './secrets/template PO.xlsx');
-    console.log(poPath);
-    const PO = await readFileContent(poPath);
-    return PO;
-  });
 
-  // Handle load-template-pr
-  ipcMain.handle('load-template-pr', async () => {
-    const prPath = path.join(__dirname, './secrets/template PR.xlsx');
-    const PR = await readFileContent(prPath);
-    return PR;
-  });
   createWindow()
-
-  /*
+  
   app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+      createWindow()
     }
-  });
-  */
+  })
+
 })
 
 

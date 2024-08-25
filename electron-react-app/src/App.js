@@ -1,7 +1,7 @@
 import './Styles.css';
 import Step2 from './components/Step2';
 import Home from './components/Home';
-import { HashRouter , Routes, Route, Link } from "react-router-dom";
+import { HashRouter , Routes, Route } from "react-router-dom";
 
 
 function App() {

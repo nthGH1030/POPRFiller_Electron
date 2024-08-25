@@ -5,19 +5,13 @@
   "main": "src/electron-starter.js",
   "homepage": "./",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "cross-env": "^7.0.3",
-    "electron-is-dev": "^3.0.1",
-    "electron-squirrel-startup": "^1.0.1",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "cross-env BROWSER=none react-scripts start",
@@ -29,7 +23,7 @@
     "electron-forge": "WEB_URL=http://localhost:3000 electron-forge start",
     "electron-forge-prd": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make",
+    "make": "electron-forge make ",
     "build-all": "npm run build && npm run make"
   },
   "eslintConfig": {
@@ -59,12 +53,16 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
     "electron": "^30.0.8",
     "node-stdlib-browser": "^1.2.0"
   },
   "config": {
     "forge": {
       "packagerConfig": {
+        "version": "1.0",
         "name": "POPRFiller",
         "executableName": "POPRFiller",
         "ignore": "/node_modules/",
@@ -76,7 +74,7 @@
           "config": {
             "name": "POPR_Filler",
             "authors": "K Ngan",
-            "description": "an automatic excel talbe filler for PO and PR"
+            "description": "an automatic excel table filler for PO and PR"
           }
         },
         {
