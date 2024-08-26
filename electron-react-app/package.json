@@ -1,6 +1,6 @@
 {
-  "name": "electron-react-app",
-  "version": "0.1.0",
+  "name": "popr-filler",
+  "version": "1.0.0",
   "private": true,
   "main": "src/electron-starter.js",
   "homepage": "./",
