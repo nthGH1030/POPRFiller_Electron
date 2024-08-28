@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url')
 const fs = require('fs').promises;
+const packageJson = require('../package.json')
 
 
 // this should be placed at top of main.js to handle setup events quickly
@@ -122,6 +123,16 @@ const createWindow = () => {
     console.log(startUrl)
 
     mainWindow.loadURL(startUrl)
+
+    //Set the app titel and version number
+    const version = packageJson.config.forge.packagerConfig.version;
+    const name = packageJson.config.forge.packagerConfig.name;
+
+    mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.setTitle(`${name} ${version}`);
+    });
+    
+    console.log(mainWindow.title)
   
 };
 
