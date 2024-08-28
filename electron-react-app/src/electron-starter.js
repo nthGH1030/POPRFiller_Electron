@@ -16,7 +16,6 @@ function handleSquirrelEvent() {
   }
 
   const ChildProcess = require('child_process');
-  const path = require('path');
 
   const appFolder = path.resolve(process.execPath, '..');
   const rootAtomFolder = path.resolve(appFolder, '..');

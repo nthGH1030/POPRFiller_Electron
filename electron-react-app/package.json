@@ -1,6 +1,6 @@
 {
   "name": "electron-react-app",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "main": "src/electron-starter.js",
   "homepage": "./",
@@ -62,7 +62,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "version": "1.0",
+        "version": "1.0.1",
         "name": "POPRFiller",
         "executableName": "POPRFiller",
         "ignore": [
@@ -82,6 +82,7 @@
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "POPR_Filler",
+            "version": "1.0.1",
             "authors": "K Ngan",
             "description": "an automatic excel table filler for PO and PR",
             "noMsi": true
