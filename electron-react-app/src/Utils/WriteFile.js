@@ -59,14 +59,14 @@ export async function handlePR(templatePR, extractedObj)
             'Entity': 'C7',
             'PO Number': 'D13',
             'Vendor': 'C16',
-            'Capex Nature': 'C36',
+            'Capex Nature': 'C32',
             'Purchase description / Payment Certification reason': 'C25',
-            'Approved PO amount': 'E41',
-            'Total Payment paid': 'E42',
-            'Paid Requested': 'C19',
+            'Approved PO amount': 'F44',
+            'Total Payment paid': 'F41',
+            'Paid Requested': 'F40',
             'Delivery date': 'C22',
-            'Invoice number': 'D31',
-            "staff": "C50"
+            'Invoice number': 'D29',
+            "staff": "C51"
         }
     
         for (let [key, value] of Object.entries(PR)) {

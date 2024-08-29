@@ -2,7 +2,6 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url')
 const fs = require('fs').promises;
-const packageJson = require('../package.json')
 
 
 // this should be placed at top of main.js to handle setup events quickly
@@ -100,11 +99,14 @@ ipcMain.handle('load-template-pr', async () => {
 });
 
 
+
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    //title: `${packageJson.config.forge.packagerConfig.name} ${packageJson.config.forge.packagerConfig.version}`,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -124,15 +126,20 @@ const createWindow = () => {
 
     mainWindow.loadURL(startUrl)
 
-    //Set the app titel and version number
-    const version = packageJson.config.forge.packagerConfig.version;
-    const name = packageJson.config.forge.packagerConfig.name;
-
+  
+    //Set the app title and version number
+    const packageJson = require(path.join(__dirname, '../package.json'))
+    const appName = packageJson.config.forge.packagerConfig.name;
+    const appVersion = packageJson.config.forge.packagerConfig.version;
+    console.log(appName)
+    console.log(appVersion)
+    
     mainWindow.webContents.on('did-finish-load', () => {
-      mainWindow.setTitle(`${name} ${version}`);
+      mainWindow.setTitle(`${appName} ${appVersion}`);
     });
     
     console.log(mainWindow.title)
+    
   
 };
 

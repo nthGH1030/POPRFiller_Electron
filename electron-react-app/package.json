@@ -1,6 +1,7 @@
 {
+  "productName": "popr-filler2",
   "name": "popr-filler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "main": "src/electron-starter.js",
   "homepage": "./",
