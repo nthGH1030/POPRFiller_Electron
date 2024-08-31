@@ -115,8 +115,11 @@ const createWindow = () => {
     
   });
     // and load the index.html of the app.
-    const startUrl = process.env.WEB_URL || 
-    url.format({
+    const isDev = process.env.NODE_ENV === 'development';
+    const startUrl = isDev
+    ? 'http://localhost:3000' 
+    
+    : url.format({
       pathname: path.join(__dirname, "../build/index.html"),
       protocol: 'file',
       slashes: true
@@ -128,17 +131,19 @@ const createWindow = () => {
 
   
     //Set the app title and version number
-    const packageJson = require(path.join(__dirname, '../package.json'))
+    const packageJson = require(path.join(app.getAppPath(), 'package.json'))
     const appName = packageJson.config.forge.packagerConfig.name;
     const appVersion = packageJson.config.forge.packagerConfig.version;
-    console.log(appName)
-    console.log(appVersion)
+    //console.log(appName)
+    //console.log(appVersion)
+    //console.log(packageJson)
     
     mainWindow.webContents.on('did-finish-load', () => {
       mainWindow.setTitle(`${appName} ${appVersion}`);
+      console.log(mainWindow.title)
     });
     
-    console.log(mainWindow.title)
+    
     
   
 };
@@ -150,6 +155,7 @@ app.whenReady().then(() => {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow()
+      
     }
   })
 

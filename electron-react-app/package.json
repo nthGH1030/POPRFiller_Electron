@@ -1,5 +1,4 @@
 {
-  "productName": "popr-filler2",
   "name": "popr-filler",
   "version": "1.0.1",
   "private": true,
@@ -15,13 +14,13 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "cross-env BROWSER=none react-scripts start",
+    "start": "cross-env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "cross-env WEB_URL=http://localhost:3000 electron .",
+    "electron": "cross-env electron .",
     "electron-prd": "electron .",
-    "electron-forge": "WEB_URL=http://localhost:3000 electron-forge start",
+    "electron-forge": "electron-forge start",
     "electron-forge-prd": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make ",
