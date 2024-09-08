@@ -65,7 +65,6 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "version": "1.0.3",
         "name": "POPRFiller",
         "executableName": "POPRFiller",
         "ignore": [
@@ -84,7 +83,6 @@
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "POPR_Filler",
-            "version": "1.0.3",
             "authors": "K Ngan",
             "description": "an automatic excel table filler for PO and PR",
             "noMsi": true

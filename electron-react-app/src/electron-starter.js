@@ -165,10 +165,6 @@ const createWindow = () => {
       mainWindow.setTitle(`${appName} ${appVersion}`);
 
     });
-
-    //logToFile(process.argv)
-    //logToFile("the program has run")
-    
     
 };
 
