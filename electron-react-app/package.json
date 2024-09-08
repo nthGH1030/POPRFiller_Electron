@@ -1,11 +1,13 @@
 {
+  "productName": "POPR Filler",
   "name": "popr-filler",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "private": true,
   "main": "src/electron-starter.js",
   "homepage": "./",
   "dependencies": {
     "cross-env": "^7.0.3",
+    "electron-log": "^5.1.7",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "react": "^18.3.1",
@@ -57,24 +59,24 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "electron": "^30.0.8",
+    "electron-winstaller": "^5.4.0",
     "node-stdlib-browser": "^1.2.0"
   },
   "config": {
     "forge": {
       "packagerConfig": {
-        "version": "1.0.1",
+        "version": "1.0.3",
         "name": "POPRFiller",
         "executableName": "POPRFiller",
         "ignore": [
-          "node_modules/",
+          "node_modules/(?!electron-log|electron-squirrel-startup|debug)",
           "test/",
           ".git/",
           "README.md"
-      ],
+        ],
         "asar": {
           "unpack": "**/node_modules/**"
         },
-
         "prune": true
       },
       "makers": [
@@ -82,7 +84,7 @@
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "POPR_Filler",
-            "version": "1.0.1",
+            "version": "1.0.3",
             "authors": "K Ngan",
             "description": "an automatic excel table filler for PO and PR",
             "noMsi": true

@@ -63,7 +63,7 @@ export async function handlePR(templatePR, extractedObj)
             'Purchase description / Payment Certification reason': 'C25',
             'Approved PO amount': 'F44',
             'Total Payment paid': 'F41',
-            'Paid Requested': 'F40',
+            'Paid Requested': 'C19',
             'Delivery date': 'C22',
             'Invoice number': 'D29',
             "staff": "C51"

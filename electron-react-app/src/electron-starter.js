@@ -2,6 +2,17 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url')
 const fs = require('fs').promises;
+const log = require('electron-log');
+
+
+
+// Configure electron-log
+log.transports.file.resolvePath = () => path.join(path.dirname(app.getPath('exe')), 'app.log');
+
+// Logging function
+function logToFile(message) {
+  log.info(message);
+}
 
 
 // this should be placed at top of main.js to handle setup events quickly
@@ -11,11 +22,13 @@ if (handleSquirrelEvent()) {
 }
 
 function handleSquirrelEvent() {
+  
   if (process.argv.length === 1) {
     return false;
   }
-
+  
   const ChildProcess = require('child_process');
+  const path = require('path');
 
   const appFolder = path.resolve(process.execPath, '..');
   const rootAtomFolder = path.resolve(appFolder, '..');
@@ -39,7 +52,11 @@ function handleSquirrelEvent() {
   const squirrelEvent = process.argv[1];
   switch (squirrelEvent) {
     case '--squirrel-install':
+      logToFile(`--squirrel-install: ${process.argv}`)
+      
+      
     case '--squirrel-updated':
+      logToFile(`--squirrel-updated: ${process.argv}`)
       // Optionally do things such as:
       // - Add your .exe to the PATH
       // - Write to the registry for things like file associations and
@@ -50,8 +67,13 @@ function handleSquirrelEvent() {
 
       setTimeout(app.quit, 1000);
       return true;
+      
+      case '--squirrel-firstrun':
+        logToFile(`--squirrel-firstrun: ${process.argv}`)
+        break
 
     case '--squirrel-uninstall':
+      logToFile(`--squirrel-uinstalled: ${process.argv}`)
       // Undo anything you did in the --squirrel-install and
       // --squirrel-updated handlers
 
@@ -65,10 +87,12 @@ function handleSquirrelEvent() {
       // This is called on the outgoing version of your app before
       // we update to the new version - it's the opposite of
       // --squirrel-updated
-
+      
       app.quit();
       return true;
   }
+      
+  
 };
 
 // Function to read file content
@@ -86,7 +110,7 @@ async function readFileContent(filePath) {
 // Handle load-template-po
 ipcMain.handle('load-template-po', async () => {
   const poPath = path.join(__dirname, './secrets/template PO.xlsx');
-  console.log(poPath);
+  //console.log(poPath);
   const PO = await readFileContent(poPath);
   return PO;
 });
@@ -118,34 +142,34 @@ const createWindow = () => {
     const isDev = process.env.NODE_ENV === 'development';
     const startUrl = isDev
     ? 'http://localhost:3000' 
-    
+
     : url.format({
       pathname: path.join(__dirname, "../build/index.html"),
       protocol: 'file',
       slashes: true
     })
 
-    console.log(startUrl)
+    //console.log(startUrl)
 
     mainWindow.loadURL(startUrl)
 
-  
     //Set the app title and version number
-    const packageJson = require(path.join(app.getAppPath(), 'package.json'))
-    const appName = packageJson.config.forge.packagerConfig.name;
-    const appVersion = packageJson.config.forge.packagerConfig.version;
-    //console.log(appName)
-    //console.log(appVersion)
-    //console.log(packageJson)
+    const packageJsonPath = path.join(__dirname, '../package.json');
+    const packageJson = require(packageJsonPath);
+
+    const appName = packageJson.productName;
+    const appVersion = packageJson.version;
+
     
     mainWindow.webContents.on('did-finish-load', () => {
       mainWindow.setTitle(`${appName} ${appVersion}`);
-      console.log(mainWindow.title)
+
     });
+
+    //logToFile(process.argv)
+    //logToFile("the program has run")
     
     
-    
-  
 };
 
 app.whenReady().then(() => {
