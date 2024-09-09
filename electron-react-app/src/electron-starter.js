@@ -52,11 +52,11 @@ function handleSquirrelEvent() {
   const squirrelEvent = process.argv[1];
   switch (squirrelEvent) {
     case '--squirrel-install':
-      logToFile(`--squirrel-install: ${process.argv}`)
+      //logToFile(`--squirrel-install: ${process.argv}`)
       
       
     case '--squirrel-updated':
-      logToFile(`--squirrel-updated: ${process.argv}`)
+      //logToFile(`--squirrel-updated: ${process.argv}`)
       // Optionally do things such as:
       // - Add your .exe to the PATH
       // - Write to the registry for things like file associations and
@@ -69,11 +69,11 @@ function handleSquirrelEvent() {
       return true;
       
       case '--squirrel-firstrun':
-        logToFile(`--squirrel-firstrun: ${process.argv}`)
+        //logToFile(`--squirrel-firstrun: ${process.argv}`)
         break
 
     case '--squirrel-uninstall':
-      logToFile(`--squirrel-uinstalled: ${process.argv}`)
+      //logToFile(`--squirrel-uinstalled: ${process.argv}`)
       // Undo anything you did in the --squirrel-install and
       // --squirrel-updated handlers
 
@@ -123,8 +123,6 @@ ipcMain.handle('load-template-pr', async () => {
 });
 
 
-
-
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -142,16 +140,11 @@ const createWindow = () => {
     const isDev = process.env.NODE_ENV === 'development';
     const startUrl = isDev
     ? 'http://localhost:3000' 
+    : path.join(__dirname, '../build/index.html')
 
-    : url.format({
-      pathname: path.join(__dirname, "../build/index.html"),
-      protocol: 'file',
-      slashes: true
-    })
+    //logToFile(`The file path loaded is : ${startUrl}`)
 
-    //console.log(startUrl)
-
-    mainWindow.loadURL(startUrl)
+    mainWindow.loadFile(startUrl)
 
     //Set the app title and version number
     const packageJsonPath = path.join(__dirname, '../package.json');
