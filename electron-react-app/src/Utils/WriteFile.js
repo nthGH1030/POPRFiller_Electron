@@ -4,21 +4,21 @@ import {readExcelFile} from './ReadFile';
 export async function handlePO(templatePO, extractedObj) 
 {
     try {
-      let POSheet = 'Purchase Requisition';
+      let POSheet = 'PO_Input';
   
       //Get the template work sheet
       const templateWorksheet = await readExcelFile(templatePO, POSheet);
   
       //Replace the value in the respective field in the template 
       let PO = {
-        "PO Number": "G3",
-        "Entity": "C9",
-        "Purchase description / Payment Certification reason": "C14",
-        "Type of expense": "C17",
-        "Capex Nature": "E17",
-        "Approved PO amount": "C19",
-        "Vendor": "C37",
-        "staff": "C44"
+        "PO Number": "C2",
+        "Entity": "C3",
+        "Purchase description / Payment Certification reason": "C4",
+        "Type of expense": "C5",
+        "Capex Nature": "C6",
+        "Approved PO amount": "C7",
+        "Vendor": "C8",
+        "staff": "C9"
       }
   
       for (let [key, value] of Object.entries(PO)) {
@@ -51,22 +51,23 @@ export async function handlePR(templatePR, extractedObj)
   {
     try{
         
-        let PRSheet = 'Payment Request'
+        let PRSheet = 'PR_Input'
         const templateWorksheet = await readExcelFile(templatePR, PRSheet);
 
         //Replace the value in the respective field in the template 
-        let PR = {        
-            'Entity': 'C7',
-            'PO Number': 'D13',
-            'Vendor': 'C16',
-            'Capex Nature': 'C32',
-            'Purchase description / Payment Certification reason': 'C25',
-            'Approved PO amount': 'F43',
-            'Total Payment paid': 'F40',
-            'Paid Requested': 'C19',
-            'Delivery date': 'C22',
-            'Invoice number': 'D29',
-            "staff": "C50"
+        let PR = {   
+            'PO Number': 'C2',     
+            'Entity': 'C3',
+            'Purchase description / Payment Certification reason': 'C4',
+            'Paid Requested': 'C5',
+            'Delivery date': 'C6',
+            'Invoice number': 'C7',
+            'Type of expenses': 'C8',
+            'Capex Nature': 'C9',
+            'Total Payment paid': 'C10',
+            'Approved PO amount': 'C11',
+            'Vendor': 'C12',
+            "staff": "C13"
         }
     
         for (let [key, value] of Object.entries(PR)) {
