@@ -18,7 +18,9 @@ export async function handlePO(templatePO, extractedObj)
         "Capex Nature": "C6",
         "Approved PO amount": "C7",
         "Vendor": "C8",
-        "staff": "C9"
+        "staff": "C9",
+        "PO Change Request" : "C12",
+        "PO Change Request Date" : "C13" 
       }
   
       for (let [key, value] of Object.entries(PO)) {
@@ -26,12 +28,27 @@ export async function handlePO(templatePO, extractedObj)
         let cellAddress = value;
         if (key in extractedObj) {
           // Replace the cell value
-          templateWorksheet.getCell(cellAddress).value = extractedObj[key];
-          //console.log(templateWorksheet.getCell(cellAddress).value)
+          if(extractedObj[key]=== "") {
+            templateWorksheet.getCell(cellAddress).value = "N/A"
+          }
+          else {
+            templateWorksheet.getCell(cellAddress).value = extractedObj[key];
+          }
+         
+          console.log(templateWorksheet.getCell(cellAddress).value)
+        }
+        //handle cases where PO amount is a formula
+        if (key === "Approved PO amount") {
+          if (templateWorksheet.getCell(cellAddress).formula){
+
+            const formulaResult = extractedObj[key].result;
+            templateWorksheet.getCell(cellAddress).value = formulaResult;
+          }
         }
         if(key === 'staff'){
           templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');
         }
+        
       }
   
       // Save as a new file 
