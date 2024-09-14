@@ -9,7 +9,7 @@ export async function handlePO(templatePO, extractedObj)
       //Get the template work sheet
       const templateWorksheet = await readExcelFile(templatePO, POSheet);
   
-      //Replace the value in the respective field in the template 
+      //Set up an object in template to be replaced by data in the central table
       let PO = {
         "PO Number": "C2",
         "Entity": "C3",
@@ -22,22 +22,27 @@ export async function handlePO(templatePO, extractedObj)
         "PO Change Request" : "C12",
         "PO Change Request Date" : "C13" 
       }
-  
+      //Loop through the template
       for (let [key, value] of Object.entries(PO)) {
-        // Get the corresponding cell address
+
         let cellAddress = value;
+
+        // Find the match key in extractedobj and template, replace the value
         if (key in extractedObj) {
-          // Replace the cell value
+
+          //Skip blank case
           if(extractedObj[key]=== "") {
-            templateWorksheet.getCell(cellAddress).value = "N/A"
+            continue
           }
           else {
+            
             templateWorksheet.getCell(cellAddress).value = extractedObj[key];
           }
          
-          console.log(templateWorksheet.getCell(cellAddress).value)
+          //console.log(templateWorksheet.getCell(cellAddress).value)
         }
         //handle cases where PO amount is a formula
+        /*
         if (key === "Approved PO amount") {
           if (templateWorksheet.getCell(cellAddress).formula){
 
@@ -45,6 +50,8 @@ export async function handlePO(templatePO, extractedObj)
             templateWorksheet.getCell(cellAddress).value = formulaResult;
           }
         }
+          */
+          
         if(key === 'staff'){
           templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');
         }
@@ -93,14 +100,16 @@ export async function handlePR(templatePR, extractedObj)
             if (key in extractedObj) {
             
                 // Replace the cell value
+                /*
                 if (key === 'Total Payment paid') {
                   const formulaResult = extractedObj[key].result;
                   
                   templateWorksheet.getCell(cellAddress).value = formulaResult;
                 }
-                else {
-                  templateWorksheet.getCell(cellAddress).value = extractedObj[key];
-                }
+                  */
+                
+                templateWorksheet.getCell(cellAddress).value = extractedObj[key];
+                
             }
             else if(key === 'staff'){
               templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');;

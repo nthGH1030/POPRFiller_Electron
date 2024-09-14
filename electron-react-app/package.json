@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "cross-env electron .",
+    "electron": "cross-env NODE_ENV=development electron .",
     "electron-prd": "electron .",
     "electron-forge": "electron-forge start",
     "electron-forge-prd": "electron-forge start",

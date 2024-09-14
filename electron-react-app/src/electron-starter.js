@@ -139,12 +139,17 @@ const createWindow = () => {
     // and load the index.html of the app.
     const isDev = process.env.NODE_ENV === 'development';
     const startUrl = isDev
-    ? 'http://localhost:3000' 
-    : path.join(__dirname, '../build/index.html')
+      ? 'http://localhost:3000'
+      : url.format({
+          pathname: path.join(__dirname, '../build/index.html'),
+          protocol: 'file:',
+          slashes: true
+        });
+    
 
     //logToFile(`The file path loaded is : ${startUrl}`)
 
-    mainWindow.loadFile(startUrl)
+    mainWindow.loadURL(startUrl)
 
     //Set the app title and version number
     const packageJsonPath = path.join(__dirname, '../package.json');

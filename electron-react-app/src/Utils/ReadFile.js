@@ -9,7 +9,7 @@ export async function extractDataFromExcel(filename, row) {
   .then((worksheet) => {
   // Extract the data from the worksheet
 
-  let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+  let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
   let indexRow = "7";
 
   const extractedObj = {};
@@ -17,14 +17,18 @@ export async function extractDataFromExcel(filename, row) {
   for (let i = 0; i < columns.length; i++) {
   const column = columns[i];
 
+  //setting the key of the object to be the value in index row
   const keyAddress = column.concat(indexRow); 
   const keyValue = worksheet.getCell(keyAddress)?.value || "";
 
+  //setting the value of hte object to be the row which user requested
   const cellAddress = column.concat(row);
-  const cellValue = worksheet.getCell(cellAddress)?.value || "";
+  const cell = worksheet.getCell(cellAddress);
+  const cellValue = cell.formula ? cell.result : (cell.value ?? ""); 
 
   extractedObj[keyValue] = cellValue;
   }
+  
   return extractedObj
   })
 } 
