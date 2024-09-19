@@ -1,7 +1,7 @@
 import '../Styles.css';
 import React , {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
-import Nav from "./NavBar";
+import StepIndicator from "./stepIndicator";
 import RadioBtn from "./RadioBtn";
 import {useLocation} from 'react-router-dom';
 import {handlePO, handlePR} from '../utils/writeFile';
@@ -76,7 +76,7 @@ function Step2() {
 
     return (
         <>
-        <Nav
+        <StepIndicator
             activeStep = {activeStep}
         />
         
