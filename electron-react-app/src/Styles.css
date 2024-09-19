@@ -1,22 +1,22 @@
 /* Nav bar styles */
-.navbar{
+.StepIndicator{
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.navbar-center .nav-ul {
+.StepIndicator-center .nav-ul {
   list-style-type: none;
   display: flex;
   align-items: center;
   padding: 0;
 }
 
-.navbar-center .nav-il {
+.StepIndicator-center .nav-il {
   margin-right: 1rem;
 }
 
-.navbar-center .active{
+.StepIndicator-center .active{
   border-bottom:1px dashed black;
   font-size: 1.2rem;
 }

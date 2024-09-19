@@ -3,11 +3,11 @@ import React from 'react';
 
 import '../Styles.css';
 
-const Navbar = ({activeStep}) => {
+const StepIndicator = ({activeStep}) => {
 
     return (
-        <nav className = "navbar">
-            <div className="navbar-center">
+        <nav className = "StepIndicator">
+            <div className="StepIndicator-center">
                 <ul className = "nav-ul">
                     <li  
                         className={`nav-il ${activeStep === '/' ? 'active' : ''}`}
@@ -27,4 +27,4 @@ const Navbar = ({activeStep}) => {
     )
 }
 
-export default Navbar
+export default StepIndicator
