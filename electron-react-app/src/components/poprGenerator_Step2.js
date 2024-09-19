@@ -1,16 +1,16 @@
 import '../Styles.css';
 import React , {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
-import Nav from "./NavBar";
-import RadioBtn from "./RadioBtn";
+import Nav from "./poprStepIndicator";
+import RadioBtn from "./poprModeBtn";
 import {useLocation} from 'react-router-dom';
-import {handlePO, handlePR} from '../utils/WriteFile';
-import {extractDataFromExcel} from '../utils/ReadFile';
+import {handlePO, handlePR} from '../utils/writeFile';
+import {extractDataFromExcel} from '../utils/readFile';
 import saveAs from 'file-saver'
 
 function Step2() {
     const [template, setTemplate] = useState('PO');
-    const [activeStep, setActiveStep] = useState('/step2');
+    const [activeStep, setActiveStep] = useState('/steno p2');
     const [templateContent, setTemplateContent] = useState(null);
 
     let location = useLocation();
