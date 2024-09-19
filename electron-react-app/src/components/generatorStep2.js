@@ -2,7 +2,7 @@ import '../Styles.css';
 import React , {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import StepIndicator from "./stepIndicator";
-import RadioBtn from "./RadioBtn";
+import RadioBtn from "./modeBtn";
 import {useLocation} from 'react-router-dom';
 import {handlePO, handlePR} from '../utils/writeFile';
 import {extractDataFromExcel} from '../utils/readFile';

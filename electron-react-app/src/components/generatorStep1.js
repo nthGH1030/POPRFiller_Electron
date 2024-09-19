@@ -1,6 +1,6 @@
 import '../Styles.css';
 import React, {useState ,useEffect, useRef } from 'react';
-import Navbar from './NavBar';
+import StepIndicator from './stepIndicator';
 import {useLocation, useNavigate} from 'react-router-dom';
 
 
@@ -71,7 +71,7 @@ function Home() {
   
     return (
       <div>
-        <Navbar
+        <StepIndicator
           activeStep = {activeStep}
         />
         <div className = 'Container'>
