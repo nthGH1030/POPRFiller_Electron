@@ -100,7 +100,7 @@ body {
   align-items: center;
 }
 
-.radio-label {
+.mode-label {
   border-radius: 5px;
   color: #303030;
   font-size: 14px;
@@ -115,18 +115,18 @@ body {
   background-color: lightgrey;
 }
 
-.radio-input {
+.mode-input {
   margin: 0;
   height: 0;
   width: 0;
   visibility: hidden;
 }
 
-.radio-label.checked{
+.mode-label.checked{
   background-color: white;
 }
 
-.custom-radio {
+.custom-mode {
   display: none;
 }
 

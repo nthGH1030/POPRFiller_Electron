@@ -4,7 +4,7 @@ import StepIndicator from './stepIndicator';
 import {useLocation, useNavigate} from 'react-router-dom';
 
 
-function Home() {
+function GeneratorStep1() {
   const [file, setFile] = useState(null);
   const [activeStep, setActiveStep] = useState("/");
   const [row, setRow] = useState(null);
@@ -64,7 +64,7 @@ function Home() {
     const handleNextClick= () => {
       if(handleCheckInput())
       {
-        navigate('/step2', {state:state});
+        navigate('/generatorStep2', {state:state});
       }
   }
 
@@ -121,4 +121,4 @@ function Home() {
       </div>
     );
 }
-  export default Home;
+  export default GeneratorStep1;

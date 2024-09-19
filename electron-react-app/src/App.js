@@ -10,7 +10,7 @@ function App() {
     <HashRouter>
         <Routes>
           <Route path ="/" element ={<GeneratorStep1/>}/>
-          <Route path = "/step2" element = {<GeneratorStep2/>}/>
+          <Route path = "/generatorStep2" element = {<GeneratorStep2/>}/>
         </Routes>
     </HashRouter>
     </>

@@ -1,7 +1,7 @@
 import React from "react";
 import '../Styles.css';
 
-const RadioBtn = ({text, onChange , isChecked}) => {
+const ModeBtn = ({text, onChange , isChecked}) => {
     
     if(text === 'PO')
     {
@@ -13,9 +13,9 @@ const RadioBtn = ({text, onChange , isChecked}) => {
     
 
     return (
-      <label htmlFor={text} className={`radio-label ${isChecked ? 'checked':''}`}>
+      <label htmlFor={text} className={`mode-label ${isChecked ? 'checked':''}`}>
         <input
-          className="radio-input"
+          className="mode-input"
           type="radio"
           name= {text}
           id={text}
@@ -23,10 +23,10 @@ const RadioBtn = ({text, onChange , isChecked}) => {
           onChange={onChange}
           checked={isChecked}
         />
-        <span className ="custom-radio"/>
+        <span className ="custom-mode"/>
         {text}
     </label>
     );
   };
 
-export default RadioBtn
+export default ModeBtn

@@ -2,15 +2,15 @@ import '../Styles.css';
 import React , {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import StepIndicator from "./stepIndicator";
-import RadioBtn from "./modeBtn";
+import ModeBtn from "./modeBtn";
 import {useLocation} from 'react-router-dom';
 import {handlePO, handlePR} from '../utils/writeFile';
 import {extractDataFromExcel} from '../utils/readFile';
 import saveAs from 'file-saver'
 
-function Step2() {
+function GeneratorStep2() {
     const [template, setTemplate] = useState('PO');
-    const [activeStep, setActiveStep] = useState('/step2');
+    const [activeStep, setActiveStep] = useState('/generatorStep2');
     const [templateContent, setTemplateContent] = useState(null);
 
     let location = useLocation();
@@ -35,7 +35,7 @@ function Step2() {
     
     useEffect(() => {
         
-        setActiveStep("/step2")
+        setActiveStep("/generatorStep2")
         loadTemplate();
         
     }, [location.pathname, template])
@@ -84,12 +84,12 @@ function Step2() {
             <h1>Pick a template</h1>
             <div className = 'break'></div>
             <div className = 'template-btn-container'>
-                <RadioBtn 
+                <ModeBtn 
                     text = "PO"
                     onChange = {() => setTemplate('PO')}
                     isChecked = {template === 'PO'}
                 />
-                <RadioBtn 
+                <ModeBtn 
                     text = "PR"
                     onChange = {() => setTemplate('PR')}
                     isChecked = {template === 'PR'}
@@ -122,4 +122,4 @@ function Step2() {
 
 
 
-export default Step2
+export default GeneratorStep2
