@@ -1,6 +1,6 @@
 import './Styles.css';
-import Step2 from './components/Step2';
-import Home from './components/Home';
+import GeneratorStep2 from './components/generatorStep2';
+import GeneratorStep1 from './components/generatorStep1';
 import { HashRouter , Routes, Route } from "react-router-dom";
 
 
@@ -9,8 +9,8 @@ function App() {
     <>
     <HashRouter>
         <Routes>
-          <Route path ="/" element ={<Home/>}/>
-          <Route path = "/step2" element = {<Step2/>}/>
+          <Route path ="/" element ={<GeneratorStep1/>}/>
+          <Route path = "/step2" element = {<GeneratorStep2/>}/>
         </Routes>
     </HashRouter>
     </>
