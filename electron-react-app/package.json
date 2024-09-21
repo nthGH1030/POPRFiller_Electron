@@ -60,6 +60,7 @@
     "@testing-library/user-event": "^13.5.0",
     "electron": "^30.0.8",
     "electron-winstaller": "^5.4.0",
+    "jest": "^27.5.1",
     "node-stdlib-browser": "^1.2.0"
   },
   "config": {
