@@ -38,10 +38,32 @@ export async function extractDataFromExcel(filename, row) {
   
 } 
 
+function validateExcelFile(file) {
+  const validMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  const validExtension = ".xlsx";
+
+  //Check MIME type
+  if(file.type != validMimeType) {
+    throw new TypeError("The provided file is not an excel spreedsheet")
+  }
+
+  //check file extension
+  const fileExtension = file.name.split('.').pop();
+  if(fileExtension.toLowerCase() != validExtension) {
+    throw new TypeError("The provided file is not an excel spreedsheet")
+  }
+}
+
 //This function create a filereader and read file as a bufferArray
-async function readFile(filename) {
+export async function readFile(filename) {
+
+  validateExcelFile(filename)
 
   return new Promise((resolve, reject) => {
+    if(!(filename instanceof Blob)) {
+      throw new TypeError("The provided file is not a Blob object")
+    }
+
     const reader = new FileReader();
     
     reader.readAsArrayBuffer(filename);
