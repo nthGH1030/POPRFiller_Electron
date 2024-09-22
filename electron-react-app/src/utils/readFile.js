@@ -2,8 +2,8 @@ import * as ExcelJS from "exceljs";
 
 //This function reads the central excel and extract the data from it
 export async function extractDataFromExcel(filename, row) {
-
-  let centralSheet = 'POPR summary';
+  try {
+    let centralSheet = 'POPR summary';
 
   return readExcelFile(filename, centralSheet)
   .then((worksheet) => {
@@ -31,6 +31,11 @@ export async function extractDataFromExcel(filename, row) {
   
   return extractedObj
   })
+
+  } catch(error) {
+    console.log("Failed to extract data from excel: ", error)
+  }
+  
 } 
 
 //This function create a filereader and read file as a bufferArray
@@ -45,7 +50,7 @@ async function readFile(filename) {
       resolve(reader.result);
     };
     reader.onerror = (error) => {
-      reject(new Error(`Failed to read file: ${error}`));
+      reject(new Error(`Failed to read file as buffer array: ${error}`));
     };
   });
 }
@@ -68,6 +73,6 @@ export async function readExcelFile(filename, sheetName) {
     const worksheet = file.getWorksheet(sheetName)
       return worksheet
   } catch (error) {
-      console.log('ReadFileError:', error);
+      console.log('Failed to get the worksheet:', error);
   }
 }
