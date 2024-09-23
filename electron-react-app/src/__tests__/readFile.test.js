@@ -1,5 +1,6 @@
 import {extractDataFromExcel, readFile, readExcelFile} from '../utils/readFile.js';
 import masterTable from '../secrets/Master table_test.xlsx';
+import * as ExcelJS from "exceljs";
 
 //Test if error will be throw if the excel file does not exist
 test('read an non-existent excel', async() => {
@@ -15,11 +16,15 @@ test('read a non-excel file', async() => {
             TypeError('The provided file is not an excel spreedsheet'))
 })
 
-
-
 //test('read an excel and get an non-existent worksheet')
-
-//Test if worksheet is not found
+test('read an non-existent worksheet' , async() => {
+    
+    const workbook = new ExcelJS.Workbook();
+    const sheet = 'non-existing worksheet'
+    await expect(
+        readExcelFile(workbook, sheet)).resolves.toBe(undefined)
+    
+})
 
 //Test if a key value pairs are indeed returned from successful case
 
