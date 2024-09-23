@@ -80,6 +80,7 @@ export async function readFile(filename) {
 //This function read a bufferarray and return an excel worksheet
 export async function readExcelFile(filename, sheetName) {
   try{
+
     const workbook = new ExcelJS.Workbook();
     let file;
 
@@ -93,8 +94,18 @@ export async function readExcelFile(filename, sheetName) {
       }
     
     const worksheet = file.getWorksheet(sheetName)
+
+    if (!worksheet) {
+      throw  TypeError(`Worksheet ${sheetName} not Found.`)
+    }
       return worksheet
+
   } catch (error) {
-      console.log('Failed to get the worksheet:', error);
+    
+    if (!(error instanceof TypeError)) {
+      console.log('Other Error:', error);
   }
+    throw error;
+  }
+
 }

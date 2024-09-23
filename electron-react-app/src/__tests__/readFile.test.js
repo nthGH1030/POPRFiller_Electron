@@ -1,6 +1,7 @@
 import {extractDataFromExcel, readFile, readExcelFile} from '../utils/readFile.js';
-import masterTable from '../secrets/Master table_test.xlsx';
 import corruptedExcel from '../secrets/test_corrupted_excel.xlsx';
+import fs from 'fs';
+import path from 'path';
 import * as ExcelJS from "exceljs";
 
 //Test if error will be throw if the excel file does not exist
@@ -17,28 +18,27 @@ test('read a non-excel file', async() => {
             TypeError('The provided file is not an excel spreedsheet'))
 })
 
-
 //Test if excel is  malformed
 test('read an corrupted excel file', async() => {
     await expect(readFile(corruptedExcel)).rejects.toThrow(
         TypeError('The provided file is not an excel spreedsheet'))
 })
 
-//test('read an excel and get an non-existent worksheet')
-test('read an non-existent worksheet' , async() => {
+// Assuming readExcelFile is adjusted to accept a buffer or workbook, not just a path
+test('read an non-existent worksheet', async () => {
+    const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
+    const sheet = 'non-existing-worksheet';
     
-    const workbook = new ExcelJS.Workbook();
-    const sheet = 'non-existing worksheet'
-    await expect(
-        readExcelFile(workbook, sheet)).resolves.toBe(undefined)
-    
-})
+    const buffer = await fs.promises.readFile(masterTablePath);
 
+    await expect(
+        readExcelFile(buffer, sheet)).rejects.toThrow(
+            TypeError(`Worksheet ${sheet} not Found.`));
+});
 
 //Test if a key value pairs are indeed returned from successful case
 
 //Test if row number is invalid
-
 
 //Test if formulas or value is handled properly
 
