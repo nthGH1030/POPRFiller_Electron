@@ -41,9 +41,22 @@ test('read an non-existent worksheet', async () => {
             TypeError(`Worksheet ${sheet} not Found.`));
 });
 
-//Test if a key value pairs are indeed returned from successful case
 
 //Test if row number is invalid
+test ('throw an error for invalid row number' , async () => {
+    const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
+    const row = 'InvalidRow'
+
+    const buffer = await fs.promises.readFile(masterTablePath);
+    
+    await expect (
+        extractDataFromExcel(buffer, row)).rejects.toThrow(
+            TypeError(`The row input: ${row} is not a number`)
+        );
+})
+        
+
+//Test if a key value pairs are indeed returned from successful case
 
 //Test if formulas or value is handled properly
 

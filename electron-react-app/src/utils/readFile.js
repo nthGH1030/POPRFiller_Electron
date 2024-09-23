@@ -3,38 +3,43 @@ import * as ExcelJS from "exceljs";
 //This function reads the central excel and extract the data from it
 export async function extractDataFromExcel(filename, row) {
   try {
+    if (isNaN(row)) {
+      throw new TypeError(`The row input: ${row} is not a number`)
+    }
+
     let centralSheet = 'POPR summary';
 
-  return readExcelFile(filename, centralSheet)
-  .then((worksheet) => {
-  // Extract the data from the worksheet
+    return readExcelFile(filename, centralSheet)
+    .then((worksheet) => {
+    // Extract the data from the worksheet
 
-  let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
-  let indexRow = "7";
+    let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
+    let indexRow = "7";
 
-  const extractedObj = {};
+    const extractedObj = {};
 
-  for (let i = 0; i < columns.length; i++) {
-  const column = columns[i];
+    for (let i = 0; i < columns.length; i++) {
+    const column = columns[i];
 
-  //setting the key of the object to be the value in index row
-  const keyAddress = column.concat(indexRow); 
-  const keyValue = worksheet.getCell(keyAddress)?.value || "";
+    //setting the key of the object to be the value in index row
+    const keyAddress = column.concat(indexRow); 
+    const keyValue = worksheet.getCell(keyAddress)?.value || "";
 
-  //setting the value of hte object to be the row which user requested
-  const cellAddress = column.concat(row);
-  const cell = worksheet.getCell(cellAddress);
-  const cellValue = cell.formula ? cell.result : (cell.value ?? ""); 
+    //setting the value of hte object to be the row which user requested
+    const cellAddress = column.concat(row);
+    const cell = worksheet.getCell(cellAddress);
+    const cellValue = cell.formula ? cell.result : (cell.value ?? ""); 
 
-  extractedObj[keyValue] = cellValue;
-  }
-  
-  return extractedObj
-  })
+    extractedObj[keyValue] = cellValue;
+    }
+    
+    return extractedObj
+    })
 
-  } catch(error) {
-    console.log("Failed to extract data from excel: ", error)
-  }
+    } catch(error) {
+      console.log("Failed to extract data from excel: ", error)
+      throw error
+    }
   
 } 
 
@@ -96,12 +101,11 @@ export async function readExcelFile(filename, sheetName) {
     const worksheet = file.getWorksheet(sheetName)
 
     if (!worksheet) {
-      throw  TypeError(`Worksheet ${sheetName} not Found.`)
+      throw new TypeError(`Worksheet ${sheetName} not Found.`)
     }
       return worksheet
 
   } catch (error) {
-    
     
     if (error.message.includes("Can't find end of central directory")) {
       console.log(error);
