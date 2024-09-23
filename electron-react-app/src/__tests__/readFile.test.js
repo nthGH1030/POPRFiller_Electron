@@ -1,5 +1,4 @@
 import {extractDataFromExcel, readFile, readExcelFile} from '../utils/readFile.js';
-import corruptedExcel from '../secrets/test_corrupted_excel.xlsx';
 import fs from 'fs';
 import path from 'path';
 import * as ExcelJS from "exceljs";
@@ -18,10 +17,16 @@ test('read a non-excel file', async() => {
             TypeError('The provided file is not an excel spreedsheet'))
 })
 
-//Test if excel is  malformed
+//Test if excel is malformed
 test('read an corrupted excel file', async() => {
-    await expect(readFile(corruptedExcel)).rejects.toThrow(
-        TypeError('The provided file is not an excel spreedsheet'))
+    const corruptedExcelPath = path.join(__dirname, '../secrets/test_corrupted_excel.xlsx');
+    const sheet = 'non-existing-worksheet';
+
+    const buffer = await fs.promises.readFile(corruptedExcelPath);
+
+    await expect(
+        readExcelFile(buffer, sheet)).rejects.toThrow(
+            TypeError("The provided file is not a valid Excel spreadsheet or is corrupted."));
 })
 
 // Assuming readExcelFile is adjusted to accept a buffer or workbook, not just a path

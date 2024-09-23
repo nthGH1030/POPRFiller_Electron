@@ -102,9 +102,15 @@ export async function readExcelFile(filename, sheetName) {
 
   } catch (error) {
     
-    if (!(error instanceof TypeError)) {
+    
+    if (error.message.includes("Can't find end of central directory")) {
+      console.log(error);
+      throw new TypeError("The provided file is not a valid Excel spreadsheet or is corrupted.");
+    }
+    else if (!(error instanceof TypeError)) {
       console.log('Other Error:', error);
-  }
+    }
+
     throw error;
   }
 
