@@ -114,7 +114,7 @@ test('read and return correct key value pairs in row 13 of test template', async
 })
 
 //Test the return key value pairs of a PO revision
-test('read and return correct key value pairs in row 134 of test template', async() => {
+test('read and return correct key value pairs in row 14 of test template', async() => {
     const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
     const row = 14
 
@@ -138,6 +138,39 @@ test('read and return correct key value pairs in row 134 of test template', asyn
     }
     //handle date format
     data['PO Change Request Date'] = new Date(data['PO Change Request Date'])
+    
+
+    await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        data
+    )
+})
+
+
+//Test the return key value pairs of a PR
+test('read and return correct key value pairs in row 16 of test template', async() => {
+    const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
+    const row = 16
+
+    const buffer = await fs.promises.readFile(masterTablePath);
+
+    const data = {
+        Bundle: 'Project testing1',
+        Entity: 'Test Location (Get Rich Fast Limited)',
+        'PO Number': 'TestingPoNumber',
+        Vendor: 'Get Rich Fast Limited',
+        'Type of expense': 'Capex',
+        'Capex Nature': 'Hard Cost',
+        'Purchase description / Payment Certification reason': 'Testing Purchase Description - Interim payment 1',
+        'Approved PO amount': 450000,
+        'PO Change Request': '',
+        'PO Change Request Date': '',
+        'Total Payment paid': 10000,
+        'Paid Requested': 10000,
+        'Delivery date': '2024-01-08T00:00:00.000Z',
+        'Invoice number': '006537'
+    }
+    //handle date format
+    data['Delivery date'] = new Date(data['Delivery date'])
     
 
     await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
