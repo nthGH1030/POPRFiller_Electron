@@ -55,11 +55,61 @@ test ('throw an error for invalid row number' , async () => {
         );
 })
         
+//Test the return key value pairs of a standard PO row 
+test('read and return correct key value pairs in row 13 of test template', async() => {
+    const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
+    const row = 13
 
-//Test if a key value pairs are indeed returned from successful case
+    const buffer = await fs.promises.readFile(masterTablePath);
 
-//Test if formulas or value is handled properly
+    const data = {
+        'Bundle': 'Project testing1',
+        'Entity': 'Test Location (Get Rich Fast Limited)',
+        'PO Number': 'TestingPoNumber',
+        'Vendor': 'Get Rich Fast Limited',
+        'Type of expense': 'Capex',
+        'Capex Nature': 'Hard Cost',
+        'Purchase description / Payment Certification reason': 'Testing Purchase Description',
+        'Approved PO amount': 300000,
+        'PO Change Request': '',
+        'PO Change Request Date': '',
+        'Total Payment paid': 'N/A',
+        'Paid Requested': 'N/A',
+        'Delivery date': 'N/A',
+        'Invoice number': 'N/A'
+    }
 
-//Test a hugh excel file and measure the performance
+    await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        data
+    )
+})
 
-//Test if the extracted data are correct
+//Test the return key value pairs of a standard PO row 
+test('read and return correct key value pairs in row 13 of test template', async() => {
+    const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
+    const row = 13
+
+    const buffer = await fs.promises.readFile(masterTablePath);
+
+    const data = {
+        'Bundle': 'Project testing1',
+        'Entity': 'Test Location (Get Rich Fast Limited)',
+        'PO Number': 'TestingPoNumber',
+        'Vendor': 'Get Rich Fast Limited',
+        'Type of expense': 'Capex',
+        'Capex Nature': 'Hard Cost',
+        'Purchase description / Payment Certification reason': 'Testing Purchase Description',
+        'Approved PO amount': 300000,
+        'PO Change Request': '',
+        'PO Change Request Date': '',
+        'Total Payment paid': 'N/A',
+        'Paid Requested': 'N/A',
+        'Delivery date': 'N/A',
+        'Invoice number': 'N/A'
+    }
+
+    await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        data
+    )
+})
+

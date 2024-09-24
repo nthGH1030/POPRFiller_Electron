@@ -32,6 +32,7 @@ export async function extractDataFromExcel(filename, row) {
 
     extractedObj[keyValue] = cellValue;
     }
+    console.log(extractedObj)
     
     return extractedObj
     })
