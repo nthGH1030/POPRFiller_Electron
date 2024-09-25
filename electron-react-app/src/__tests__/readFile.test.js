@@ -1,7 +1,6 @@
 import {extractDataFromExcel, readFile, readExcelFile} from '../utils/readFile.js';
 import fs from 'fs';
 import path from 'path';
-import * as ExcelJS from "exceljs";
 
 describe('Test for non-existent file to read', () => {
 
