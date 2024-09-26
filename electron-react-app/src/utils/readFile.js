@@ -95,17 +95,17 @@ export async function readExcelFile(filename, sheetName) {
       {
         const buffer = await readFile(filename);
         file = await workbook.xlsx.load(buffer);
-      }
+      } 
+      /*
       else if (typeof(filename) === 'string'){
-        
-        if (fs.existsync(filename)) {
-          const buffer = await readFile(filename);  
-          file = await workbook.xlsx.load(buffer);
+        if (fs.existsSync(filename)) {
+          file = await workbook.xlsx.load(filename)  
         }
         else {
           throw new Error ('File path does not exist');
         }
       }
+        */
       else {
         file = await workbook.xlsx.load(filename);
       }
