@@ -1,4 +1,5 @@
 import * as ExcelJS from "exceljs";
+import fs from 'fs';
 
 //This function reads the central excel and extract the data from it
 export async function extractDataFromExcel(filename, row) {
@@ -94,6 +95,16 @@ export async function readExcelFile(filename, sheetName) {
       {
         const buffer = await readFile(filename);
         file = await workbook.xlsx.load(buffer);
+      }
+      else if (typeof(filename) === 'string'){
+        
+        if (fs.existsync(filename)) {
+          const buffer = await readFile(filename);  
+          file = await workbook.xlsx.load(buffer);
+        }
+        else {
+          throw new Error ('File path does not exist');
+        }
       }
       else {
         file = await workbook.xlsx.load(filename);
