@@ -3,8 +3,7 @@ const path = require('path');
 const url = require('url')
 const fs = require('fs').promises;
 const log = require('electron-log');
-
-
+const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
 
 // Configure electron-log
 log.transports.file.resolvePath = () => path.join(path.dirname(app.getPath('exe')), 'app.log');
@@ -91,14 +90,13 @@ function handleSquirrelEvent() {
       app.quit();
       return true;
   }
-      
-  
 };
 
 // Function to read file content
 async function readFileContent(filePath) {
     try {
-        const content = await fs.readFile(filePath);
+        let content = await fs.readFile(filePath);
+        toArrayBuffer(content);
         return content;
     } catch (error) {
         console.error('Failed to read file:', error);
@@ -112,6 +110,7 @@ ipcMain.handle('load-template-po', async () => {
   const poPath = path.join(__dirname, './secrets/template PO.xlsx');
   //console.log(poPath);
   const PO = await readFileContent(poPath);
+
   return PO;
 });
 

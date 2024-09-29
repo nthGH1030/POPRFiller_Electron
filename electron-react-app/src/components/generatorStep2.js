@@ -5,8 +5,9 @@ import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
 import {useLocation} from 'react-router-dom';
 import {handlePO, handlePR} from '../utils/writeFile';
-import {extractDataFromExcel} from '../utils/readFile';
+import {extractDataFromExcel, readFileUpload} from '../utils/readFile';
 import saveAs from 'file-saver'
+
 
 function GeneratorStep2() {
     const [template, setTemplate] = useState('PO');
@@ -25,7 +26,7 @@ function GeneratorStep2() {
             } else {
                 content = await window.electronAPI.loadTemplatePR();
             }
-            console.log(content);
+            console.log("content: ", content);
             console.log(localStorage.getItem('staff'));
             setTemplateContent(content);
         } catch (error) {
@@ -43,7 +44,8 @@ function GeneratorStep2() {
     const handleClick = async() => {
         if (file) {
             try {
-                const data = await extractDataFromExcel(file, row);
+                const bufferArray = readFileUpload(file)
+                const data = await extractDataFromExcel(bufferArray, row);
                 console.log(data)
                 if(localStorage.getItem('staff') == null) {
                     alert('Please enter the name of the staff preparing the submission')

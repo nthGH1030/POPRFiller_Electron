@@ -1,16 +1,17 @@
 import * as ExcelJS from "exceljs";
-import fs from 'fs';
+
 
 //This function reads the central excel and extract the data from it
-export async function extractDataFromExcel(filename, row) {
-  try {
-    if (isNaN(row)) {
-      throw new TypeError(`The row input: ${row} is not a number`)
-    }
+export async function extractDataFromExcel(fileBufferArray, row) {
+  
+  if (isNaN(row)) {
+    throw new TypeError(`The row input: ${row} is not a number`)
+  }
 
+  try {
     let centralSheet = 'POPR summary';
 
-    return readExcelFile(filename, centralSheet)
+    return readExcelFile(fileBufferArray, centralSheet)
     .then((worksheet) => {
     // Extract the data from the worksheet
 
@@ -45,31 +46,17 @@ export async function extractDataFromExcel(filename, row) {
   
 } 
 
-function validateExcelFile(file) {
-  const validMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-  const validExtension = ".xlsx";
-
-  //Check MIME type
-  if(file.type != validMimeType) {
-    throw new TypeError("The provided file is not an excel spreedsheet")
-  }
-
-  //check file extension
-  const fileExtension = file.name.split('.').pop();
-  if(fileExtension.toLowerCase() != validExtension) {
-    throw new TypeError("The provided file is not an excel spreedsheet")
-  }
-}
-
+/*
 //This function create a filereader and read file as a bufferArray
 export async function readFile(filename) {
 
-  validateExcelFile(filename)
 
   return new Promise((resolve, reject) => {
+    
     if(!(filename instanceof Blob)) {
       throw new TypeError("The provided file is not a Blob object")
     }
+      
 
     const reader = new FileReader();
     
@@ -83,7 +70,8 @@ export async function readFile(filename) {
     };
   });
 }
-
+*
+/*
 //This function read a bufferarray and return an excel worksheet
 export async function readExcelFile(filename, sheetName) {
   try{
@@ -91,12 +79,15 @@ export async function readExcelFile(filename, sheetName) {
     const workbook = new ExcelJS.Workbook();
     let file;
 
+    const buffer = await readFile(filename);
+    file = await workbook.xlsx.load(buffer);
+    
     if (filename instanceof File)
       {
         const buffer = await readFile(filename);
         file = await workbook.xlsx.load(buffer);
       } 
-      /*
+      
       else if (typeof(filename) === 'string'){
         if (fs.existsSync(filename)) {
           file = await workbook.xlsx.load(filename)  
@@ -105,10 +96,11 @@ export async function readExcelFile(filename, sheetName) {
           throw new Error ('File path does not exist');
         }
       }
-        */
+        
       else {
         file = await workbook.xlsx.load(filename);
       }
+      
     
     const worksheet = file.getWorksheet(sheetName)
 
@@ -128,6 +120,53 @@ export async function readExcelFile(filename, sheetName) {
     }
 
     throw error;
+  }export 
+
+}
+*/
+
+//Rewrite function
+
+export async function readFileUpload(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.readAsArrayBuffer(file);
+  
+    reader.onload = () => {
+      resolve(reader.result)
+    }
+  
+    reader.onerror = (error) => {
+      reject(`File uploaded failed to be read as buffer array : ${error}`)
+    }
+  })
+
+}
+
+export async function readExcelFile(file, sheetName) {
+
+  if (sheetName === undefined || null) {
+    throw new TypeError(`Invalid ${sheetName}`)
   }
 
+  if (file === undefined || null) {
+    throw new TypeError(`File not Found.`)
+  }
+
+  if (!file instanceof ArrayBuffer) {
+    throw new TypeError('The file passed in is not a buffer Array')
+  }
+
+  try {
+    const workbook = new ExcelJS.Workbook();
+    let loadedWorkbook = await workbook.xlsx.load(file);
+
+    const worksheet = loadedWorkbook.getWorksheet(sheetName)
+
+    return worksheet
+
+  } catch (error) {
+    console.log(error)
+  }
 }
