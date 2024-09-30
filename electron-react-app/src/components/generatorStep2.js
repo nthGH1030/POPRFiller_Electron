@@ -47,7 +47,7 @@ function GeneratorStep2() {
                 const bufferArray = await readFileUpload(file)
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
-                console.log(data)
+                //console.log(data)
                 if(localStorage.getItem('staff') == null) {
                     alert('Please enter the name of the staff preparing the submission')
                     return;
@@ -55,7 +55,6 @@ function GeneratorStep2() {
                 if (template === 'PO')
                     {
                         const templateWorksheet = await readExcelFile(templateContent, 'PO_Input')
-                        console.log(`templateWorksheet: ${templateWorksheet}`)
                         const { filename, buffer } = await handlePO(data, templateWorksheet);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);

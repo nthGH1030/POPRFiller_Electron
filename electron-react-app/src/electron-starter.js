@@ -93,7 +93,7 @@ function handleSquirrelEvent() {
 };
 
 // Function to read file content
-async function readFileContent(filePath) {
+async function readFileToBufferArray(filePath) {
     try {
         let content = await fs.readFile(filePath);
         toArrayBuffer(content);
@@ -109,7 +109,7 @@ async function readFileContent(filePath) {
 ipcMain.handle('load-template-po', async () => {
   const poPath = path.join(__dirname, './secrets/template PO.xlsx');
   //console.log(poPath);
-  const PO = await readFileContent(poPath);
+  const PO = await readFileToBufferArray(poPath);
 
   return PO;
 });
@@ -117,7 +117,7 @@ ipcMain.handle('load-template-po', async () => {
 // Handle load-template-pr
 ipcMain.handle('load-template-pr', async () => {
   const prPath = path.join(__dirname, './secrets/template PR.xlsx');
-  const PR = await readFileContent(prPath);
+  const PR = await readFileToBufferArray(prPath);
   return PR;
 });
 
