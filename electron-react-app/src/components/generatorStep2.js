@@ -5,7 +5,7 @@ import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
 import {useLocation} from 'react-router-dom';
 import {handlePO, handlePR} from '../utils/writeFile';
-import {extractDataFromExcel, readFileUpload} from '../utils/readFile';
+import {extractDataFromExcel, readFileUpload, readExcelFile} from '../utils/readFile';
 import saveAs from 'file-saver'
 
 
@@ -44,8 +44,9 @@ function GeneratorStep2() {
     const handleClick = async() => {
         if (file) {
             try {
-                const bufferArray = readFileUpload(file)
-                const data = await extractDataFromExcel(bufferArray, row);
+                const bufferArray = await readFileUpload(file)
+                const worksheet = await readExcelFile(bufferArray, 'POPR summary')
+                const data = await extractDataFromExcel(worksheet, row);
                 console.log(data)
                 if(localStorage.getItem('staff') == null) {
                     alert('Please enter the name of the staff preparing the submission')

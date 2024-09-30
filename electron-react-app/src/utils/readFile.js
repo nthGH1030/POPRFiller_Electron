@@ -2,17 +2,13 @@ import * as ExcelJS from "exceljs";
 
 
 //This function reads the central excel and extract the data from it
-export async function extractDataFromExcel(fileBufferArray, row) {
+export async function extractDataFromExcel(worksheet, row) {
   
   if (isNaN(row)) {
     throw new TypeError(`The row input: ${row} is not a number`)
   }
 
   try {
-    let centralSheet = 'POPR summary';
-
-    return readExcelFile(fileBufferArray, centralSheet)
-    .then((worksheet) => {
     // Extract the data from the worksheet
 
     let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
@@ -37,8 +33,7 @@ export async function extractDataFromExcel(fileBufferArray, row) {
     console.log('the row is',row, extractedObj)
     
     return extractedObj
-    })
-
+    
     } catch(error) {
       console.log("Failed to extract data from excel: ", error)
       throw error
