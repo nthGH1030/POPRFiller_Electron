@@ -5,6 +5,7 @@ const fs = require('fs').promises;
 const log = require('electron-log');
 const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
 
+//-------------------------------handle logging----------------------------------
 // Configure electron-log
 log.transports.file.resolvePath = () => path.join(path.dirname(app.getPath('exe')), 'app.log');
 
@@ -13,7 +14,7 @@ function logToFile(message) {
   log.info(message);
 }
 
-
+//-------------------------------handle squirrel events----------------------------------
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
   // squirrel event handled and app will exit in 1000ms, so don't do anything else
@@ -92,7 +93,8 @@ function handleSquirrelEvent() {
   }
 };
 
-// Function to read file content
+//-------------------functions to be exposed in renderer process--------------------------
+// Read a given file path and return its content in buffer array
 async function readFileToBufferArray(filePath) {
     try {
         let content = await fs.readFile(filePath);
@@ -105,7 +107,7 @@ async function readFileToBufferArray(filePath) {
 }
 
 
-// Handle load-template-po
+// Load template PO from backend and return it as bufferArray
 ipcMain.handle('load-template-po', async () => {
   const poPath = path.join(__dirname, './secrets/template PO.xlsx');
   //console.log(poPath);
@@ -114,14 +116,14 @@ ipcMain.handle('load-template-po', async () => {
   return PO;
 });
 
-// Handle load-template-pr
+// Load template PR from backend and return it as bufferArray
 ipcMain.handle('load-template-pr', async () => {
   const prPath = path.join(__dirname, './secrets/template PR.xlsx');
   const PR = await readFileToBufferArray(prPath);
   return PR;
 });
 
-
+//-------------------------Create App Window and load URL-------------------------------
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
