@@ -68,13 +68,10 @@ export async function handlePO(extractedObj, templateWorksheet)
     }
 }
 
-export async function handlePR(templatePR, extractedObj)
+export async function handlePR(extractedObj, templateWorksheet)
   {
     try{
         
-        let PRSheet = 'PR_Input'
-        const templateWorksheet = await readExcelFile(templatePR, PRSheet);
-
         //Replace the value in the respective field in the template 
         let PR = {   
             'PO Number': 'C2',     

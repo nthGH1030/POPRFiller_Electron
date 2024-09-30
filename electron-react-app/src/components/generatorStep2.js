@@ -62,7 +62,8 @@ function GeneratorStep2() {
                     }
                 if (template === 'PR')
                     {
-                        const { filename, buffer } = await handlePR(templateContent, data);
+                        const templateWorksheet = await readExcelFile(templateContent, 'PR_Input')
+                        const { filename, buffer } = await handlePR(data, templateWorksheet);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
