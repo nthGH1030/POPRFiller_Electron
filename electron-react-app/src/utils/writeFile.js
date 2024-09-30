@@ -1,13 +1,10 @@
 import {readExcelFile} from './readFile';
 
 
-export async function handlePO(templatePO, extractedObj) 
+export async function handlePO(extractedObj, templateWorksheet) 
 {
     try {
-      let POSheet = 'PO_Input';
-  
-      //Get the template work sheet
-      const templateWorksheet = await readExcelFile(templatePO, POSheet);
+
   
       //Set up an object in template to be replaced by data in the central table
       let PO = {

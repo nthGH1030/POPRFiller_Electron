@@ -156,8 +156,11 @@ export async function readExcelFile(file, sheetName) {
   try {
     const workbook = new ExcelJS.Workbook();
     let loadedWorkbook = await workbook.xlsx.load(file);
+    console.log(`loadedWorkbook: ${loadedWorkbook}`)
 
     const worksheet = loadedWorkbook.getWorksheet(sheetName)
+
+    console.log(`Worksheet : ${worksheet}`)
 
     return worksheet
 

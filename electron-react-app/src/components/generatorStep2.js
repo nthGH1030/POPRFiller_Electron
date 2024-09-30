@@ -26,7 +26,7 @@ function GeneratorStep2() {
             } else {
                 content = await window.electronAPI.loadTemplatePR();
             }
-            console.log("content: ", content);
+            console.log("template content: ", content);
             console.log(localStorage.getItem('staff'));
             setTemplateContent(content);
         } catch (error) {
@@ -54,7 +54,9 @@ function GeneratorStep2() {
                 }
                 if (template === 'PO')
                     {
-                        const { filename, buffer } = await handlePO(templateContent, data);
+                        const templateWorksheet = await readExcelFile(templateContent, 'PO_Input')
+                        console.log(`templateWorksheet: ${templateWorksheet}`)
+                        const { filename, buffer } = await handlePO(data, templateWorksheet);
                         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
