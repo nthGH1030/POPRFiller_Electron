@@ -26,7 +26,7 @@ function GeneratorStep2() {
             } else {
                 content = await window.electronAPI.loadTemplatePR();
             }
-            //console.log("template content: ", content);
+            console.log("template content: ", content);
             //console.log(localStorage.getItem('staff'));
             setTemplateContent(content);
         } catch (error) {

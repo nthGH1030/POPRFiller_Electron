@@ -69,8 +69,8 @@ export async function readExcelFile(file, sheetName) {
     throw new TypeError(`File not Found.`)
   }
 
-  if (!(file instanceof ArrayBuffer)) {
-    throw new TypeError('The file passed in is not a buffer Array')
+  if (!(file instanceof ArrayBuffer || file instanceof Uint8Array)) {
+    throw new TypeError('The file passed in is not an ArrayBuffer or Uint8Array');
   }
 
   try {
@@ -102,6 +102,7 @@ export async function ifWorkSheetExist(file, sheetName) {
       return
     }     
   })
+  console.log(foundSheet)
 
   return foundSheet
 }
