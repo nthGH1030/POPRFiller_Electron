@@ -1,11 +1,8 @@
-import {readExcelFile} from './readFile';
 
-
-export async function handlePO(extractedObj, templateWorksheet) 
+//This function writes to a PO worksheet with data provided
+export async function writePO(extractedObj, templateWorksheet) 
 {
     try {
-
-  
       //Set up an object in template to be replaced by data in the central table
       let PO = {
         "PO Number": "C2",
@@ -38,16 +35,6 @@ export async function handlePO(extractedObj, templateWorksheet)
          
           //console.log(templateWorksheet.getCell(cellAddress).value)
         }
-        //handle cases where PO amount is a formula
-        /*
-        if (key === "Approved PO amount") {
-          if (templateWorksheet.getCell(cellAddress).formula){
-
-            const formulaResult = extractedObj[key].result;
-            templateWorksheet.getCell(cellAddress).value = formulaResult;
-          }
-        }
-          */
           
         if(key === 'staff'){
           templateWorksheet.getCell(cellAddress).value = localStorage.getItem('staff');
@@ -68,7 +55,8 @@ export async function handlePO(extractedObj, templateWorksheet)
     }
 }
 
-export async function handlePR(extractedObj, templateWorksheet)
+//This function writes to a PR worksheet with data provided
+export async function writePR(extractedObj, templateWorksheet)
   {
     try{
         
@@ -93,15 +81,6 @@ export async function handlePR(extractedObj, templateWorksheet)
           let cellAddress = value
             if (key in extractedObj) {
             
-                // Replace the cell value
-                /*
-                if (key === 'Total Payment paid') {
-                  const formulaResult = extractedObj[key].result;
-                  
-                  templateWorksheet.getCell(cellAddress).value = formulaResult;
-                }
-                  */
-                
                 templateWorksheet.getCell(cellAddress).value = extractedObj[key];
                 
             }

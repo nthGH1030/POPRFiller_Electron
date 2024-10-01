@@ -40,8 +40,8 @@ function GeneratorStep1() {
   useEffect(() => {
     
     setActiveStep(location.pathname)
-    console.log(activeStep)
-    console.log(state)
+    //console.log(activeStep)
+    //console.log(state)
     
   },[location.pathname])
 

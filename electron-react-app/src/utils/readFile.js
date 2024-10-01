@@ -1,7 +1,7 @@
 import * as ExcelJS from "exceljs";
 
 
-//This function reads the central excel and extract the data from it
+//This function reads the a excel worksheet and extract data from a row
 export async function extractDataFromExcel(worksheet, row) {
   
   if (isNaN(row)) {
@@ -9,7 +9,6 @@ export async function extractDataFromExcel(worksheet, row) {
   }
 
   try {
-    // Extract the data from the worksheet
 
     let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
     let indexRow = "7";
@@ -41,87 +40,7 @@ export async function extractDataFromExcel(worksheet, row) {
   
 } 
 
-/*
-//This function create a filereader and read file as a bufferArray
-export async function readFile(filename) {
-
-
-  return new Promise((resolve, reject) => {
-    
-    if(!(filename instanceof Blob)) {
-      throw new TypeError("The provided file is not a Blob object")
-    }
-      
-
-    const reader = new FileReader();
-    
-    reader.readAsArrayBuffer(filename);
-      
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-    reader.onerror = (error) => {
-      reject(new Error(`Failed to read file as buffer array: ${error}`));
-    };
-  });
-}
-*
-/*
-//This function read a bufferarray and return an excel worksheet
-export async function readExcelFile(filename, sheetName) {
-  try{
-
-    const workbook = new ExcelJS.Workbook();
-    let file;
-
-    const buffer = await readFile(filename);
-    file = await workbook.xlsx.load(buffer);
-    
-    if (filename instanceof File)
-      {
-        const buffer = await readFile(filename);
-        file = await workbook.xlsx.load(buffer);
-      } 
-      
-      else if (typeof(filename) === 'string'){
-        if (fs.existsSync(filename)) {
-          file = await workbook.xlsx.load(filename)  
-        }
-        else {
-          throw new Error ('File path does not exist');
-        }
-      }
-        
-      else {
-        file = await workbook.xlsx.load(filename);
-      }
-      
-    
-    const worksheet = file.getWorksheet(sheetName)
-
-    if (!worksheet) {
-      throw new TypeError(`Worksheet ${sheetName} not Found.`)
-    }
-      return worksheet
-
-  } catch (error) {
-    
-    if (error.message.includes("Can't find end of central directory")) {
-      console.log(error);
-      throw new TypeError("The provided file is not a valid Excel spreadsheet or is corrupted.");
-    }
-    else if (!(error instanceof TypeError)) {
-      console.log('Other Error:', error);
-    }
-
-    throw error;
-  }export 
-
-}
-*/
-
-//Rewrite function
-
+//This function takes a file uploaded by user and return it as buffer array
 export async function readFileUpload(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -139,6 +58,7 @@ export async function readFileUpload(file) {
 
 }
 
+//This function Takes an excel file in buffer array and return one of its worksheet
 export async function readExcelFile(file, sheetName) {
 
   if (sheetName === undefined || null) {

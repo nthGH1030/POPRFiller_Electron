@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
 import {useLocation} from 'react-router-dom';
-import {handlePO, handlePR} from '../utils/writeFile';
+import {writePO, writePR} from '../utils/writeFile';
 import {extractDataFromExcel, readFileUpload, readExcelFile} from '../utils/readFile';
 import saveAs from 'file-saver'
 
@@ -26,8 +26,8 @@ function GeneratorStep2() {
             } else {
                 content = await window.electronAPI.loadTemplatePR();
             }
-            console.log("template content: ", content);
-            console.log(localStorage.getItem('staff'));
+            //console.log("template content: ", content);
+            //console.log(localStorage.getItem('staff'));
             setTemplateContent(content);
         } catch (error) {
             console.error('Error loading template:', error);
@@ -35,35 +35,38 @@ function GeneratorStep2() {
     };
     
     useEffect(() => {
-        
         setActiveStep("/generatorStep2")
         loadTemplate();
-        
     }, [location.pathname, template])
   
-    const handleClick = async() => {
+    const handleGenerate = async() => {
         if (file) {
             try {
+                if(!localStorage.getItem('staff')) {
+                    alert('Please enter the name of the staff preparing the submission')
+                    return;
+                }
+                //extract data from uploaded excel file
                 const bufferArray = await readFileUpload(file)
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
                 //console.log(data)
-                if(localStorage.getItem('staff') == null) {
-                    alert('Please enter the name of the staff preparing the submission')
-                    return;
-                }
+
+                //write the data into respective template
                 if (template === 'PO')
                     {
                         const templateWorksheet = await readExcelFile(templateContent, 'PO_Input')
-                        const { filename, buffer } = await handlePO(data, templateWorksheet);
-                        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        const { filename, buffer } = await writePO(data, templateWorksheet);
+                        const blob = new Blob([buffer], { 
+                            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
-                if (template === 'PR')
+                else if (template === 'PR')
                     {
                         const templateWorksheet = await readExcelFile(templateContent, 'PR_Input')
-                        const { filename, buffer } = await handlePR(data, templateWorksheet);
-                        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        const { filename, buffer } = await writePR(data, templateWorksheet);
+                        const blob = new Blob([buffer], { 
+                            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
                 
@@ -84,7 +87,6 @@ function GeneratorStep2() {
         <StepIndicator
             activeStep = {activeStep}
         />
-        
         <div className = 'template-container'>
             <h1>Pick a template</h1>
             <div className = 'break'></div>
@@ -100,9 +102,7 @@ function GeneratorStep2() {
                     isChecked = {template === 'PR'}
                 />
             </div>
-            
         </div>
-        
         <div className = 'Container'>
             <p>Who is preparing this submission?</p>
             <input type = 'text' 
@@ -115,12 +115,10 @@ function GeneratorStep2() {
                     Back
                 </button>
             </Link>
-
-            <button type = 'button' className = "button generate" onClick={handleClick}>
+            <button type = 'button' className = "button generate" onClick={handleGenerate}>
                 Generate
             </button>
         </div>
-
         </>
     );
 }
