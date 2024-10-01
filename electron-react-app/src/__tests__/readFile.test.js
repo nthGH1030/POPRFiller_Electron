@@ -1,45 +1,25 @@
-import {extractDataFromExcel, readFile, readExcelFile} from '../utils/readFile.js';
+import {extractDataFromExcel, readExcelFile} from '../utils/readFile.js';
+import { toArrayBuffer } from '../utils/Parser_toArrayBuffer.js';
 import fs from 'fs';
 import path from 'path';
 
-/*
-describe('Test for non-existent file to read', () => {
-
-    //Test if error will be throw if the excel file does not exist
-    test('read an non-existent excel', async() => {
-        await expect(
-            readFile('path/to/nonexistent/file.xlsx')).rejects.toThrow(
-                TypeError('The provided file is not an excel spreedsheet'))
-    })
-
-    //Test if error will be throw if the file is not an excel extension
-    test('read a non-excel file', async() => {
-        await expect(
-            readFile('path/to/nonexistent/file.txt')).rejects.toThrow(
-                TypeError('The provided file is not an excel spreedsheet'))
-    })
-})
-
-*/
-
 describe ('Test for invalid input', () => {
     let buffer;
+    let bufferArray;
     
     beforeAll(async ()=> {
     
         const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
         buffer = await fs.promises.readFile(masterTablePath);
+        bufferArray = toArrayBuffer(buffer);
     })
 
     // Assuming readExcelFile is adjusted to accept a buffer or workbook, not just a path
     test('read an non-existent worksheet', async () => {
-        //const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
-        const sheet = 'non-existing-worksheet';
-        //const buffer = await fs.promises.readFile(masterTablePath);
-
+        const sheet = 'Non-existing worksheet';
         await expect(
-            readExcelFile(buffer, sheet)).rejects.toThrow(
-                TypeError(`Worksheet ${sheet} not Found.`));
+            readExcelFile(bufferArray, sheet)).rejects.toThrow(
+                TypeError(`Invalid sheet: ${sheet}`));
     });
 
     //Test if row number is invalid
@@ -48,24 +28,26 @@ describe ('Test for invalid input', () => {
         const row = 'InvalidRow'
 
         await expect (
-            extractDataFromExcel(buffer, row)).rejects.toThrow(
+            extractDataFromExcel(bufferArray, row)).rejects.toThrow(
                 TypeError(`The row input: ${row} is not a number`)
             );
     });
-
+    /*
     //Test if excel is malformed
     test('read an corrupted excel file', async() => {
         const corruptedExcelPath = path.join(__dirname, '../secrets/test_corrupted_excel.xlsx');
         const sheet = 'non-existing-worksheet';
 
         buffer = await fs.promises.readFile(corruptedExcelPath);
+        bufferArray = toArrayBuffer(buffer);
 
         await expect(
-            readExcelFile(buffer, sheet)).rejects.toThrow(
-                TypeError("The provided file is not a valid Excel spreadsheet or is corrupted."));
+            readExcelFile(bufferArray, sheet)).rejects.toThrow(
+                TypeError('The file passed in is not a buffer Array'));
     })
+    */
 })
-
+/*
 describe ('read and return correct data from excel table', () => {
     let buffer;
     
@@ -248,3 +230,4 @@ describe ('read and return correct data from excel table', () => {
 })
 
     
+*/

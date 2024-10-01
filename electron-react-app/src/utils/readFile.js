@@ -61,15 +61,15 @@ export async function readFileUpload(file) {
 //This function Takes an excel file in buffer array and return one of its worksheet
 export async function readExcelFile(file, sheetName) {
 
-  if (sheetName === undefined || null) {
-    throw new TypeError(`Invalid ${sheetName}`)
+  if (!sheetName || await checkWorkSheet(file, sheetName) === false) {
+    throw new TypeError(`Invalid sheet: ${sheetName}`)
   }
 
-  if (file === undefined || null) {
+  if (!file) {
     throw new TypeError(`File not Found.`)
   }
 
-  if (!file instanceof ArrayBuffer) {
+  if (!(file instanceof ArrayBuffer)) {
     throw new TypeError('The file passed in is not a buffer Array')
   }
 
@@ -87,4 +87,16 @@ export async function readExcelFile(file, sheetName) {
   } catch (error) {
     console.log(error)
   }
+}
+
+//This function loop through all the worksheet in file and returns false if no match is found
+export async function checkWorkSheet(file, sheetName) {
+  const workbook = new ExcelJS.Workbook();
+  let loadedWorkbook = await workbook.xlsx.load(file); 
+  let foundSheet = false ;
+  loadedWorkbook.eachSheet( function (worksheet) {
+    worksheet === sheetName ? foundSheet = true : foundSheet = false;
+  })
+
+  return foundSheet
 }

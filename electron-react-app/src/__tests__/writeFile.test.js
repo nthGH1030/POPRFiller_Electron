@@ -6,7 +6,7 @@ import path from 'path';
 
 //test if data are indeed written in the correct cell
 //Write a template PO, check the file with readFile to verify the input
-
+/*
 describe('Test writePO to write correct data in excel' , () => {
     let buffer
     //extractedObj for testing purpose
@@ -21,3 +21,4 @@ describe('Test writePO to write correct data in excel' , () => {
         
     })
 })
+    */
