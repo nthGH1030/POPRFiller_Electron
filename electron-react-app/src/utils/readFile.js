@@ -59,23 +59,23 @@ export async function readFileUpload(file) {
 }
 
 //This function Takes an excel file in buffer array and return one of its worksheet
-export async function readExcelFile(file, sheetName) {
+export async function readExcelFile(file_bufferArray, sheetName) {
 
-  if (!sheetName || await ifWorkSheetExist(file, sheetName) === false) {
+  if (!sheetName || await ifWorkSheetExist(file_bufferArray, sheetName) === false) {
     throw new TypeError(`Invalid sheet: ${sheetName}`)
   }
 
-  if (!file) {
-    throw new TypeError(`File not Found.`)
+  if (!file_bufferArray) {
+    throw new TypeError(`file_bufferArray not Found.`)
   }
 
-  if (!(file instanceof ArrayBuffer || file instanceof Uint8Array)) {
-    throw new TypeError('The file passed in is not an ArrayBuffer or Uint8Array');
+  if (!(file_bufferArray instanceof ArrayBuffer || file_bufferArray instanceof Uint8Array)) {
+    throw new TypeError('The file_bufferArray passed in is not an ArrayBuffer or Uint8Array');
   }
 
   try {
     const workbook = new ExcelJS.Workbook();
-    let loadedWorkbook = await workbook.xlsx.load(file);
+    let loadedWorkbook = await workbook.xlsx.load(file_bufferArray);
     console.log(`loadedWorkbook: ${loadedWorkbook}`)
 
     const worksheet = loadedWorkbook.getWorksheet(sheetName)
@@ -89,11 +89,11 @@ export async function readExcelFile(file, sheetName) {
   }
 }
 
-//This function loop through all the worksheet in file and returns false if no match is found
-export async function ifWorkSheetExist(file, sheetName) {
+//This function loop through all the worksheet in file_bufferArray and returns false if no match is found
+export async function ifWorkSheetExist(file_bufferArray, sheetName) {
   
   const workbook = new ExcelJS.Workbook();
-  let loadedWorkbook = await workbook.xlsx.load(file); 
+  let loadedWorkbook = await workbook.xlsx.load(file_bufferArray); 
   let foundSheet = false ;
   loadedWorkbook.eachSheet( function (worksheet) {
     

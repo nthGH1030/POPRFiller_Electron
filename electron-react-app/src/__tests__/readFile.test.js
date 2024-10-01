@@ -6,7 +6,7 @@ import path from 'path';
 describe ('Test for invalid input', () => {
     let buffer;
     let bufferArray;
-    
+
     beforeAll(async ()=> {
     
         const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
@@ -88,33 +88,6 @@ describe ('read and return correct data from excel table', () => {
         )
     })
 
-    //Test the return key value pairs of a standard PO row 
-    test('read and return correct key value pairs in row 13 of test template', async() => {
-
-        const row = 13
-
-        const data = {
-            'Bundle': 'Project testing1',
-            'Entity': 'Test Location (Get Rich Fast Limited)',
-            'PO Number': 'TestingPoNumber',
-            'Vendor': 'Get Rich Fast Limited',
-            'Type of expense': 'Capex',
-            'Capex Nature': 'Hard Cost',
-            'Purchase description / Payment Certification reason': 'Testing Purchase Description',
-            'Approved PO amount': 300000,
-            'PO Change Request': '',
-            'PO Change Request Date': '',
-            'Total Payment paid': 'N/A',
-            'Paid Requested': 'N/A',
-            'Delivery date': 'N/A',
-            'Invoice number': 'N/A'
-        }
-
-        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
-            data
-        )
-    })
-
     //Test the return key value pairs of a PO revision
     test('read and return correct key value pairs in row 14 of test template', async() => {
 
@@ -143,6 +116,37 @@ describe ('read and return correct data from excel table', () => {
             data
         )
     })
+
+        //Test the return key value pairs of a PO revision
+        test('read and return correct key value pairs in row 15 of test template', async() => {
+
+            const row = 15
+    
+            const data = {
+                'Bundle': 'Project testing1',
+                'Entity': 'Test Location (Get Rich Fast Limited)',
+                'PO Number': 'TestingPoNumber-R2',
+                'Vendor': 'Get Rich Fast Limited',
+                'Type of expense': 'Capex',
+                'Capex Nature': 'Hard Cost',
+                'Purchase description / Payment Certification reason': 'Testing Purchase Description',
+                'Approved PO amount': 550000,
+                'PO Change Request': 200000,
+                'PO Change Request Date': "2024-09-08T00:00:00.000Z",
+                'Total Payment paid': 'N/A',
+                'Paid Requested': 'N/A',
+                'Delivery date': 'N/A',
+                'Invoice number': 'N/A'
+            }
+            //handle date format
+            data['PO Change Request Date'] = new Date(data['PO Change Request Date'])
+            
+            await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
+                data
+            )
+        })
+    
+    
 
 
     //Test the return key value pairs of a PR
