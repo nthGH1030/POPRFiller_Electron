@@ -47,14 +47,18 @@ describe ('Test for invalid input', () => {
     })
     */
 })
-/*
+
 describe ('read and return correct data from excel table', () => {
     let buffer;
+    let bufferArray;
+    let worksheet;
     
     beforeAll(async ()=> {
     
         const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
         buffer = await fs.promises.readFile(masterTablePath);
+        bufferArray = toArrayBuffer(buffer);
+        worksheet = await readExcelFile(bufferArray, 'POPR summary');
     })
 
     //Test the return key value pairs of a standard PO row 
@@ -79,7 +83,7 @@ describe ('read and return correct data from excel table', () => {
             'Invoice number': 'N/A'
         }
 
-        await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
             data
         )
     })
@@ -106,7 +110,7 @@ describe ('read and return correct data from excel table', () => {
             'Invoice number': 'N/A'
         }
 
-        await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
             data
         )
     })
@@ -135,7 +139,7 @@ describe ('read and return correct data from excel table', () => {
         //handle date format
         data['PO Change Request Date'] = new Date(data['PO Change Request Date'])
         
-        await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
             data
         )
     })
@@ -165,7 +169,7 @@ describe ('read and return correct data from excel table', () => {
         //handle date format
         data['Delivery date'] = new Date(data['Delivery date'])
         
-        await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
             data
         )
     })
@@ -193,7 +197,7 @@ describe ('read and return correct data from excel table', () => {
         //handle date format
         data['Delivery date'] = new Date(data['Delivery date'])
         
-        await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
             data
         )
     })
@@ -222,7 +226,7 @@ describe ('read and return correct data from excel table', () => {
         //handle date format
         data['Delivery date'] = new Date(data['Delivery date'])
         
-        await expect(Promise.resolve(extractDataFromExcel(buffer,row))).resolves.toStrictEqual(
+        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
             data
         )
     })
@@ -230,4 +234,3 @@ describe ('read and return correct data from excel table', () => {
 })
 
     
-*/

@@ -91,11 +91,16 @@ export async function readExcelFile(file, sheetName) {
 
 //This function loop through all the worksheet in file and returns false if no match is found
 export async function ifWorkSheetExist(file, sheetName) {
+  
   const workbook = new ExcelJS.Workbook();
   let loadedWorkbook = await workbook.xlsx.load(file); 
   let foundSheet = false ;
   loadedWorkbook.eachSheet( function (worksheet) {
-    worksheet === sheetName ? foundSheet = true : foundSheet = false;
+    
+    if (worksheet.name === sheetName) {
+      foundSheet = true  
+      return
+    }     
   })
 
   return foundSheet
