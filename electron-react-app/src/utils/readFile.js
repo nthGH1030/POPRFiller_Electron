@@ -106,3 +106,35 @@ export async function ifWorkSheetExist(file_bufferArray, sheetName) {
 
   return foundSheet
 }
+
+//This function extract data from a PO / PR file
+export async function extractDataFromPOPR(worksheet) {
+
+  try {
+  let keyColumn = "B"
+  let valueColumn = "C"
+  let indexRow = ["1,2,3,4,5,6,7,8,9,10,11,12"]
+  
+  const data = {}
+  for (let i = 0; i < indexRow.length; i++) {
+
+    const keyAddress = keyColumn.concat(indexRow[i]);
+    const keyValue = worksheet.getCell(keyAddress)?.value || "";
+
+    const valueAddress = valueColumn.concat(indexRow[i]);
+    const value = worksheet.getCell(valueAddress);
+    const valueValue = value.formula ? value.result : (value.value ?? ""); 
+
+    data[keyValue] = valueValue;
+    
+  }
+  
+  console.log(`POPR data is: ${JSON.stringify(data)}`)
+
+    return data
+  } catch (error) {
+    console.log("Failed to extract data from POPR: ", error)
+  }
+
+
+}
