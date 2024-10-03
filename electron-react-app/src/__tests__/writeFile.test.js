@@ -41,20 +41,16 @@ describe('Test writePO to write correct data in excel' , () => {
     test('Write a PO with correct data', async() => {
         
         const matchData = {
-            'Bundle': 'Project testing2',
-            'Entity': 'Test Location (Get Rich Quick Limited)',
             'PO Number': 'TestingPoNumber2',
-            'Vendor': 'Get Rich Quick Limited',
-            'Type of expense': 'Capex',
+            'Entity': 'Test Venue (Get Rich Quick Limited)',
+            'Description of purchase': 'Testing Purchase Description',
+            'Type of expenses': 'Capex',
             'Capex Nature': 'Soft Cost',
-            'Purchase description / Payment Certification reason': 'Testing Purchase Description',
-            'Approved PO amount': 100000,
-            'PO Change Request': '',
-            'PO Change Request Date': '',
-            'Total Payment paid': 'N/A',
-            'Paid Requested': 'N/A',
-            'Delivery date': 'N/A',
-            'Invoice number': 'N/A'
+            'Amount': 100000,
+            'Vendor': 'Get Rich Quick Limited',
+            'Staff': '',
+            'Change': '',
+            'Change Date': ''
         }
 
         await expect(Promise.resolve(writtenData)).resolves.toStrictEqual(matchData)

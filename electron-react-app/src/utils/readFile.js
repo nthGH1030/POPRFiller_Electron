@@ -113,13 +113,20 @@ export async function extractDataFromPOPR(worksheet) {
   try {
   let keyColumn = "B"
   let valueColumn = "C"
-  let indexRow = ["1,2,3,4,5,6,7,8,9,10,11,12"]
+  let indexRow = ['2','3','4','5','6','7','8','9','10','11','12','13']
   
   const data = {}
   for (let i = 0; i < indexRow.length; i++) {
 
     const keyAddress = keyColumn.concat(indexRow[i]);
-    const keyValue = worksheet.getCell(keyAddress)?.value || "";
+    let keyValue
+      if (!worksheet.getCell(keyAddress).value) {
+        continue
+      } 
+      else
+      {
+        keyValue = worksheet.getCell(keyAddress).value
+      }
 
     const valueAddress = valueColumn.concat(indexRow[i]);
     const value = worksheet.getCell(valueAddress);
@@ -129,7 +136,7 @@ export async function extractDataFromPOPR(worksheet) {
     
   }
   
-  console.log(`POPR data is: ${JSON.stringify(data)}`)
+  console.log(`POPR data is: ${data}`)
 
     return data
   } catch (error) {
