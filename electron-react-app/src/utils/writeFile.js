@@ -68,7 +68,7 @@ export async function writePR(extractedObj, templateWorksheet)
             'Paid Requested': 'C5',
             'Delivery date': 'C6',
             'Invoice number': 'C7',
-            'Type of expenses': 'C8',
+            'Type of expense': 'C8',
             'Capex Nature': 'C9',
             'Total Payment paid': 'C10',
             'Approved PO amount': 'C11',
