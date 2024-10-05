@@ -2,6 +2,7 @@ import '../Styles.css';
 import React, {useState ,useEffect, useRef } from 'react';
 import StepIndicator from './stepIndicator';
 import {useLocation, useNavigate} from 'react-router-dom';
+import SideNavBar from './sideNavBar';
 
 
 function GeneratorStep1() {
@@ -71,6 +72,8 @@ function GeneratorStep1() {
   
     return (
       <div>
+        <SideNavBar>
+        </SideNavBar>
         <StepIndicator
           activeStep = {activeStep}
         />
