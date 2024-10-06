@@ -8,14 +8,14 @@ const SideNavBar = () => {
 
     return (
         <div>
-            <div classname = "sideNavBarContainer">
+            <div classname = "linkToFeatureContainer">
                 <LinkToFeature
                 route = "/"
                 imagePath = {imageDownload}
                 >
                 </LinkToFeature>
             </div>
-            <div classname = "sideNavBarContainer">
+            <div classname = "linkToFeatureContainer">
             <LinkToFeature
                 route = "/"
                 imagePath = {imageUpload}

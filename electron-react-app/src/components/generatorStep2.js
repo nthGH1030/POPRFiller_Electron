@@ -109,7 +109,7 @@ function GeneratorStep2() {
             placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
             onChange = {handleStaff}/>
         </div>
-        <div className = 'Button-Container'>
+        <div className = 'button-container'>
             <Link to="/">
                 <button type = 'button' className = "button" >
                     Back

@@ -1,4 +1,34 @@
-/* Nav bar styles */
+/*page*/
+.page{
+  display: flex;
+  justify-content:left;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Assuming your whole page div has a class of .whole-page */
+.whole-page {
+  height: 100%;
+  width: 100%;
+}
+
+/* sidebar style*/
+.sidebar-container {
+  flex: 1;
+  border-right: thick solid black;
+}
+
+.image-icon {
+  width: 75px;
+  height: auto;
+}
+
+/* step indicator styles */
 .StepIndicator{
   display: flex;
   align-items: center;
@@ -28,20 +58,25 @@ input {
 }
 
 /*Home Page */
-.Container{
+.generatorstep1-container {
+  flex: 4
+  
+}
+
+.row-container{
   margin-top: 10px;
   flex-direction: column;
   display:flex;
   justify-content: center;
   align-items: center;
 }
-.Button-Container{
+.button-container{
   margin: 20px 0 0 0;
   display:flex;
   justify-content: space-between;
   align-items: center;
 }
-.Next-Btn-Container{
+.next-btn-container{
   display:flex;
   justify-content: end;
 

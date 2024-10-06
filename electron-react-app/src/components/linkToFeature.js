@@ -7,7 +7,7 @@ const LinkToFeature = ({route, imagePath}) => {
     return (
         <div classname = "featureLinkContainer">
         <Link to = {route}>
-            <input type= 'image' id = 'image' alt = 'icon'
+            <input type= 'image' className = 'image-icon' id = 'image' alt = 'icon'
             src = {imagePath}>
             </input>
         </Link>

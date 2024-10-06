@@ -71,13 +71,16 @@ function GeneratorStep1() {
 
   
     return (
-      <div>
-        <SideNavBar>
-        </SideNavBar>
+      <div className = 'page'>
+        <div className = 'sidebar-container'>
+          <SideNavBar>
+          </SideNavBar>
+        </div>
+        <div className = 'generatorstep1-container'>
         <StepIndicator
           activeStep = {activeStep}
         />
-        <div className = 'Container'>
+        <div className = 'row-container'>
           <h1>Upload your file</h1>
           <div className = 'break'></div>
 
@@ -101,7 +104,7 @@ function GeneratorStep1() {
           </div>
         </div>
 
-        <div className = 'Container'>
+        <div className = 'row-container'>
           <p>Which row of data you want to extract ?</p>
           <div className = 'break'></div>
           <input 
@@ -112,7 +115,7 @@ function GeneratorStep1() {
           />
         </div>
         
-        <div className = 'Next-Btn-Container'>
+        <div className = 'next-btn-container'>
           <button 
             type = 'button' 
             className = "button"
@@ -121,6 +124,8 @@ function GeneratorStep1() {
               Next
           </button>
         </div>
+        </div>
+        
       </div>
     );
 }
