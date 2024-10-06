@@ -76,7 +76,7 @@ function GeneratorStep1() {
           <SideNavBar>
           </SideNavBar>
         </div>
-        <div className = 'generatorstep1-container'>
+        <div className = 'generatorstep-container'>
         <StepIndicator
           activeStep = {activeStep}
         />

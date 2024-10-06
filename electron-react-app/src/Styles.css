@@ -72,8 +72,8 @@ html, body {
 }
 
 
-/*Home Page */
-.generatorstep1-container {
+/*Generator */
+.generatorstep-container {
   flex: 4;
   display: flex;
   align-items: center;
@@ -90,11 +90,13 @@ html, body {
   align-items: center;
 }
 .button-container{
-  margin: 20px 0 0 0;
+  margin: 10%;
+  width: 100%;
   display:flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
+
 .next-btn-container{
   display:flex;
   justify-content: end;
@@ -193,9 +195,23 @@ input::-webkit-inner-spin-button {
   padding: 1em 0.5rem;
 }
 
-
 input[type = 'file']{
   display: none;
+}
+
+.staff-input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  margin: 3%;
+}
+
+.staff-name-input {
+  width: 200px;
+  margin: 5%;
+  padding: 2%;
+  border-radius: 5%;
 }
 
 .custom-file-upload {

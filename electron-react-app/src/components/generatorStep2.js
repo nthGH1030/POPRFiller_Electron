@@ -7,6 +7,7 @@ import {useLocation} from 'react-router-dom';
 import {writePO, writePR} from '../utils/writeFile';
 import {extractDataFromExcel, readFileUpload, readExcelFile} from '../utils/readFile';
 import saveAs from 'file-saver'
+import SideNavBar from './sideNavBar';
 
 
 function GeneratorStep2() {
@@ -84,40 +85,49 @@ function GeneratorStep2() {
 
     return (
         <>
-        <StepIndicator
-            activeStep = {activeStep}
-        />
-        <div className = 'template-container'>
-            <h1>Pick a template</h1>
-            <div className = 'break'></div>
-            <div className = 'template-btn-container'>
-                <ModeBtn 
-                    text = "PO"
-                    onChange = {() => setTemplate('PO')}
-                    isChecked = {template === 'PO'}
-                />
-                <ModeBtn 
-                    text = "PR"
-                    onChange = {() => setTemplate('PR')}
-                    isChecked = {template === 'PR'}
-                />
+        <div className = 'page'>
+            <div className = 'sidebar-container'>
+                <SideNavBar>
+                </SideNavBar>
             </div>
-        </div>
-        <div className = 'Container'>
-            <p>Who is preparing this submission?</p>
-            <input type = 'text' 
-            placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
-            onChange = {handleStaff}/>
-        </div>
-        <div className = 'button-container'>
-            <Link to="/">
-                <button type = 'button' className = "button" >
-                    Back
+            <div className = 'generatorstep-container'>
+            <StepIndicator
+                activeStep = {activeStep}
+            />
+            <div className = 'template-container'>
+                <h1>Pick a template</h1>
+                <div className = 'break'></div>
+                <div className = 'template-btn-container'>
+                    <ModeBtn 
+                        text = "PO"
+                        onChange = {() => setTemplate('PO')}
+                        isChecked = {template === 'PO'}
+                    />
+                    <ModeBtn 
+                        text = "PR"
+                        onChange = {() => setTemplate('PR')}
+                        isChecked = {template === 'PR'}
+                    />
+                </div>
+            </div>
+            <div className = 'staff-input-container'>
+                <p>Who is preparing this submission?</p>
+
+                <input type = 'text' className = 'staff-name-input'
+                placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
+                onChange = {handleStaff}/>
+            </div>
+            <div className = 'button-container'>
+                <Link to="/">
+                    <button type = 'button' className = "button" >
+                        Back
+                    </button>
+                </Link>
+                <button type = 'button' className = "button generate" onClick={handleGenerate}>
+                    Generate
                 </button>
-            </Link>
-            <button type = 'button' className = "button generate" onClick={handleGenerate}>
-                Generate
-            </button>
+            </div>
+            </div>
         </div>
         </>
     );
