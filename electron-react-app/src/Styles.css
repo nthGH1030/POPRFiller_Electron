@@ -4,7 +4,7 @@
   justify-content:left;
   align-items:flex-start;
   width: 100%; /* Ensure it occupies the full width */
-  height: 75%;
+  height: 100%;
   margin: 0; /* Remove any default margin */
   padding: 0; /* Remove any default padding */
 }
@@ -20,13 +20,9 @@ html, body {
   justify-content: center;
 }
 
-:root {
-  /* Define base size variables */
-  --base-size: 1vw; /* This will scale with the width of the viewport */
-}
 
 #root {
-  width: calc(80 * var(--base-size)); /* Scale width based on viewport */
+  width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -79,7 +75,11 @@ html, body {
 /*Home Page */
 .generatorstep1-container {
   flex: 4;
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 5%;
 }
 
 .row-container{
