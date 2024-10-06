@@ -108,6 +108,7 @@ function GeneratorStep1() {
           <p>Which row of data you want to extract ?</p>
           <div className = 'break'></div>
           <input 
+          className = 'row-input'
           type = 'number' 
           min = "1" 
           placeholder = 'Eg. 134'

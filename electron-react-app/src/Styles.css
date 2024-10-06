@@ -2,6 +2,11 @@
 .page{
   display: flex;
   justify-content:left;
+  align-items:flex-start;
+  width: 100%; /* Ensure it occupies the full width */
+  height: 75%;
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
 }
 
 html, body {
@@ -9,23 +14,42 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
 }
 
-/* Assuming your whole page div has a class of .whole-page */
-.whole-page {
-  height: 100%;
-  width: 100%;
+:root {
+  /* Define base size variables */
+  --base-size: 1vw; /* This will scale with the width of the viewport */
 }
+
+#root {
+  width: calc(80 * var(--base-size)); /* Scale width based on viewport */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 
 /* sidebar style*/
 .sidebar-container {
   flex: 1;
-  border-right: thick solid black;
+  border-right: medium solid black;
+  height: 100%;
 }
 
 .image-icon {
   width: 75px;
   height: auto;
+}
+
+.link-To-Feature-Container{
+
+  text-align: center;
+  margin-top: 25%;
+
 }
 
 /* step indicator styles */
@@ -51,15 +75,10 @@ html, body {
   font-size: 1.2rem;
 }
 
-/*input */
-input {
-  border-radius: 5px;
-  padding: 1em 0.5rem;
-}
 
 /*Home Page */
 .generatorstep1-container {
-  flex: 4
+  flex: 4;
   
 }
 
@@ -98,16 +117,6 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-/* Styles for RaioBtn */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin-top: 25%;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-}
-
 .template-container {
   margin-top: 20px;
   flex-direction: column;
@@ -134,7 +143,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+/* Styles for RaioBtn */
 .mode-label {
   border-radius: 5px;
   color: #303030;
@@ -177,6 +186,13 @@ body {
 .File-Drop-Zone.has-file {
   border-style: solid;
 }
+
+/*input */
+.row-input {
+  border-radius: 5px;
+  padding: 1em 0.5rem;
+}
+
 
 input[type = 'file']{
   display: none;
