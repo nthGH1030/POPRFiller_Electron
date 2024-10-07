@@ -98,8 +98,11 @@ html, body {
 }
 
 .next-btn-container{
-  display:flex;
-  justify-content: end;
+  margin-top: 5%;
+  margin-right: 10% ;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 
 }
 
