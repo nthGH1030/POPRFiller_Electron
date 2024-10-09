@@ -8,7 +8,6 @@ const SideNavBar = () => {
 
     return (
         <div>
-
             <LinkToFeature
             route = "/"
             imagePath = {imageDownload}
@@ -16,7 +15,7 @@ const SideNavBar = () => {
             </LinkToFeature>
 
             <LinkToFeature
-                route = "/"
+                route = "/replaceTemplate"
                 imagePath = {imageUpload}
             >
             </LinkToFeature>
