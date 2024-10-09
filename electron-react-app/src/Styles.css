@@ -31,7 +31,9 @@ html, body {
 
 /* sidebar style*/
 .sidebar-container {
-  flex: 1;
+  min-width: 200px; /* Minimum size of the sidebar */
+  max-width: 400px; /* Maximum size of the sidebar */
+  flex-shrink: 0; /* Prevents the sidebar from shrinking */
   border-right: medium solid black;
   height: 100%;
 }
@@ -48,7 +50,7 @@ html, body {
 
 }
 
-/* step indicator styles */
+ 
 .StepIndicator{
   display: flex;
   align-items: center;
@@ -69,6 +71,16 @@ html, body {
 .StepIndicator-center .active{
   border-bottom:1px dashed black;
   font-size: 1.2rem;
+}
+
+/* replace template */
+.replaceTemplate-container {
+  flex: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 5%;
 }
 
 
