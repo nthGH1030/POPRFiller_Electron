@@ -41,7 +41,7 @@ function GeneratorStep1() {
   useEffect(() => {
     
     setActiveStep(location.pathname)
-    //console.log(activeStep)
+    console.log(activeStep)
     //console.log(state)
     
   },[location.pathname])
@@ -73,8 +73,7 @@ function GeneratorStep1() {
     return (
       <div className = 'page'>
         <div className = 'sidebar-container'>
-          <SideNavBar>
-          </SideNavBar>
+          <SideNavBar currentRoute = {activeStep}/>
         </div>
         <div className = 'generatorstep-container'>
         <StepIndicator

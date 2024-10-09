@@ -46,11 +46,15 @@ html, body {
 .link-To-Feature-Container{
 
   text-align: center;
-  margin-top: 25%;
+  margin: 25%;
 
 }
 
- 
+.link-To-Feature-Container .Active{
+  border: 1px solid black !important;
+}
+
+
 .StepIndicator{
   display: flex;
   align-items: center;
