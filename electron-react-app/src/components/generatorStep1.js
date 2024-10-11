@@ -3,6 +3,7 @@ import React, {useState ,useEffect, useRef } from 'react';
 import StepIndicator from './stepIndicator';
 import {useLocation, useNavigate} from 'react-router-dom';
 import SideNavBar from './sideNavBar';
+import FileUpload from './fileUpload';
 
 
 function GeneratorStep1() {
@@ -13,25 +14,16 @@ function GeneratorStep1() {
 
   const fileInputRef = useRef(null);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleFileChange = (uploadedFile) => {
+    setFile(uploadedFile);
   }
 
   const handleDropZoneClick = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileDrop = (e) => {
-    e.preventDefault();
-      const file = e.dataTransfer.files[0];
-      if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        {
-          setFile(file);
-        }
-      else
-      {
-        alert('You can only upload an excel file')
-      }
+  const handleFileDrop = (uploadedFile) => {
+    setFile(uploadedFile);
   }
 
   const handleRowChange = (e) => {
@@ -39,11 +31,12 @@ function GeneratorStep1() {
   }
 
   useEffect(() => {
-    
+
     setActiveStep(location.pathname)
-    console.log(activeStep)
+    //console.log(activeStep)
+    //console.log(file)
     //console.log(state)
-    
+
   },[location.pathname])
 
   const state = {'row': row, 'file' : file};
@@ -68,37 +61,28 @@ function GeneratorStep1() {
         navigate('/generatorStep2', {state:state});
       }
   }
-
-  
     return (
       <div className = 'page'>
         <div className = 'sidebar-container'>
           <SideNavBar currentRoute = {activeStep}/>
         </div>
-        <div className = 'generatorstep-container'>
-        <StepIndicator
-          activeStep = {activeStep}
-        />
-        <div className = 'row-container'>
-          <h1>Upload your file</h1>
-          <div className = 'break'></div>
 
-          <div 
-            className = {`File-Drop-Zone ${file ? 'has-file' : ''}`}
-            onClick={handleDropZoneClick}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={handleFileDrop}
-          > 
-            {file ? (
-                  <span className='span-cursor'>File uploaded: {file.name}</span>
-                ) : (
-                  <span className='span-cursor'>Drop your file here</span>
-            )}
-            <input  
-              ref={fileInputRef}
-              type = 'file' 
-              accept = '.xlsx'
-              onChange = {handleFileChange}
+        <div className = 'generatorstep-container'>
+          <StepIndicator
+            activeStep = {activeStep}
+          />
+        <div className = 'row-container'>
+
+          <h1>Upload your file</h1>
+          <div className = 'break'>
+          </div>
+          <div>
+            <FileUpload
+              file = {file}
+              onFileChange = {handleFileChange}
+              onFileDrop = {handleFileDrop}
+              onDropZoneClick = {handleDropZoneClick}
+              fileInputRef = {fileInputRef}
             />
           </div>
         </div>
