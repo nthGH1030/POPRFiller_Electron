@@ -40,18 +40,19 @@ html, body {
 
 .image-icon {
   width: 75px;
-  height: auto;
+  height: 75px;
 }
 
 .link-To-Feature-Container{
-
+  border: thick solid transparent;
   text-align: center;
   margin: 25%;
 
 }
 
-.link-To-Feature-Container .Active{
-  border: 1px solid black !important;
+.link-To-Feature-Container.Active{
+  border: thick solid grey;
+  border-radius: 10%;
 }
 
 
