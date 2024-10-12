@@ -34,10 +34,10 @@ function GeneratorStep1() {
 
     setActiveStep(location.pathname)
     //console.log(activeStep)
-    //console.log(file)
+    console.log(file)
     //console.log(state)
 
-  },[location.pathname])
+  },[location.pathname, file])
 
   const state = {'row': row, 'file' : file};
 
