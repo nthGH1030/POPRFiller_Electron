@@ -94,6 +94,11 @@ function handleSquirrelEvent() {
 };
 
 //-------------------functions to be exposed in renderer process--------------------------
+const templatePaths = {
+  'PO': './secrets/template PO.xlsx',
+  'PR': './secrets/template PR.xlsx',
+}
+
 // Read a given file path and return its content in buffer array
 async function readFileToBufferArray(filePath) {
     try {
@@ -106,21 +111,11 @@ async function readFileToBufferArray(filePath) {
     }
 }
 
-
 // Load template PO from backend and return it as bufferArray
-ipcMain.handle('load-template-po', async () => {
-  const poPath = path.join(__dirname, './secrets/template PO.xlsx');
-  //console.log(poPath);
-  const PO = await readFileToBufferArray(poPath);
-
-  return PO;
-});
-
-// Load template PR from backend and return it as bufferArray
-ipcMain.handle('load-template-pr', async () => {
-  const prPath = path.join(__dirname, './secrets/template PR.xlsx');
-  const PR = await readFileToBufferArray(prPath);
-  return PR;
+ipcMain.handle('load-template', async (templateType) => {
+  const templatePath = path.join(__dirname, templatePaths[templateType]);
+  const content = await readFileToBufferArray(templatePath);
+  return content;
 });
 
 //-------------------------Create App Window and load URL-------------------------------

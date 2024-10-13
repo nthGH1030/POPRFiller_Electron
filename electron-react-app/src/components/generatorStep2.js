@@ -19,14 +19,10 @@ function GeneratorStep2() {
     const {state} = location;
     const {row, file} = state;
 
-    const loadTemplate = async () => {
+    const loadTemplate = async (template) => {
         try {
             let content;
-            if (template === 'PO') {
-                content = await window.electronAPI.loadTemplatePO();
-            } else {
-                content = await window.electronAPI.loadTemplatePR();
-            }
+            content = await window.electronAPI.loadTemplate(template);
             console.log("template content: ", content);
             //console.log(localStorage.getItem('staff'));
             setTemplateContent(content);
@@ -37,7 +33,7 @@ function GeneratorStep2() {
     
     useEffect(() => {
         setActiveStep("/generatorStep2")
-        loadTemplate();
+        loadTemplate(template);
     }, [location.pathname, template])
   
     const handleGenerate = async() => {
