@@ -18,14 +18,43 @@ async function ensureDirectoryExists(folderName) {
 /*  Takes in a file object
     Get the path to the JSON DB
     Use check dupfile function to check for dups
-    if no dup, append the filename as a new item in the database
+        if no dup, 
+            append the filename as a new item in the database
+            save the user file into the target directory
+        if dup,
+            send an ipc message to renderer and ask for confirmation
+            wait for user confirmation (A promise)
+            when promise fullfilled, conduct write file operation & replace the data in database
     Doesnt return anything
 */
 
-async function appendFileToDatabase(file) {
+async function appendFileToDatabase(file, fileContent) {
     const userDataPath = app.getPath('userData')
     const dbPath = path.join(userDataPath,'fileDatabase.json')
+    const data = await fs.readFile(dbPath)
+    const jsonData = JSON.parse(data)
+    
+    if (handleDuplicatedFilename(jsonData, file) === true) {
+        //send ipc message back to renderer process 
+    }
+    else if (handleDuplicatedFilename(jsonData, file) === false) {
+        // append data
+        const dataEntry = parseData(file)
+        jsonData.push(dataEntry)
 
+        //save file in directory
+        const filePath = path.join(userDataPath, file.name);
+        const fileContent = await fs.readFile(fileContent)
+        const buffer = Buffer.from(fileContent)
+        fs.writeFile(filePath, buffer);
+
+        console.log(`file saved to ${filePath}`)
+        
+    }
+    else {
+        throw new Error('There is something wrong when handling duplicate filename')
+    }
+    /*
     try {
         const data = await fs.readFile(dbPath, 'utf8')
         const jsonData = JSON.parse(data);
@@ -37,6 +66,7 @@ async function appendFileToDatabase(file) {
             throw error;
         }
     }
+    */
 }
 
 //A function that handles dup file name
@@ -45,9 +75,22 @@ async function appendFileToDatabase(file) {
     When reply positive, return true
 */
 
-async function handleDuplicatedFilename(filename){
+async function handleDuplicatedFilename(jsonData, file){
+    
+    const duplicate = jsonData.find((item) => item.filename === file.filename)
 
+    return duplicate != undefined ? true : false;
 }
+
+// A function that parse tehe file into data that can be written into database
+async function parseFile(file){
+    const JSON = {
+        filename: file.name,
+        uploadDate: Date.now(),
+    }
+    return JSON
+}
+
 
 //A function that save file into the new directory
 /*  Takes in a file object and file path
