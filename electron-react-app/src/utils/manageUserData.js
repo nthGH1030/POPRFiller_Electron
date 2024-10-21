@@ -28,7 +28,7 @@ async function ensureDirectoryExists(folderName) {
     Doesnt return anything
 */
 
-async function appendFileToDatabase(file, fileContent) {
+async function appendFileToDatabase(file, fileArrayBuffer) {
     const userDataPath = app.getPath('userData')
     const dbPath = path.join(userDataPath,'fileDatabase.json')
     const data = await fs.readFile(dbPath)
@@ -38,49 +38,28 @@ async function appendFileToDatabase(file, fileContent) {
         //send ipc message back to renderer process 
     }
     else if (handleDuplicatedFilename(jsonData, file) === false) {
-        // append data
-        const dataEntry = parseData(file)
-        jsonData.push(dataEntry)
+        
+        //AppendData
+        await appendData(jsonData, file);
 
         //save file in directory
-        const filePath = path.join(userDataPath, file.name);
-        const fileContent = await fs.readFile(fileContent)
-        const buffer = Buffer.from(fileContent)
-        fs.writeFile(filePath, buffer);
-
-        console.log(`file saved to ${filePath}`)
+        await saveFile(userDataPath, file, fileArrayBuffer);
         
     }
     else {
         throw new Error('There is something wrong when handling duplicate filename')
     }
-    /*
-    try {
-        const data = await fs.readFile(dbPath, 'utf8')
-        const jsonData = JSON.parse(data);
-    } catch (error) {
-        if (error.code === 'ENOENT'){
-            await fs.writeFile(dbPath, JSON.stringify([]), 'utf8')
-        }
-        else {
-            throw error;
-        }
-    }
-    */
 }
 
-//A function that handles dup file name
-/*  Takes in a file name , check the data base for dups
-    If so, pass a message to renderer process and wait for reply
-    When reply positive, return true
-*/
-
+//A function that check dup file name
 async function handleDuplicatedFilename(jsonData, file){
     
     const duplicate = jsonData.find((item) => item.filename === file.filename)
 
     return duplicate != undefined ? true : false;
 }
+
+
 
 // A function that parse tehe file into data that can be written into database
 async function parseFile(file){
@@ -91,8 +70,21 @@ async function parseFile(file){
     return JSON
 }
 
+//A function that Append data
+async function appendData(jsonData, file) {
+    
+    const dataEntry = parseData(file)
+    jsonData.push(dataEntry)
+}
+
 
 //A function that save file into the new directory
-/*  Takes in a file object and file path
-    use saveAs()
-*/
+async function saveFile(userDataPath, file, fileArrayBuffer) {
+    const buffer = Buffer.from(fileArrayBuffer)
+    const filePath = path.join(userDataPath, file.name);
+    await fs.writeFile(filePath, buffer);
+
+    console.log(`file saved to ${filePath}`)
+}
+
+// A function that send IPC message to renderer process
