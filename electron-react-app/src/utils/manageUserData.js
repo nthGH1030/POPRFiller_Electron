@@ -1,4 +1,5 @@
 const fs = require ('fs').promises;
+const { ipcRenderer } = require('electron');
 const path = require('path');
 const app = require('electron').app;
 
@@ -36,6 +37,16 @@ async function appendFileToDatabase(file, fileArrayBuffer) {
     
     if (handleDuplicatedFilename(jsonData, file) === true) {
         //send ipc message back to renderer process 
+        const userConfirmation = await getUserConfirmation();
+        if (userConfirmation) {
+
+            await appendData(jsonData, file);
+            await saveFile(userDataPath, file.name, fileArrayBuffer);
+        }
+        else {
+            return
+        }
+        
     }
     else if (handleDuplicatedFilename(jsonData, file) === false) {
         
@@ -43,7 +54,7 @@ async function appendFileToDatabase(file, fileArrayBuffer) {
         await appendData(jsonData, file);
 
         //save file in directory
-        await saveFile(userDataPath, file, fileArrayBuffer);
+        await saveFile(userDataPath, file.name, fileArrayBuffer);
         
     }
     else {
@@ -73,18 +84,29 @@ async function parseFile(file){
 //A function that Append data
 async function appendData(jsonData, file) {
     
-    const dataEntry = parseData(file)
+    const dataEntry = parseFile(file)
     jsonData.push(dataEntry)
 }
 
 
 //A function that save file into the new directory
-async function saveFile(userDataPath, file, fileArrayBuffer) {
+async function saveFile(userDataPath, filename, fileArrayBuffer) {
     const buffer = Buffer.from(fileArrayBuffer)
-    const filePath = path.join(userDataPath, file.name);
+    const filePath = path.join(userDataPath, filename);
     await fs.writeFile(filePath, buffer);
 
     console.log(`file saved to ${filePath}`)
 }
 
 // A function that send IPC message to renderer process
+async function getUserConfirmation() {
+    const promise = new Promise((resolve) => {
+        ipcRenderer.send('get-user-confirmation');
+
+        ipcRenderer.once('user-confirmation-response', (event, userConfirmed) => {
+            resolve(userConfirmed);
+        })
+    })
+
+    return promise
+}
