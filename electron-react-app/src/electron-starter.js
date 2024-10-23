@@ -4,6 +4,8 @@ const url = require('url')
 const fs = require('fs').promises;
 const log = require('electron-log');
 const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
+const {appendFileToDatabase, ensureDirectoryExists} = require('./utils/manageUserData');
+
 
 //-------------------------------handle logging----------------------------------
 // Configure electron-log
@@ -118,6 +120,12 @@ ipcMain.handle('load-template', async (templateType) => {
   return content;
 });
 
+// Handle the event to append the database
+ipcMain.handle('append-file-to-database', async(event, file, fileArrayBuffer) => {
+  return await appendFileToDatabase(file, fileArrayBuffer);
+})
+
+
 //-------------------------Create App Window and load URL-------------------------------
 const createWindow = () => {
   // Create the browser window.
@@ -157,6 +165,9 @@ const createWindow = () => {
     
     mainWindow.webContents.on('did-finish-load', () => {
       mainWindow.setTitle(`${appName} ${appVersion}`);
+
+    //Set up the database
+    ensureDirectoryExists('Database')
 
     });
     

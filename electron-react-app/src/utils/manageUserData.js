@@ -1,5 +1,5 @@
 const fs = require ('fs').promises;
-const { ipcRenderer } = require('electron');
+const {dialog } = require('electron');
 const path = require('path');
 const app = require('electron').app;
 
@@ -31,7 +31,7 @@ async function ensureDirectoryExists(folderName) {
 
 async function appendFileToDatabase(file, fileArrayBuffer) {
     const userDataPath = app.getPath('userData')
-    const dbPath = path.join(userDataPath,'fileDatabase.json')
+    const dbPath = path.join(userDataPath,'Database','fileDatabase.json')
     const data = await fs.readFile(dbPath)
     const jsonData = JSON.parse(data)
     
@@ -40,7 +40,10 @@ async function appendFileToDatabase(file, fileArrayBuffer) {
         const userConfirmation = await getUserConfirmation();
         if (userConfirmation) {
 
+            //Append data in the database
             await appendData(jsonData, file);
+            
+            //Save the new template in the directory
             await saveFile(userDataPath, file.name, fileArrayBuffer);
         }
         else {
@@ -53,7 +56,7 @@ async function appendFileToDatabase(file, fileArrayBuffer) {
         //AppendData
         await appendData(jsonData, file);
 
-        //save file in directory
+        //Save the new template in the directory
         await saveFile(userDataPath, file.name, fileArrayBuffer);
         
     }
@@ -72,7 +75,7 @@ async function handleDuplicatedFilename(jsonData, file){
 
 
 
-// A function that parse tehe file into data that can be written into database
+// A function that parse the file into data that can be written into database
 async function parseFile(file){
     const JSON = {
         filename: file.name,
@@ -100,13 +103,18 @@ async function saveFile(userDataPath, filename, fileArrayBuffer) {
 
 // A function that send IPC message to renderer process
 async function getUserConfirmation() {
-    const promise = new Promise((resolve) => {
-        ipcRenderer.send('get-user-confirmation');
-
-        ipcRenderer.once('user-confirmation-response', (event, userConfirmed) => {
-            resolve(userConfirmed);
-        })
-    })
-
-    return promise
+    const result = await dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Yes', 'No'],
+        title: 'Confirm',
+        message: 'Do you want to replace the existing file?'
+    });
+    return result.response === 0; // 0 is the index of the 'Yes' button
 }
+
+
+module.exports = {
+    appendFileToDatabase,
+    ensureDirectoryExists,
+
+};
