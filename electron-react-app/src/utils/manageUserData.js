@@ -40,9 +40,10 @@ async function appendFileToDatabase(file, fileArrayBuffer) {
         const userConfirmation = await getUserConfirmation();
         if (userConfirmation) {
 
-            //Append data in the database
-            await appendData(jsonData, file);
-            
+            //Update Database
+            await updateData(jsonData, file);
+            const updatedData = JSON.stringify(jsonData, null, 2);
+            await fs.writeFile(dbPath, updatedData);
             //Save the new template in the directory
             await saveFile(userDataPath, file.name, fileArrayBuffer);
         }
@@ -53,13 +54,14 @@ async function appendFileToDatabase(file, fileArrayBuffer) {
     }
     else if (handleDuplicatedFilename(jsonData, file) === false) {
         
-        //AppendData
-        await appendData(jsonData, file);
-
+        //Update Database
+        //!!!!!! not yet updated
+        await updateData(jsonData, file);
         //Save the new template in the directory
         await saveFile(userDataPath, file.name, fileArrayBuffer);
         
     }
+
     else {
         throw new Error('There is something wrong when handling duplicate filename')
     }
@@ -73,8 +75,6 @@ async function handleDuplicatedFilename(jsonData, file){
     return duplicate != undefined ? true : false;
 }
 
-
-
 // A function that parse the file into data that can be written into database
 async function parseFile(file){
     const JSON = {
@@ -84,11 +84,25 @@ async function parseFile(file){
     return JSON
 }
 
-//A function that Append data
-async function appendData(jsonData, file) {
+//A function that Append data if it does exist, update it if it does
+async function updateData(jsonData, file) {
     
+    const updatedData = {...jsonData};
     const dataEntry = parseFile(file)
-    jsonData.push(dataEntry)
+    const existingIndex = jsonData.findIndex((entry) => entry.filename === file.name);
+    
+    //If no match is returned
+    if (existingIndex === -1) {
+        updatedData.push(dataEntry)
+    }
+    else {
+        //if match is found
+        updatedData[existingIndex] = dataEntry
+    }
+
+    return updatedData
+
+
 }
 
 
