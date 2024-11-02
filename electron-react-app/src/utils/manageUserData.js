@@ -3,32 +3,81 @@ const {dialog } = require('electron');
 const path = require('path');
 const app = require('electron').app;
 
-//A function that checks if the directory exists, else creates it
-async function ensureDirectoryExists(folderName) {
-    const userDataPath = app.getPath('userData')
-    const filePath = path.join(userDataPath, folderName)
+
+async function ensureDatabaseExist(filename, databaseDirectory){
+    const filePath = path.join(databaseDirectory,filename);
     try {
-        await fs.mkdir(filePath, {recursive: true});
-        console.log(`Directory ${filePath} is created or already exist`)
-    } catch {
-        console.log(error, 'Failed to create directory');
+        fs.access(filePath)
+    } catch(err) {
+        if(err === 'ENOENT') {
+            await fs.mkdir(filePath, {recursive: true});
+            await fs.writeFile(filePath, '[]')
+            console.log('database has been created')
+        } else {
+            console.log('There is an error in creating the database')
+        }
     }
 }
 
-//A function that append a uploaded file to a JSON database 
-/*  Takes in a file object
-    Get the path to the JSON DB
-    Use check dupfile function to check for dups
-        if no dup, 
-            append the filename as a new item in the database
-            save the user file into the target directory
-        if dup,
-            send an ipc message to renderer and ask for confirmation
-            wait for user confirmation (A promise)
-            when promise fullfilled, conduct write file operation & replace the data in database
-    Doesnt return anything
-*/
+// A function that parse the file into data that can be written into database
+async function parseFile(file){
+    const JSON = {
+        filename: file.name,
+        uploadDate: Date.now(),
+    }
+    console.log('parsed DataEntry :', JSON)
+    return JSON
+}
 
+async function appendtoDatabase(dataEntry, databaseFilepath) {
+    const databaseBuffer = await fs.readFile(databaseFilepath);
+    const databaseObj = JSON.parse(databaseBuffer);
+    databaseObj.push(dataEntry)
+    console.log('Database after append: ', databaseObj)
+
+    const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
+    await fs.writeFile(databaseFilepath, newDataInJSONString)
+}
+
+async function updateDatabase(newDataEntry, databaseFilepath) {
+    const databaseBuffer = await fs.readFile(databaseFilepath);
+    const databaseObj = JSON.parse(databaseBuffer);
+    const updatedDatabaseObj = databaseObj.map(entry => {
+        if (entry.filename === newDataEntry.filename) {
+            return {...entry, ...newDataEntry}
+        }
+    })
+    console.log('Database after update', updatedDatabaseObj)
+
+    const newDataInJSONString = JSON.stringify(updatedDatabaseObj, null, 2)
+    await fs.writeFile(databaseFilepath, newDataInJSONString)
+}
+
+// A function that send IPC message to renderer process
+async function getUserConfirmation() {
+    const result = await dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Yes', 'No'],
+        title: 'Confirm',
+        message: 'Do you want to replace the existing file?'
+    });
+    return result.response === 0; // 0 is the index of the 'Yes' button
+}
+
+async function saveTemplates(fileBufferArray, fileDirectory) {
+    
+    try { await fs.writeFile(fileBufferArray, fileDirectory)
+    } catch(error) {
+
+        console.log('Failed to save template in directory. Error: ', error)
+    }
+}
+
+
+
+
+
+/*
 async function appendFileToDatabase(file, fileArrayBuffer) {
     const userDataPath = app.getPath('userData')
     const dbPath = path.join(userDataPath,'Database','fileDatabase.json')
@@ -41,8 +90,8 @@ async function appendFileToDatabase(file, fileArrayBuffer) {
         if (userConfirmation) {
 
             //Update Database
-            await updateData(jsonData, file);
-            const updatedData = JSON.stringify(jsonData, null, 2);
+            //!!!! you cant change a const, & you need to figure out what is stringify doing
+            const updatedData = await updateData(jsonData, file);
             await fs.writeFile(dbPath, updatedData);
             //Save the new template in the directory
             await saveFile(userDataPath, file.name, fileArrayBuffer);
@@ -86,8 +135,9 @@ async function parseFile(file){
 
 //A function that Append data if it does exist, update it if it does
 async function updateData(jsonData, file) {
-    
-    const updatedData = {...jsonData};
+
+    //!!! figure out what is a shallow copy
+    let updatedData = {...jsonData};
     const dataEntry = parseFile(file)
     const existingIndex = jsonData.findIndex((entry) => entry.filename === file.name);
     
@@ -100,35 +150,19 @@ async function updateData(jsonData, file) {
         updatedData[existingIndex] = dataEntry
     }
 
-    return updatedData
-
+    const stringifiedUpdatedData = JSON.stringify(updatedData, null, 2);
+    return stringifiedUpdatedData
 
 }
-
-
-//A function that save file into the new directory
-async function saveFile(userDataPath, filename, fileArrayBuffer) {
-    const buffer = Buffer.from(fileArrayBuffer)
-    const filePath = path.join(userDataPath, filename);
-    await fs.writeFile(filePath, buffer);
-
-    console.log(`file saved to ${filePath}`)
-}
-
-// A function that send IPC message to renderer process
-async function getUserConfirmation() {
-    const result = await dialog.showMessageBox({
-        type: 'question',
-        buttons: ['Yes', 'No'],
-        title: 'Confirm',
-        message: 'Do you want to replace the existing file?'
-    });
-    return result.response === 0; // 0 is the index of the 'Yes' button
-}
-
+*/
 
 module.exports = {
-    appendFileToDatabase,
-    ensureDirectoryExists,
+    
+    ensureDatabaseExist,
+    parseFile,
+    appendtoDatabase,
+    updateDatabase,
+    getUserConfirmation,
+    saveTemplates
 
 };

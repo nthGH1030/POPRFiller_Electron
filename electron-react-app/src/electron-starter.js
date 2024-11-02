@@ -4,7 +4,9 @@ const url = require('url')
 const fs = require('fs').promises;
 const log = require('electron-log');
 const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
-const {appendFileToDatabase, ensureDirectoryExists} = require('./utils/manageUserData');
+const {ensureDatabaseExist, parseFile, appendtoDatabase, 
+      updateDatabase, getUserConfirmation, saveTemplates} 
+      = require('./utils/manageUserData');
 
 
 //-------------------------------handle logging----------------------------------
@@ -120,9 +122,25 @@ ipcMain.handle('load-template', async (templateType) => {
   return content;
 });
 
-// Handle the event to append the database
-ipcMain.handle('append-file-to-database', async(event, file, fileArrayBuffer) => {
-  return await appendFileToDatabase(file, fileArrayBuffer);
+// Append to database
+ipcMain.handle('append-data-to-database', async(dataEntry, databaseFilepath) => {
+
+  await appendtoDatabase(dataEntry, databaseFilepath);
+
+})
+
+//Ensure database exist
+ipcMain.handle('ensure-database-exist', async(filename, databaseDirectory) => {
+  
+  await ensureDatabaseExist(filename, databaseDirectory)
+
+})
+
+//Save file in directory
+ipcMain.handle('save-template-in-directory', async(fileBufferArray, fileDirectory) => {
+  
+  await saveTemplates(fileBufferArray, fileDirectory)
+  
 })
 
 
