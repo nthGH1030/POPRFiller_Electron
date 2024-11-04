@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer} = require('electron');
-const { saveTemplates } = require('./utils/manageUserData');
+
 
 
 
@@ -7,14 +7,17 @@ const { saveTemplates } = require('./utils/manageUserData');
 contextBridge.exposeInMainWorld('electronAPI', {
     loadTemplate: () => ipcRenderer.invoke('load-template'),
 
-    appendFileToDatabase: (file, fileArrayBuffer) => 
-        ipcRenderer.invoke('append-data-to-database', dataEntry, databaseFilepath),
+    appendFileToDatabase: (dataEntry) => 
+        ipcRenderer.invoke('append-data-to-database', dataEntry),
 
     ensureDatabaseExist: () => 
-        ipcRenderer.invoke('ensure-database-exist', filename, databaseDirectory),
+        ipcRenderer.invoke('ensure-database-exist'),
 
-    saveTemplates: () => 
-        ipcRenderer.invoke('save-template-in-directory', fileArrayBuffer, fileDirectory),
+    saveTemplates: (fileArrayBuffer) => 
+        ipcRenderer.invoke('save-template-in-directory', fileArrayBuffer),
+
+    parsefile: (file, templateType) => 
+        ipcRenderer.invoke('parse-file-to-json', file, templateType),
         
 });
 

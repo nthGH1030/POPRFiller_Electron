@@ -4,10 +4,14 @@ const path = require('path');
 const app = require('electron').app;
 
 
-async function ensureDatabaseExist(filename, databaseDirectory){
-    const filePath = path.join(databaseDirectory,filename);
+async function ensureDatabaseExist(){
+    const userDataPath = app.getPath('userData')
+    const databaseDirectory = path.join(userDataPath,'Database')
+    const filePath = path.join(databaseDirectory,'userDatabase.json');
+
     try {
         fs.access(filePath)
+
     } catch(err) {
         if(err === 'ENOENT') {
             await fs.mkdir(filePath, {recursive: true});
@@ -20,33 +24,52 @@ async function ensureDatabaseExist(filename, databaseDirectory){
 }
 
 // A function that parse the file into data that can be written into database
-async function parseFile(file){
+async function parseFile(file, templateType){
     const JSON = {
         filename: file.name,
         uploadDate: Date.now(),
+        templateType: templateType
     }
     console.log('parsed DataEntry :', JSON)
     return JSON
 }
 
-async function appendtoDatabase(dataEntry, databaseFilepath) {
-    const databaseBuffer = await fs.readFile(databaseFilepath);
-    const databaseObj = JSON.parse(databaseBuffer);
-    databaseObj.push(dataEntry)
-    console.log('Database after append: ', databaseObj)
+async function appendtoDatabase(dataEntry) {
+    try {
+        const userDataPath = app.getPath('userData')
+        const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
+    
+        const databaseBuffer = await fs.readFile(databaseFilepath);
+        const databaseObj = JSON.parse(databaseBuffer);
+        databaseObj.push(dataEntry)
+    
+        console.log('Database after append: ', databaseObj)
+    
+        const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
+        await fs.writeFile(databaseFilepath, newDataInJSONString)
 
-    const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
-    await fs.writeFile(databaseFilepath, newDataInJSONString)
+        return {success: true}
+
+    } catch(error) {
+        console.error('Failed to append file to database:', error);
+        return { success: false, error: error.message };
+    }
+
 }
 
-async function updateDatabase(newDataEntry, databaseFilepath) {
+async function updateDatabase(newDataEntry) {
+    const userDataPath = app.getPath('userData')
+    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
+
     const databaseBuffer = await fs.readFile(databaseFilepath);
     const databaseObj = JSON.parse(databaseBuffer);
+
     const updatedDatabaseObj = databaseObj.map(entry => {
         if (entry.filename === newDataEntry.filename) {
             return {...entry, ...newDataEntry}
         }
     })
+    
     console.log('Database after update', updatedDatabaseObj)
 
     const newDataInJSONString = JSON.stringify(updatedDatabaseObj, null, 2)
@@ -64,9 +87,12 @@ async function getUserConfirmation() {
     return result.response === 0; // 0 is the index of the 'Yes' button
 }
 
-async function saveTemplates(fileBufferArray, fileDirectory) {
+async function saveTemplates(fileBufferArray) {
+    //Need to check if user has created such directory
+    const userDataPath = app.getPath('userData')
+    const templateDirectory = path.join(userDataPath,'UserUploadedTemplate')
     
-    try { await fs.writeFile(fileBufferArray, fileDirectory)
+    try { await fs.writeFile(fileBufferArray, templateDirectory)
     } catch(error) {
 
         console.log('Failed to save template in directory. Error: ', error)

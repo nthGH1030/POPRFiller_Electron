@@ -123,25 +123,35 @@ ipcMain.handle('load-template', async (templateType) => {
 });
 
 // Append to database
-ipcMain.handle('append-data-to-database', async(dataEntry, databaseFilepath) => {
+ipcMain.handle('append-data-to-database', async(event, dataEntry) => {
 
-  await appendtoDatabase(dataEntry, databaseFilepath);
-
+  const result = await appendtoDatabase(dataEntry);
+  if (result.success) {
+    return 'Data is successfully appended to database';
+  } else {
+    return 'Data append failed, please try again';
+  }
 })
 
 //Ensure database exist
-ipcMain.handle('ensure-database-exist', async(filename, databaseDirectory) => {
+ipcMain.handle('ensure-database-exist', async() => {
   
-  await ensureDatabaseExist(filename, databaseDirectory)
+  await ensureDatabaseExist(filename)
 
 })
 
 //Save file in directory
-ipcMain.handle('save-template-in-directory', async(fileBufferArray, fileDirectory) => {
+ipcMain.handle('save-template-in-directory', async(fileBufferArray) => {
   
-  await saveTemplates(fileBufferArray, fileDirectory)
-  
+  await saveTemplates(fileBufferArray)
+
 })
+
+ipcMain.handle('parse-file-to-json'), async(file, templateType) => {
+
+  await parseFile(file, templateType)
+
+}
 
 
 //-------------------------Create App Window and load URL-------------------------------

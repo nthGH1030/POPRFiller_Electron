@@ -1,12 +1,14 @@
 import '../Styles.css';
-import React from 'react';
+import React, {useState} from 'react';
 
 const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputRef}) => {
+
 
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
             onFileChange(file)
+
         }
         else {
           alert('You can only upload an excel file')
@@ -18,6 +20,7 @@ const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputR
         const file = e.dataTransfer.files[0];
         if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
             onFileDrop(file)
+
         }
         else {
           alert('You can only upload an excel file')

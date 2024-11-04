@@ -5,6 +5,7 @@ import SideNavBar from './sideNavBar';
 import FileUpload from './fileUpload';
 import ModeBtn from './modeBtn';
 
+//Figure out how to receive message from main process
 const ReplaceTemplate = () => {
 
     let location = useLocation();
@@ -24,30 +25,53 @@ const ReplaceTemplate = () => {
     const handleFileDrop = (uploadedFile) => {
         setFile(uploadedFile);
     }
-    const handleApplyClick = () => {
-        const fileName = file.name.toLowerCase();
+    const handleApplyClick = async (
+        file, 
+        mode, 
+        parseFile, 
+        ensureDatabaseExist, 
+        appendFileToDatabase, 
+        saveTemplates) => {
+
+        await ensureDatabaseExist()
+        const JSON = await parseFile(file, mode)
         
-        if (mode === 'PO' && fileName.includes('po')) {
+        if (mode === 'PO') {
             console.log('template is PO')
+            await appendFileToDatabase(JSON)
+            await saveTemplates(file)
         }
-        else if (mode === 'PR' && fileName.includes('pr')) {
+        else if (mode === 'PR') {
             console.log('template is PR')
         }
-        else if (fileName.includes('po') && fileName.includes('pr') ) {
-            alert('Invalid File name, Your template file name must include the word "PO" or "PR" and not both')
-        }
-        else if (!fileName.includes(mode)) {
-            alert('Invalid File name, Your template file name must include the word "PO" or "PR"')
-        }
     }
+
+    const appendFileToDatabase = async (dataEntry) => {
+        const message = await window.electronAPI.appendFileToDatabase(dataEntry);
+        alert(message)
+    }
+
+    const ensureDatabaseExist = async () => {
+        await window.electronAPI.ensureDatabaseExist()
+    }
+
+    const saveTemplates = async (fileArrayBuffer) => {
+        await window.electronAPI.saveTemplates(fileArrayBuffer)
+    }
+
+    const parseFile = async (file, templateType) => {
+        await window.electronAPI.parseFile(file, templateType)
+    } 
         
     useEffect(() => {
-
         setActiveStep(location.pathname)
         console.log(file)
         //console.log(activeStep)
     
       },[location.pathname, file])
+    
+      
+
 
     return (
         <div className = 'page'>
@@ -100,7 +124,13 @@ const ReplaceTemplate = () => {
                     <button 
                         type = 'button' 
                         className = "button"
-                        onClick = {handleApplyClick}
+                        onClick = {() => handleApplyClick(
+                            file, 
+                            mode, 
+                            parseFile, 
+                            ensureDatabaseExist, 
+                            appendFileToDatabase, 
+                            saveTemplates)}
                     >
                     Apply
                 </button>
