@@ -129,7 +129,7 @@ ipcMain.handle('append-data-to-database', async(event, dataEntry) => {
   if (result.success) {
     return 'Data is successfully appended to database';
   } else {
-    return 'Data append failed, please try again';
+    return `Data append failed, please try again : ${result.error}`
   }
 })
 
