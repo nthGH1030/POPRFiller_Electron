@@ -18,6 +18,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
     parsefile: (file, templateType) => 
         ipcRenderer.invoke('parse-file-to-json', file, templateType),
+
+    askUserConfirmation: (message, functionToExecute, args = []) => 
+        ipcRenderer.invoke('user-confirm-action', message, functionToExecute, args)
         
 });
 

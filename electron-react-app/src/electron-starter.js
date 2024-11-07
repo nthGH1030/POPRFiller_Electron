@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const url = require('url')
 const fs = require('fs').promises;
@@ -151,6 +151,30 @@ ipcMain.handle('parse-file-to-json'), async(file, templateType) => {
 
   await parseFile(file, templateType)
 
+}
+
+ipcMain.handle('user-confirm-action'), async(message, functionToExecute, args) => {
+  const result = await dialog.showMessageBox({
+    type: 'question',
+    button: ['Yes', 'No'],
+    title: 'Confirmation',
+    message: message,
+  });
+  if (result.response === 0) {
+    if(Array.isArray(args)) {
+      await functionToExecute.apply(null.args);
+
+    } else if (args != undefined) {
+      await functionToExecute(args);
+
+    } else {
+      await functionToExecute();
+      
+    }
+  } else {
+
+    return
+  }
 }
 
 
