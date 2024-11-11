@@ -7,21 +7,24 @@ const { contextBridge, ipcRenderer} = require('electron');
 contextBridge.exposeInMainWorld('electronAPI', {
     loadTemplate: () => ipcRenderer.invoke('load-template'),
 
-    appendFileToDatabase: (dataEntry) => 
-        ipcRenderer.invoke('append-data-to-database', dataEntry),
-
-    ensureDatabaseExist: () => 
-        ipcRenderer.invoke('ensure-database-exist'),
-
-    saveTemplates: (fileArrayBuffer) => 
-        ipcRenderer.invoke('save-template-in-directory', fileArrayBuffer),
-
     parsefile: (file, templateType) => 
         ipcRenderer.invoke('parse-file-to-json', file, templateType),
 
-    askUserConfirmation: (message, functionToExecute, args = []) => 
-        ipcRenderer.invoke('user-confirm-action', message, functionToExecute, args)
-        
+    checkForDuplicate: (newDataEntry) => 
+        ipcRenderer.invoke('check-duplicate-filename-in-database', newDataEntry),
+    
+    getUserConfirmation: (message) => 
+        ipcRenderer.invoke('get-user-confirmation', message),
+
+    updateDatabase: (updatedDatbaseObj) => 
+        ipcRenderer.invoke('update-database', updatedDatbaseObj),
+
+    appendFileToDatabase: (dataEntry) => 
+        ipcRenderer.invoke('append-data-to-database', dataEntry),
+
+    saveTemplates: (fileArrayBuffer, templateType) => 
+        ipcRenderer.invoke('save-template-in-directory', fileArrayBuffer, templateType),
+
 });
 
 console.log('the preload script has run')

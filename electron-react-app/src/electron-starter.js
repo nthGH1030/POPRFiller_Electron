@@ -5,7 +5,8 @@ const fs = require('fs').promises;
 const log = require('electron-log');
 const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
 const {ensureDatabaseExist, parseFile, appendtoDatabase, 
-      updateDatabase, getUserConfirmation, saveTemplates} 
+      updateDatabase, checkForDuplicate ,getUserConfirmation, ensureTemplateDirectoryExist,
+      saveTemplates} 
       = require('./utils/manageUserData');
 
 
@@ -122,7 +123,35 @@ ipcMain.handle('load-template', async (templateType) => {
   return content;
 });
 
-// Append to database
+//Parse user data into a writtable dataEntry
+ipcMain.handle('parse-file-to-json', async(file, templateType) => {
+  const JSON = await parseFile(file, templateType)
+  return JSON
+})
+
+//Check for duplicate filename in database
+ipcMain.handle('check-duplicate-filename-in-database' , async (event, newDataEntry) => {
+  const updatedDatabaseObj = await checkForDuplicate(newDataEntry)
+  return updatedDatabaseObj
+})
+
+//Get user confirm (To overwrite existingfile)
+ipcMain.handle('get-user-confirmation', async(event, message) => {
+  const userResponse = await getUserConfirmation(message)
+  return userResponse
+})
+
+//Update Database
+ipcMain.handle('update-database' , async(event, updatedDatabaseObj) => {
+  const result = await updateDatabase(updatedDatabaseObj);
+  if (result.success) {
+    return 'Data is successfully updated to database';
+  } else {
+    return `Data update failed, please try again : ${result.error}`
+  }
+})
+
+//Append to database
 ipcMain.handle('append-data-to-database', async(event, dataEntry) => {
 
   const result = await appendtoDatabase(dataEntry);
@@ -133,49 +162,18 @@ ipcMain.handle('append-data-to-database', async(event, dataEntry) => {
   }
 })
 
-//Ensure database exist
-ipcMain.handle('ensure-database-exist', async() => {
-  
-  await ensureDatabaseExist(filename)
-
-})
-
 //Save file in directory
-ipcMain.handle('save-template-in-directory', async(fileBufferArray) => {
-  
-  await saveTemplates(fileBufferArray)
+ipcMain.handle('save-template-in-directory', async(event, fileBufferArray) => {
+  const result = await saveTemplates(fileBufferArray)
 
+  if (result.success) {
+    return 'Template is succesfully saved to directory';
+  } else {
+    return `Template failed to save to directory, please try again : ${result.error}`
+  }
 })
 
-ipcMain.handle('parse-file-to-json'), async(file, templateType) => {
 
-  await parseFile(file, templateType)
-
-}
-
-ipcMain.handle('user-confirm-action'), async(message, functionToExecute, args) => {
-  const result = await dialog.showMessageBox({
-    type: 'question',
-    button: ['Yes', 'No'],
-    title: 'Confirmation',
-    message: message,
-  });
-  if (result.response === 0) {
-    if(Array.isArray(args)) {
-      await functionToExecute.apply(null.args);
-
-    } else if (args != undefined) {
-      await functionToExecute(args);
-
-    } else {
-      await functionToExecute();
-      
-    }
-  } else {
-
-    return
-  }
-}
 
 
 //-------------------------Create App Window and load URL-------------------------------
@@ -188,7 +186,6 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
-      
     }
     
   });
@@ -218,8 +215,9 @@ const createWindow = () => {
     mainWindow.webContents.on('did-finish-load', () => {
       mainWindow.setTitle(`${appName} ${appVersion}`);
 
-    //Set up the database
-    ensureDirectoryExists('Database')
+    //ensureDatabaseExist()
+    //ensureTemplateDirectoryExist(PO)
+    //ensureTemplateDirectoryExist(PR)
 
     });
     

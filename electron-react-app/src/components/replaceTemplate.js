@@ -5,6 +5,7 @@ import SideNavBar from './sideNavBar';
 import FileUpload from './fileUpload';
 import ModeBtn from './modeBtn';
 
+
 //Figure out how to receive message from main process
 const ReplaceTemplate = () => {
 
@@ -25,53 +26,80 @@ const ReplaceTemplate = () => {
     const handleFileDrop = (uploadedFile) => {
         setFile(uploadedFile);
     }
+
     const handleApplyClick = async (
         file, 
         mode, 
         parseFile, 
-        ensureDatabaseExist, 
-        appendFileToDatabase, 
+        checkForDuplicate,
+        getUserConfirmation,
+        updateDatabase, 
+        appendFileToDatabase,
         saveTemplates) => {
 
-        await ensureDatabaseExist()
+        //handle database operation
         const JSON = await parseFile(file, mode)
-        
-        if (mode === 'PO') {
-            console.log('template is PO')
-            await appendFileToDatabase(JSON)
-            await saveTemplates(file)
+        const duplicate = await checkForDuplicate(JSON)
+
+        if (duplicate === null) {
+            const appendResult = await appendFileToDatabase(JSON)
+            console.log(appendResult)
+
+            const saveResult = await saveTemplates(file, mode)
+            console.log(saveResult)
+        } else {
+            const updateResult = await updateDatabase(duplicate)
+            console.log('The updated database is : ', updateResult)
+
+            const userConfirmation = await getUserConfirmation(
+                'A file with duplicate filename is found, do you wish to replace it? ')
+            console.log('userConfirmation is :', userConfirmation)
+
+            if (userConfirmation === 'Yes') {
+                const saveResult = await saveTemplates(file, mode)
+                console.log(saveResult)
+            } else {
+                return
+            }          
         }
-        else if (mode === 'PR') {
-            console.log('template is PR')
-        }
-    }
-
-    const appendFileToDatabase = async (dataEntry) => {
-        const message = await window.electronAPI.appendFileToDatabase(dataEntry);
-        alert(message)
-    }
-
-    const ensureDatabaseExist = async () => {
-        await window.electronAPI.ensureDatabaseExist()
-    }
-
-    const saveTemplates = async (fileArrayBuffer) => {
-        await window.electronAPI.saveTemplates(fileArrayBuffer)
     }
 
     const parseFile = async (file, templateType) => {
-        await window.electronAPI.parseFile(file, templateType)
+        const result = await window.electronAPI.parseFile(file, templateType)
+        return result 
     } 
-        
+    
+    const checkForDuplicate = async (newDataEntry) => {
+        const result = await window.electronAPI.checkForDuplicate(newDataEntry)
+        return result
+    }
+
+    const getUserConfirmation = async (message) => {
+        const result = await window.electronAPI.getUserConfirmation(message)
+        return result
+    }
+
+    const updateDatabase = async (updatedDatabaseObj) => {
+        const result = await window.electronAPI.updateDatabase(updatedDatabaseObj)
+        return result
+    }
+
+    const appendFileToDatabase = async (dataEntry) => {
+        const result = await window.electronAPI.appendFileToDatabase(dataEntry);
+        return result
+    }
+
+    const saveTemplates = async (fileArrayBuffer) => {
+        const result = await window.electronAPI.saveTemplates(fileArrayBuffer)
+        return result
+    }
+
     useEffect(() => {
         setActiveStep(location.pathname)
         console.log(file)
         //console.log(activeStep)
     
       },[location.pathname, file])
-    
-      
-
 
     return (
         <div className = 'page'>
@@ -90,15 +118,7 @@ const ReplaceTemplate = () => {
                     */}
                 </div>
                 <h1>Upload a new template</h1>
-                <div className = 'file-upload-container'>
-
-                    {/* 
-                        1. implement the File Upload feature from the Fileupload component
-                        2. Saved the uploaded file in the state
-                        3. check whether the template is PO or a PR
-                        4. A button to apply 
-                        5. make a PO and a PR version of this
-                    */}                  
+                <div className = 'file-upload-container'>              
                     <FileUpload
                         file = {file}
                         onFileChange = {handleFileChange}
@@ -128,8 +148,10 @@ const ReplaceTemplate = () => {
                             file, 
                             mode, 
                             parseFile, 
-                            ensureDatabaseExist, 
-                            appendFileToDatabase, 
+                            checkForDuplicate,
+                            getUserConfirmation,
+                            updateDatabase, 
+                            appendFileToDatabase,
                             saveTemplates)}
                     >
                     Apply
