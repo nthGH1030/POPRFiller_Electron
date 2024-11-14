@@ -5,7 +5,7 @@ const { contextBridge, ipcRenderer} = require('electron');
 contextBridge.exposeInMainWorld('electronAPI', {
     logMessage: () => ipcRenderer.invoke('log-main-process-message'),
 
-    loadTemplate: () => ipcRenderer.invoke('load-template'),
+    loadTemplate: (templateType) => ipcRenderer.invoke('load-template', templateType),
 
     parsefile: (file, templateType) => 
         ipcRenderer.invoke('parse-file-to-json', file, templateType),

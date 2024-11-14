@@ -127,14 +127,14 @@ async function readFileToBufferArray(filePath) {
 }
 
 // Load template PO from backend and return it as bufferArray
-ipcMain.handle('load-template', async (templateType) => {
+ipcMain.handle('load-template', async (event , templateType) => {
   const templatePath = path.join(__dirname, templatePaths[templateType]);
   const content = await readFileToBufferArray(templatePath);
   return content;
 });
 
 //Parse user data into a writtable dataEntry
-ipcMain.handle('parse-file-to-json', async(file, templateType) => {
+ipcMain.handle('parse-file-to-json', async(event, file, templateType) => {
   const JSON = await parseFile(file, templateType)
   return JSON
 })
