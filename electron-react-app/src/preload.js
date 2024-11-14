@@ -1,10 +1,10 @@
 const { contextBridge, ipcRenderer} = require('electron');
 
 
-
-
 // Expose the readFileContent function to the renderer process
 contextBridge.exposeInMainWorld('electronAPI', {
+    logMessage: () => ipcRenderer.invoke('log-main-process-message'),
+
     loadTemplate: () => ipcRenderer.invoke('load-template'),
 
     parsefile: (file, templateType) => 

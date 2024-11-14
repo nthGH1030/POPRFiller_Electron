@@ -15,6 +15,42 @@ const ReplaceTemplate = () => {
     const [file, setFile] = useState(null);
     const fileInputRef = useRef(null);
 
+    const logMessage = async () => {
+        const result = await window.electronAPI.logMessage();
+        return result
+    }
+
+    const parseFile = async (file, templateType) => {
+        const result = await window.electronAPI.parseFile(file, templateType)
+        return result 
+    } 
+    
+    const checkForDuplicate = async (newDataEntry) => {
+        const result = await window.electronAPI.checkForDuplicate(newDataEntry)
+        return result
+    }
+
+    const getUserConfirmation = async (message) => {
+        const result = await window.electronAPI.getUserConfirmation(message)
+        return result
+    }
+
+    const updateDatabase = async (updatedDatabaseObj) => {
+        const result = await window.electronAPI.updateDatabase(updatedDatabaseObj)
+        return result
+    }
+
+    const appendFileToDatabase = async (dataEntry) => {
+        const result = await window.electronAPI.appendFileToDatabase(dataEntry);
+        return result
+    }
+
+    const saveTemplates = async (fileArrayBuffer) => {
+        const result = await window.electronAPI.saveTemplates(fileArrayBuffer)
+        return result
+    }
+
+
     const handleFileChange = (uploadedFile) => {
         setFile(uploadedFile);
     }
@@ -64,39 +100,12 @@ const ReplaceTemplate = () => {
         }
     }
 
-    const parseFile = async (file, templateType) => {
-        const result = await window.electronAPI.parseFile(file, templateType)
-        return result 
-    } 
-    
-    const checkForDuplicate = async (newDataEntry) => {
-        const result = await window.electronAPI.checkForDuplicate(newDataEntry)
-        return result
-    }
-
-    const getUserConfirmation = async (message) => {
-        const result = await window.electronAPI.getUserConfirmation(message)
-        return result
-    }
-
-    const updateDatabase = async (updatedDatabaseObj) => {
-        const result = await window.electronAPI.updateDatabase(updatedDatabaseObj)
-        return result
-    }
-
-    const appendFileToDatabase = async (dataEntry) => {
-        const result = await window.electronAPI.appendFileToDatabase(dataEntry);
-        return result
-    }
-
-    const saveTemplates = async (fileArrayBuffer) => {
-        const result = await window.electronAPI.saveTemplates(fileArrayBuffer)
-        return result
-    }
-
+   
     useEffect(() => {
         setActiveStep(location.pathname)
         console.log(file)
+        const result = logMessage()
+        console.log(result)
         //console.log(activeStep)
     
       },[location.pathname, file])

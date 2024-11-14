@@ -98,6 +98,16 @@ function handleSquirrelEvent() {
   }
 };
 
+//---------------Debug tool---------------------//
+
+ipcMain.handle('log-main-process-message' , async (event) => {
+  const databaseExist = await ensureDatabaseExist()
+  const POdirectoryExist = await ensureTemplateDirectoryExist('PO')
+  const PRdirectoryExist = await ensureTemplateDirectoryExist('PR')
+  const userDataPath = app.getPath('userData')
+  return [`Message: ${userDataPath}, ${databaseExist}, ${POdirectoryExist}, ${PRdirectoryExist}`]
+})
+
 //-------------------functions to be exposed in renderer process--------------------------
 const templatePaths = {
   'PO': './secrets/template PO.xlsx',
@@ -174,8 +184,6 @@ ipcMain.handle('save-template-in-directory', async(event, fileBufferArray) => {
 })
 
 
-
-
 //-------------------------Create App Window and load URL-------------------------------
 const createWindow = () => {
   // Create the browser window.
@@ -200,24 +208,20 @@ const createWindow = () => {
         });
     
 
-    //logToFile(`The file path loaded is : ${startUrl}`)
+      //logToFile(`The file path loaded is : ${startUrl}`)
 
-    mainWindow.loadURL(startUrl)
+      mainWindow.loadURL(startUrl)
 
-    //Set the app title and version number
-    const packageJsonPath = path.join(__dirname, '../package.json');
-    const packageJson = require(packageJsonPath);
+      //Set the app title and version number
+      const packageJsonPath = path.join(__dirname, '../package.json');
+      const packageJson = require(packageJsonPath);
 
-    const appName = packageJson.productName;
-    const appVersion = packageJson.version;
+      const appName = packageJson.productName;
+      const appVersion = packageJson.version;
 
-    
-    mainWindow.webContents.on('did-finish-load', () => {
-      mainWindow.setTitle(`${appName} ${appVersion}`);
-
-    //ensureDatabaseExist()
-    //ensureTemplateDirectoryExist(PO)
-    //ensureTemplateDirectoryExist(PR)
+      
+      mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.setTitle(`${appName} ${appVersion}`);
 
     });
     

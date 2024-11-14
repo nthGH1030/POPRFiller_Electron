@@ -10,16 +10,16 @@ async function ensureDatabaseExist(){
     const filePath = path.join(databaseDirectory,'userDatabase.json');
 
     try {
-        fs.access(filePath)
+        await fs.access(filePath)
         return 'There is already an existing database'
 
     } catch(err) {
-        if(err === 'ENOENT') {
-            await fs.mkdir(filePath, {recursive: true});
+        if(err.code === 'ENOENT') {
+            await fs.mkdir(databaseDirectory, {recursive: true});
             await fs.writeFile(filePath, '[]')
             return 'database has been created'
         } else {
-            return 'There is an error in creating the database'
+            return `Error: ${err}, There is an error in creating the database`
         }
     }
 }
@@ -113,19 +113,19 @@ async function appendtoDatabase(dataEntry) {
 // Ensure template directory exists
 async function ensureTemplateDirectoryExist(templateType) {
     const userDataPath = app.getPath('userData')
-    const fileDirectory = path.join(userDataPath, 'UserUploaded' ,templateType)
+    const fileDirectory = path.join(userDataPath, 'UserUploadedTemplate' ,templateType)
 
     try {
-        fs.access(fileDirectory)
+        await fs.access(fileDirectory)
         return 'There is already an existing database'
 
     } catch(err) {
-        if(err === 'ENOENT') {
+        if(err.code === 'ENOENT') {
             await fs.mkdir(fileDirectory, {recursive: true});
 
             return 'Template Directory has been created'
         } else {
-            return 'There is an error in creating template directory'
+            return `Error: ${err}, There is an error in creating template directory`
         }
     }
 }
