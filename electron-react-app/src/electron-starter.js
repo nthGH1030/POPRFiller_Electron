@@ -173,8 +173,8 @@ ipcMain.handle('append-data-to-database', async(event, dataEntry) => {
 })
 
 //Save file in directory
-ipcMain.handle('save-template-in-directory', async(event, fileBufferArray) => {
-  const result = await saveTemplates(fileBufferArray)
+ipcMain.handle('save-template-in-directory', async(event, fileBufferArray, filename, templateType) => {
+  const result = await saveTemplates(fileBufferArray, filename, templateType)
 
   if (result.success) {
     return 'Template is succesfully saved to directory';

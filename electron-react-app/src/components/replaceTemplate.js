@@ -46,8 +46,8 @@ const ReplaceTemplate = () => {
         return result
     }
 
-    const saveTemplates = async (fileArrayBuffer) => {
-        const result = await window.electronAPI.saveTemplates(fileArrayBuffer)
+    const saveTemplates = async (fileArrayBuffer, filename, templateType) => {
+        const result = await window.electronAPI.saveTemplates(fileArrayBuffer, filename, templateType)
         return result
     }
 
@@ -76,12 +76,13 @@ const ReplaceTemplate = () => {
         const filename = file.name
         const JSON = await parseFile(filename, mode)
         const duplicate = await checkForDuplicate(JSON)
+        const fileArrayBuffer = await file.arrayBuffer();
 
         if (duplicate === null) {
             const appendResult = await appendFileToDatabase(JSON)
             console.log(appendResult)
 
-            const saveResult = await saveTemplates(file, mode)
+            const saveResult = await saveTemplates(fileArrayBuffer ,filename, mode)
             console.log(saveResult)
         } else {
             const updateResult = await updateDatabase(duplicate)
@@ -92,7 +93,7 @@ const ReplaceTemplate = () => {
             console.log('userConfirmation is :', userConfirmation)
 
             if (userConfirmation === 'Yes') {
-                const saveResult = await saveTemplates(file, mode)
+                const saveResult = await saveTemplates(fileArrayBuffer, filename, mode)
                 console.log(saveResult)
             } else {
                 return

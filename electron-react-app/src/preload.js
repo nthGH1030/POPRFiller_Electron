@@ -22,8 +22,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     appendFileToDatabase: (dataEntry) => 
         ipcRenderer.invoke('append-data-to-database', dataEntry),
 
-    saveTemplates: (fileArrayBuffer, templateType) => 
-        ipcRenderer.invoke('save-template-in-directory', fileArrayBuffer, templateType),
+    saveTemplates: (fileArrayBuffer, filename, templateType) => 
+        ipcRenderer.invoke('save-template-in-directory', fileArrayBuffer, filename, templateType),
 
 });
 

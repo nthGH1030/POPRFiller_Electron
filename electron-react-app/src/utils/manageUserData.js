@@ -132,18 +132,19 @@ async function ensureTemplateDirectoryExist(templateType) {
 }
 
 //Save database in destination
-async function saveTemplates(fileBufferArray, templateType) {
+async function saveTemplates(fileBufferArray, filename, templateType) {
 
     const userDataPath = app.getPath('userData')
-    const templateDirectory = path.join(userDataPath, 'UserUploaded', templateType)
-    
+    const templateDirectory = path.join(userDataPath, 'UserUploadedTemplate', templateType)
+    const filepath = path.join(templateDirectory, filename)
+    const buffer = Buffer.from(fileBufferArray)
     try { 
-        await fs.writeFile(fileBufferArray, templateDirectory)
+        await fs.writeFile(filepath, buffer)
         return {success: true}
         
     } catch(error) {
 
-        return { success: false, error: error.message };
+        return { success: false, error: error.message};
     }
 }
 
