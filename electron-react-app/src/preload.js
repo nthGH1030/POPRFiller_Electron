@@ -7,8 +7,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
     loadTemplate: (templateType) => ipcRenderer.invoke('load-template', templateType),
 
-    parsefile: (file, templateType) => 
-        ipcRenderer.invoke('parse-file-to-json', file, templateType),
+    parseFile: (filename, templateType) => 
+        ipcRenderer.invoke('parse-file-to-json', filename, templateType),
 
     checkForDuplicate: (newDataEntry) => 
         ipcRenderer.invoke('check-duplicate-filename-in-database', newDataEntry),

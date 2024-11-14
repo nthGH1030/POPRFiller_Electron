@@ -21,7 +21,8 @@ const ReplaceTemplate = () => {
     }
 
     const parseFile = async (file, templateType) => {
-        const result = await window.electronAPI.parseFile(file, templateType)
+        const result = await window.electronAPI.parseFile(file, templateType);
+        console.log(result)
         return result 
     } 
     
@@ -64,8 +65,6 @@ const ReplaceTemplate = () => {
     }
 
     const handleApplyClick = async (
-        file, 
-        mode, 
         parseFile, 
         checkForDuplicate,
         getUserConfirmation,
@@ -74,7 +73,8 @@ const ReplaceTemplate = () => {
         saveTemplates) => {
 
         //handle database operation
-        const JSON = await parseFile(file, mode)
+        const filename = file.name
+        const JSON = await parseFile(filename, mode)
         const duplicate = await checkForDuplicate(JSON)
 
         if (duplicate === null) {
@@ -154,8 +154,6 @@ const ReplaceTemplate = () => {
                         type = 'button' 
                         className = "button"
                         onClick = {() => handleApplyClick(
-                            file, 
-                            mode, 
                             parseFile, 
                             checkForDuplicate,
                             getUserConfirmation,

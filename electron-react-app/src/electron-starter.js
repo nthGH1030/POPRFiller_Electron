@@ -134,8 +134,8 @@ ipcMain.handle('load-template', async (event , templateType) => {
 });
 
 //Parse user data into a writtable dataEntry
-ipcMain.handle('parse-file-to-json', async(event, file, templateType) => {
-  const JSON = await parseFile(file, templateType)
+ipcMain.handle('parse-file-to-json', async(event, filename, templateType) => {
+  const JSON = await parseFile(filename, templateType)
   return JSON
 })
 

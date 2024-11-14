@@ -26,9 +26,9 @@ async function ensureDatabaseExist(){
 
 
 // A function that parse the file into data that can be written into database
-async function parseFile(file, templateType){
+async function parseFile(filename, templateType){
     const JSON = {
-        filename: file.name,
+        filename: filename,
         uploadDate: Date.now(),
         templateType: templateType
     }
@@ -38,8 +38,9 @@ async function parseFile(file, templateType){
 
 async function checkForDuplicate(newDataEntry) {
     const userDataPath = app.getPath('userData')
-    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
-    const databaseBuffer = await fs.readFile(databaseFilepath);
+    const databaseDirectory = path.join(userDataPath,'Database')
+    const filePath = path.join(databaseDirectory,'userDatabase.json');
+    const databaseBuffer = await fs.readFile(filePath);
     const databaseObj = JSON.parse(databaseBuffer);
     let foundDuplicate = false
 
@@ -92,7 +93,7 @@ async function updateDatabase(updatedDatabaseObj) {
 async function appendtoDatabase(dataEntry) {
     try {
         const userDataPath = app.getPath('userData')
-        const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
+        const databaseFilepath = path.join(userDataPath,'Database','userDatabase.json')
     
         const databaseBuffer = await fs.readFile(databaseFilepath);
         const databaseObj = JSON.parse(databaseBuffer);
