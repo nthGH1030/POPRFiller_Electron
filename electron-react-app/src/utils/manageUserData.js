@@ -30,7 +30,8 @@ async function parseFile(file, templateType){
     const JSON = {
         filename: file.name,
         uploadDate: Date.now(),
-        templateType: templateType
+        templateType: templateType,
+        status: "unselected"
     }
     console.log('parsed DataEntry :', JSON)
     return JSON
@@ -106,6 +107,50 @@ async function appendtoDatabase(dataEntry) {
     } catch(error) {
 
         return { success: false, error: error.message };
+    }
+}
+
+async function getFileDatabyTemplateType(templateType) {
+    try {
+
+        const userDataPath = app.getPath('userData')
+        const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
+        const databaseBuffer = await fs.readFile(databaseFilepath);
+        const databaseObj = JSON.parse(databaseBuffer);
+        
+        const filteredData = databaseObj.filter(
+            entry => entry.templateType === templateType);
+            
+        return filteredData   
+    } catch(error) {
+        return {error: error.message}
+    }
+}
+
+async function selectAndDeselectTemplate(filename) {
+    const userDataPath = app.getPath('userData')
+    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
+    const databaseBuffer = await fs.readFile(databaseFilepath);
+    const databaseObj = JSON.parse(databaseBuffer);
+
+    const selectedObj = databaseObj.find(entry => entry.filename === filename)
+    if (selectedObj) {
+        //select the entry
+        selectedObj.status = 'selected';
+
+        //deselect the other entry
+        databaseObj.forEach(entry => {
+            if (entry.filename != filename) {
+                entry.status = 'unselected';
+            }
+        })
+        // Write the updated database back to the file
+        await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
+        
+        return 'file select is successful'
+
+    } else {
+        return 'No such file is found in the database'
     }
 
 }
