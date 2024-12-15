@@ -24,6 +24,15 @@ async function ensureDatabaseExist(){
     }
 }
 
+async function getDatabaseAsObj() {
+    const userDataPath = app.getPath('userData')
+    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
+    const databaseBuffer = await fs.readFile(databaseFilepath);
+    const databaseObj = JSON.parse(databaseBuffer);
+
+    return databaseObj
+}
+
 
 // A function that parse the file into data that can be written into database
 async function parseFile(file, templateType){
@@ -38,10 +47,8 @@ async function parseFile(file, templateType){
 }
 
 async function checkForDuplicate(newDataEntry) {
-    const userDataPath = app.getPath('userData')
-    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
-    const databaseBuffer = await fs.readFile(databaseFilepath);
-    const databaseObj = JSON.parse(databaseBuffer);
+    
+    const databaseObj = await getDatabaseAsObj()
     let foundDuplicate = false
 
     const updatedDatabaseObj = databaseObj.map(entry => {
@@ -92,11 +99,7 @@ async function updateDatabase(updatedDatabaseObj) {
 //append to database
 async function appendtoDatabase(dataEntry) {
     try {
-        const userDataPath = app.getPath('userData')
-        const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
-    
-        const databaseBuffer = await fs.readFile(databaseFilepath);
-        const databaseObj = JSON.parse(databaseBuffer);
+        const databaseObj = await getDatabaseAsObj()
         databaseObj.push(dataEntry)
     
         const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
@@ -112,11 +115,7 @@ async function appendtoDatabase(dataEntry) {
 
 async function getFileDatabyTemplateType(templateType) {
     try {
-
-        const userDataPath = app.getPath('userData')
-        const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
-        const databaseBuffer = await fs.readFile(databaseFilepath);
-        const databaseObj = JSON.parse(databaseBuffer);
+        const databaseObj = await getDatabaseAsObj()
         
         const filteredData = databaseObj.filter(
             entry => entry.templateType === templateType);
@@ -128,10 +127,7 @@ async function getFileDatabyTemplateType(templateType) {
 }
 
 async function selectAndDeselectTemplate(filename) {
-    const userDataPath = app.getPath('userData')
-    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
-    const databaseBuffer = await fs.readFile(databaseFilepath);
-    const databaseObj = JSON.parse(databaseBuffer);
+    const databaseObj = await getDatabaseAsObj()
 
     const selectedObj = databaseObj.find(entry => entry.filename === filename)
     if (selectedObj) {
@@ -146,7 +142,7 @@ async function selectAndDeselectTemplate(filename) {
         })
         // Write the updated database back to the file
         await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
-        
+
         return 'file select is successful'
 
     } else {
