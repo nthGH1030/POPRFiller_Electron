@@ -37,7 +37,7 @@ const ReplaceTemplate = () => {
         appendFileToDatabase,
         saveTemplates) => {
 
-        //handle database operation
+        //handle database and file saving operation
         const JSON = await parseFile(file, mode)
         const duplicate = await checkForDuplicate(JSON)
 
@@ -47,9 +47,8 @@ const ReplaceTemplate = () => {
 
             const saveResult = await saveTemplates(file, mode)
             console.log(saveResult)
+
         } else {
-            const updateResult = await updateDatabase(duplicate)
-            console.log('The updated database is : ', updateResult)
 
             const userConfirmation = await getUserConfirmation(
                 'A file with duplicate filename is found, do you wish to replace it? ')
@@ -60,7 +59,9 @@ const ReplaceTemplate = () => {
                 console.log(saveResult)
             } else {
                 return
-            }          
+            }   
+            const updateResult = await updateDatabase(duplicate)
+            console.log('The updated database is : ', updateResult)
         }
     }
 
