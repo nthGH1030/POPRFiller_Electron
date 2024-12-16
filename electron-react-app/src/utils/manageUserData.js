@@ -113,43 +113,6 @@ async function appendtoDatabase(dataEntry) {
     }
 }
 
-async function getFileDatabyTemplateType(templateType) {
-    try {
-        const databaseObj = await getDatabaseAsObj()
-        
-        const filteredData = databaseObj.filter(
-            entry => entry.templateType === templateType);
-            
-        return filteredData   
-    } catch(error) {
-        return {error: error.message}
-    }
-}
-
-async function selectAndDeselectTemplate(filename) {
-    const databaseObj = await getDatabaseAsObj()
-
-    const selectedObj = databaseObj.find(entry => entry.filename === filename)
-    if (selectedObj) {
-        //select the entry
-        selectedObj.status = 'selected';
-
-        //deselect the other entry
-        databaseObj.forEach(entry => {
-            if (entry.filename != filename) {
-                entry.status = 'unselected';
-            }
-        })
-        // Write the updated database back to the file
-        await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
-
-        return 'file select is successful'
-
-    } else {
-        return 'No such file is found in the database'
-    }
-
-}
 
 // Ensure template directory exists
 async function ensureTemplateDirectoryExist(templateType) {
@@ -187,6 +150,54 @@ async function saveTemplates(fileBufferArray, templateType) {
     }
 }
 
+
+async function getFileDatabyTemplateType(templateType) {
+    try {
+        const databaseObj = await getDatabaseAsObj()
+        
+        const filteredData = databaseObj.filter(
+            entry => entry.templateType === templateType);
+            
+        return filteredData   
+    } catch(error) {
+        return {error: error.message}
+    }
+}
+
+async function selectAndDeselectTemplate(filename) {
+    const databaseObj = await getDatabaseAsObj()
+
+    const selectedObj = databaseObj.find(entry => entry.filename === filename)
+    if (selectedObj) {
+        //select the entry
+        selectedObj.status = 'selected';
+
+        //deselect the other entry
+        databaseObj.forEach(entry => {
+            if (entry.filename != filename) {
+                entry.status = 'unselected';
+            }
+        })
+        // Write the updated database back to the file
+        await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
+
+        return {success: true}
+
+    } else {
+        return { success: false };
+    }
+}
+
+async function findSelected(filename) {
+    const databaseObj = await getDatabaseAsObj()
+    const selectedObj = databaseObj.find(entry => entry.filename === filename)
+    if (selectedObj) {
+
+        return selectedObj
+
+    } 
+}
+
 module.exports = {
     
     ensureDatabaseExist,
@@ -196,6 +207,9 @@ module.exports = {
     checkForDuplicate,
     getUserConfirmation,
     ensureTemplateDirectoryExist,
-    saveTemplates
+    saveTemplates,
+    getFileDatabyTemplateType,
+    selectAndDeselectTemplate,
+    findSelected
 
 };
