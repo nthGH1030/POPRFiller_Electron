@@ -3,6 +3,7 @@ import '../Styles.css';
 import LinkToFeature from './linkToFeature.js'
 import imageDownload from '../image/imageDownload.png';
 import imageUpload from '../image/imageUpload.png';
+import imageSelect from '../image/imageSelect.png';
 
 
 const SideNavBar = ({currentRoute}) => {
@@ -19,6 +20,13 @@ const SideNavBar = ({currentRoute}) => {
             <LinkToFeature
                 route = "/replaceTemplate"
                 imagePath = {imageUpload}
+                currentRoute = {currentRoute}
+            >
+            </LinkToFeature>
+
+            <LinkToFeature
+                route = "/selectTemplate"
+                imagePath = {imageSelect}
                 currentRoute = {currentRoute}
             >
             </LinkToFeature>

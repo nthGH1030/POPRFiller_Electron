@@ -267,3 +267,22 @@ input[type = 'file']{
   font-size: 12px;
   color: lightgray;
 }
+
+/*container in selectTemplate*/
+.flex-container-selectTemplate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.flex-container-POPR-selectTemplate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
