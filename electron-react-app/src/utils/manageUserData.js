@@ -83,11 +83,11 @@ async function getUserConfirmation(message) {
 async function updateDatabase(updatedDatabaseObj) {
     const userDataPath = app.getPath('userData')
     const databaseDirectory = path.join(userDataPath,'Database')
-    const filePath = path.join(databaseDirectory,'userDatabase.json');
+    const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
     const newDataInJSONString = JSON.stringify(updatedDatabaseObj, null, 2)
 
     try { 
-        await fs.writeFile(filePath, newDataInJSONString)
+        await fs.writeFile(databaseFilepath, newDataInJSONString)
         return {success: true}
 
     } catch(error) {
@@ -103,6 +103,9 @@ async function appendtoDatabase(dataEntry) {
         databaseObj.push(dataEntry)
     
         const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
+        const userDataPath = app.getPath('userData')
+        const databaseDirectory = path.join(userDataPath,'Database')
+        const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
         await fs.writeFile(databaseFilepath, newDataInJSONString)
 
         return {success: true}
@@ -178,7 +181,11 @@ async function selectAndDeselectTemplate(filename) {
                 entry.status = 'unselected';
             }
         })
+
         // Write the updated database back to the file
+        const userDataPath = app.getPath('userData')
+        const databaseDirectory = path.join(userDataPath,'Database')
+        const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
         await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
 
         return {success: true}
