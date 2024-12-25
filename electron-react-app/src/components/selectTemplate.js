@@ -8,18 +8,60 @@ import Template from './template';
 const SelectTemplate = () => {
     let location = useLocation();
     const [activeStep, setActiveStep] = useState("selectTemplate");
+    const [POList, setPOList] = useState([]);
+    const [PRList, setPRList] = useState([]);
 
     //Query the database and get a list of object for PO and PR separately
     //For each of the object, pass them as props to a template object.
-    //
+    
     const getTemplateList = async (templateType) => {
-        const templateList = await window.electronAPI.getFileDatabyTemplateType(templateType)
-        return templateList
+        //const templateList = await window.electronAPI.getFileDatabyTemplateType(templateType)
+        const POtemplateList = [{
+            filename: 'POtemplate1',
+            uploadDate: Date.now(),
+            templateType: 'PO',
+            status: "unselected"
+        },
+        {
+            filename: 'POtemplate2',
+            uploadDate: Date.now(),
+            templateType: 'PO',
+            status: "selected"
+        }
+        ]
+        const PRtemplateList = [{
+            filename: 'PRtemplate1',
+            uploadDate: Date.now(),
+            templateType: 'PR',
+            status: "unselected"
+        },
+        {
+            filename: 'PRtemplate2',
+            uploadDate: Date.now(),
+            templateType: 'PR',
+            status: "selected"
+        }
+        ]
+
+        if(templateType === 'PO') {
+            return POtemplateList
+        } else {
+            return PRtemplateList
+        }
+        //return templateList
     }
+
+    const fetchTemplates = async () => {
+        const POList = await getTemplateList('PO')
+        const PRList = await getTemplateList('PR')
+        setPOList(POList)
+        setPRList(PRList)
+    };
+
 
     useEffect(() => {
         setActiveStep(location.pathname)
-    
+        fetchTemplates();
       },[location.pathname])
 
     return(
@@ -34,6 +76,14 @@ const SelectTemplate = () => {
                 </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
                     PO
+                    {POList.map((template, index)=> (
+                        <Template 
+                        key = {index} 
+                        filename = {template.filename} 
+                        uploadDate = {template.uploadDate}
+                        selected = {template.status}
+                        />
+                    ))}
                 </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
                     PR

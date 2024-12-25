@@ -52,7 +52,7 @@ function GeneratorStep2() {
                 if (template === 'PO')
                     {
                         const templateWorksheet = await window.electronAPI.readExcelFile(templateContent, 'PO_Input')
-                        const { filename, buffer } = await window.electronAPI.writePO(data, templateWorksheet);
+                        const { filename, buffer } = await writePO(data, templateWorksheet);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
@@ -60,7 +60,7 @@ function GeneratorStep2() {
                 else if (template === 'PR')
                     {
                         const templateWorksheet = await window.electronAPI.readExcelFile(templateContent, 'PR_Input')
-                        const { filename, buffer } = await window.electronAPI.writePR(data, templateWorksheet);
+                        const { filename, buffer } = await writePR(data, templateWorksheet);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
