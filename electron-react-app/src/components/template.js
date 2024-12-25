@@ -3,17 +3,19 @@ import '../Styles.css';
 
 const Template = ({filename, uploadDate, selected, onClick}) => {
     return (
-        <div classname = 'template-container'>
-            <div className = {`highlight-if-selected ${selected ? 'selected ': ''}`}>
+        
+        <div className = 'template-container'>
+            <div className = {`highlight-if-selected 
+                ${selected === 'selected' ? 'selected': ''}`}>
                 <span 
-                    classname = 'file-info' 
+                    className = 'file-info' 
                     onClick = {onClick}>
                     {filename}
                     <br />
-                    {new Date(uploadDate).toLocaleDateString()}
+                    Upload Date: {new Date(uploadDate).toLocaleDateString()}
                 </span>
             </div>
-            <span classname = 'selected-status'>
+            <span className = 'selected-status'>
                 {selected}
             </span>
         </div>

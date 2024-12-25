@@ -254,18 +254,28 @@ input[type = 'file']{
   margin: 3%;
 }
 
-.highlight-if-selected.selected{
-  border-color: black;
-  border-width: medium;
+.highlight-if-selected{
+  padding: 10%;
+  margin: 10px;
+
 }
 
-.file-info{
-  background-color: grey;
+
+.highlight-if-selected.selected{
+  outline: medium solid black;
+  border-radius: 3%;
+  padding: 10%;
+  margin: 10px;
+}
+
+.file-info {
+  background-color: lightgrey;
+  white-space: nowrap;
 }
 
 .selected-status{
-  font-size: 12px;
-  color: lightgray;
+  font-size: 18px;
+  color: gray;
 }
 
 /*container in selectTemplate*/
@@ -280,7 +290,7 @@ input[type = 'file']{
 
 .flex-container-POPR-selectTemplate {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   text-align: center;

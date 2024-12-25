@@ -11,9 +11,6 @@ const SelectTemplate = () => {
     const [POList, setPOList] = useState([]);
     const [PRList, setPRList] = useState([]);
 
-    //Query the database and get a list of object for PO and PR separately
-    //For each of the object, pass them as props to a template object.
-    
     const getTemplateList = async (templateType) => {
         //const templateList = await window.electronAPI.getFileDatabyTemplateType(templateType)
         const POtemplateList = [{
@@ -58,6 +55,10 @@ const SelectTemplate = () => {
         setPRList(PRList)
     };
 
+    const onClickTemplate = (filename) => {
+        console.log('you selected the template: ', filename)
+    }
+
 
     useEffect(() => {
         setActiveStep(location.pathname)
@@ -72,20 +73,21 @@ const SelectTemplate = () => {
             </div>
             <div className = 'flex-container-selectTemplate'>
                 <div className = 'flex-container-selectTemplate'>
-                    <p>Select your Template</p>
+                    <h1>Select your Template</h1>
                 </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
-                    PO
+                    
                     {POList.map((template, index)=> (
                         <Template 
                         key = {index} 
                         filename = {template.filename} 
                         uploadDate = {template.uploadDate}
                         selected = {template.status}
+                        onClick = {() => onClickTemplate(template.filename)}
                         />
                     ))}
                 </div>
-                <div className = 'flex-container-POPR-selectTemplate'>
+                <div classname = 'flex-container-POPR-selectTemplate'>
                     PR
                 </div>
             </div>
