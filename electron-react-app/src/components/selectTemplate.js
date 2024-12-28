@@ -11,8 +11,10 @@ const SelectTemplate = () => {
     const [POList, setPOList] = useState([]);
     const [PRList, setPRList] = useState([]);
 
+    
     const getTemplateList = async (templateType) => {
-        //const templateList = await window.electronAPI.getFileDatabyTemplateType(templateType)
+        const templateList = await window.electronAPI.getFileDatabyTemplateType(templateType)
+        /*
         const POtemplateList = [{
             filename: 'POtemplate1',
             uploadDate: Date.now(),
@@ -39,24 +41,37 @@ const SelectTemplate = () => {
             status: "selected"
         }
         ]
-
+        */
+        /*
         if(templateType === 'PO') {
-            return POtemplateList
+            return templateList
         } else {
             return PRtemplateList
         }
-        //return templateList
+        */
+        return templateList
     }
+    
 
     const fetchTemplates = async () => {
         const POList = await getTemplateList('PO')
         const PRList = await getTemplateList('PR')
         setPOList(POList)
         setPRList(PRList)
+        console.log ('POList is: ', POList)
+        console.log ('PRList is: ', PRList)
     };
 
-    const onClickTemplate = (filename) => {
+    const onClickTemplate = async (filename) => {
+        //update the template data in database
         console.log('you selected the template: ', filename)
+        const result = await window.electronAPI.selectAndDeselectTemplate(filename)
+        console.log('the selection of remplate is : ', result)
+        //re-fetch the template data
+        const POList = await getTemplateList('PO')
+        const PRList = await getTemplateList('PR')
+        setPOList(POList)
+        setPRList(PRList)
     }
 
 

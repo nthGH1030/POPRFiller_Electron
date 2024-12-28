@@ -250,10 +250,12 @@ const createWindow = () => {
       
       mainWindow.webContents.on('did-finish-load', () => {
         mainWindow.setTitle(`${appName} ${appVersion}`);
-
+      
+        /*
     ensureDatabaseExist()
     ensureTemplateDirectoryExist(PO)
     ensureTemplateDirectoryExist(PR)
+    */
 
     });
     

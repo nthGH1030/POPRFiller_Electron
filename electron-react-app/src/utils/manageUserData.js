@@ -26,16 +26,7 @@ async function ensureDatabaseExist(){
 
 async function getDatabaseAsObj() {
     const userDataPath = app.getPath('userData')
-    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
-    const databaseBuffer = await fs.readFile(databaseFilepath);
-    const databaseObj = JSON.parse(databaseBuffer);
-
-    return databaseObj
-}
-
-async function getDatabaseAsObj() {
-    const userDataPath = app.getPath('userData')
-    const databaseFilepath = path.join(userDataPath,'Database','fileDatabase.json')
+    const databaseFilepath = path.join(userDataPath,'Database','userDatabase.json')
     const databaseBuffer = await fs.readFile(databaseFilepath);
     const databaseObj = JSON.parse(databaseBuffer);
 
