@@ -244,3 +244,55 @@ input[type = 'file']{
 .span-cursor{
   cursor:pointer;
 }
+
+/*template card*/
+.template-container {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  margin: 3%;
+}
+
+.highlight-if-selected{
+  padding: 10%;
+  margin: 10px;
+
+}
+
+
+.highlight-if-selected.selected{
+  outline: medium solid black;
+  border-radius: 3%;
+  padding: 10%;
+  margin: 10px;
+}
+
+.file-info {
+  background-color: lightgrey;
+  white-space: nowrap;
+}
+
+.selected-status{
+  font-size: 18px;
+  color: gray;
+}
+
+/*container in selectTemplate*/
+.flex-container-selectTemplate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.flex-container-POPR-selectTemplate {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}

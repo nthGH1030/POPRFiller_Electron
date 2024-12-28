@@ -25,6 +25,15 @@ contextBridge.exposeInMainWorld('electronAPI', {
     saveTemplates: (fileArrayBuffer, filename, templateType) => 
         ipcRenderer.invoke('save-template-in-directory', fileArrayBuffer, filename, templateType),
 
+    getFileDatabyTemplateType: (templateType) =>
+        ipcRenderer.invoke('get-file-data-by-template-type', templateType),
+
+    selectAndDeselectTemplate: (filename) =>
+        ipcRenderer.invoke('select-deselect-template', filename),
+
+    findSelected: (filename) =>
+        ipcRenderer.invoke('find-selected-template', filename)
+
 });
 
 console.log('the preload script has run')

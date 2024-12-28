@@ -6,7 +6,7 @@ const log = require('electron-log');
 const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
 const {ensureDatabaseExist, parseFile, appendtoDatabase, 
       updateDatabase, checkForDuplicate ,getUserConfirmation, ensureTemplateDirectoryExist,
-      saveTemplates} 
+      saveTemplates, getFileDatabyTemplateType, selectAndDeselectTemplate, findSelected} 
       = require('./utils/manageUserData');
 
 
@@ -183,6 +183,34 @@ ipcMain.handle('save-template-in-directory', async(event, fileBufferArray, filen
   }
 })
 
+//get file data by template type from database
+ipcMain.handle('get-file-data-by-template-type', async (event, templateType) => {
+  const result = await getFileDatabyTemplateType(templateType)
+
+  return result
+})
+
+//select and de-select template by updating database
+ipcMain.handle('select-deselect-template', async(event, filename) => {
+  const result  = await selectAndDeselectTemplate(filename)
+
+  if (result.success) {
+    return 'Database has been updated to select and de-selecte template'
+  } else {
+    return 'Database failed to update select and de-select of templates'
+  }
+})
+
+//find selected template
+ipcMain.handle('find-selected-template', async(event, filename) => {
+  const result = await findSelected(filename)
+  if (result) {
+    return result
+  } else {
+    return 'Fail to find selected template'
+  }
+})
+
 
 //-------------------------Create App Window and load URL-------------------------------
 const createWindow = () => {
@@ -222,6 +250,10 @@ const createWindow = () => {
       
       mainWindow.webContents.on('did-finish-load', () => {
         mainWindow.setTitle(`${appName} ${appVersion}`);
+
+    ensureDatabaseExist()
+    ensureTemplateDirectoryExist(PO)
+    ensureTemplateDirectoryExist(PR)
 
     });
     

@@ -1,11 +1,10 @@
 import '../Styles.css';
 import React , {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
+import {useLocation} from 'react-router-dom';
 import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
-import {useLocation} from 'react-router-dom';
 import {writePO, writePR} from '../utils/writeFile';
-import {extractDataFromExcel, readFileUpload, readExcelFile} from '../utils/readFile';
 import saveAs from 'file-saver'
 import SideNavBar from './sideNavBar';
 
@@ -44,15 +43,15 @@ function GeneratorStep2() {
                     return;
                 }
                 //extract data from uploaded excel file
-                const bufferArray = await readFileUpload(file)
-                const worksheet = await readExcelFile(bufferArray, 'POPR summary')
-                const data = await extractDataFromExcel(worksheet, row);
+                const bufferArray = await window.electronAPI.readFileUpload(file)
+                const worksheet = await window.electronAPI.readExcelFile(bufferArray, 'POPR summary')
+                const data = await window.electronAPI.extractDataFromExcel(worksheet, row);
                 //console.log(data)
 
                 //write the data into respective template
                 if (template === 'PO')
                     {
-                        const templateWorksheet = await readExcelFile(templateContent, 'PO_Input')
+                        const templateWorksheet = await window.electronAPI.readExcelFile(templateContent, 'PO_Input')
                         const { filename, buffer } = await writePO(data, templateWorksheet);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -60,7 +59,7 @@ function GeneratorStep2() {
                     }
                 else if (template === 'PR')
                     {
-                        const templateWorksheet = await readExcelFile(templateContent, 'PR_Input')
+                        const templateWorksheet = await window.electronAPI.readExcelFile(templateContent, 'PR_Input')
                         const { filename, buffer } = await writePR(data, templateWorksheet);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
