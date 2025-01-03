@@ -28,10 +28,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getFileDatabyTemplateType: (templateType) =>
         ipcRenderer.invoke('get-file-data-by-template-type', templateType),
 
-    selectAndDeselectTemplate: (filename) =>
-        ipcRenderer.invoke('select-deselect-template', filename),
+    selectAndDeselectTemplate: (filename, templateType) =>
+        ipcRenderer.invoke('select-deselect-template', filename, templateType),
 
-    findSelected: (filename) =>
+    findTemplate: (filename) =>
         ipcRenderer.invoke('find-selected-template', filename)
 
 });

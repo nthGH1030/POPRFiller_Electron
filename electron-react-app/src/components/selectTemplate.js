@@ -62,18 +62,17 @@ const SelectTemplate = () => {
         console.log ('PRList is: ', PRList)
     };
 
-    const onClickTemplate = async (filename) => {
+    const onClickTemplate = async (filename, templateType) => {
         //update the template data in database
         console.log('you selected the template: ', filename)
-        const result = await window.electronAPI.selectAndDeselectTemplate(filename)
-        console.log('the selection of remplate is : ', result)
+        const result = await window.electronAPI.selectAndDeselectTemplate(filename, templateType)
+        console.log('the selection of template is : ', result)
         //re-fetch the template data
         const POList = await getTemplateList('PO')
         const PRList = await getTemplateList('PR')
         setPOList(POList)
         setPRList(PRList)
     }
-
 
     useEffect(() => {
         setActiveStep(location.pathname)
@@ -91,19 +90,28 @@ const SelectTemplate = () => {
                     <h1>Select your Template</h1>
                 </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
-                    
+                    <h3>PO</h3>
                     {POList.map((template, index)=> (
                         <Template 
                         key = {index} 
                         filename = {template.filename} 
                         uploadDate = {template.uploadDate}
                         selected = {template.status}
-                        onClick = {() => onClickTemplate(template.filename)}
+                        onClick = {() => onClickTemplate(template.filename, 'PO')}
                         />
                     ))}
                 </div>
-                <div classname = 'flex-container-POPR-selectTemplate'>
-                    PR
+                <div className = 'flex-container-POPR-selectTemplate'>
+                    <h3>PR</h3>
+                    {PRList.map((template, index)=> (
+                            <Template 
+                            key = {index} 
+                            filename = {template.filename} 
+                            uploadDate = {template.uploadDate}
+                            selected = {template.status}
+                            onClick = {() => onClickTemplate(template.filename, 'PR')}
+                            />
+                    ))}
                 </div>
             </div>
 

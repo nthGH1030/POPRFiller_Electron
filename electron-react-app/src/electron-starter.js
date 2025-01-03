@@ -6,7 +6,8 @@ const log = require('electron-log');
 const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
 const {ensureDatabaseExist, parseFile, appendtoDatabase, 
       updateDatabase, checkForDuplicate ,getUserConfirmation, ensureTemplateDirectoryExist,
-      saveTemplates, getFileDatabyTemplateType, selectAndDeselectTemplate, findSelected} 
+      saveTemplates, getFileDatabyTemplateType, selectAndDeselectTemplate, findTemplate,
+      findSelectedTemplate} 
       = require('./utils/manageUserData');
 
 
@@ -128,10 +129,29 @@ async function readFileToBufferArray(filePath) {
 
 // Load template PO from backend and return it as bufferArray
 ipcMain.handle('load-template', async (event , templateType) => {
-  const templatePath = path.join(__dirname, templatePaths[templateType]);
-  const content = await readFileToBufferArray(templatePath);
-  return content;
+  //query the database to see if there is "selected"
+  //if "selected", use that instead
+  //else, use "default"
+  const selectedTemplateObj = await findSelectedTemplate(templateType)
+  const userDataPath = app.getPath('userData')
+  const templateDirectory = path.join(userDataPath, 'UserUploadedTemplate', templateType)
+  const selectedFilepath = path.join(templateDirectory, selectedTemplateObj.filename)
+
+  const defaultPath = path.join(__dirname, templatePaths[templateType]);
+
+  if (selectedTemplateObj) {
+
+    const selectedTemplate = await readFileToBufferArray(selectedFilepath);
+    return selectedTemplate
+
+  } else {
+
+    const defaultTemplate = await readFileToBufferArray(defaultPath);
+    return defaultTemplate
+  }
+
 });
+
 
 //Parse user data into a writtable dataEntry
 ipcMain.handle('parse-file-to-json', async(event, filename, templateType) => {
@@ -191,8 +211,8 @@ ipcMain.handle('get-file-data-by-template-type', async (event, templateType) => 
 })
 
 //select and de-select template by updating database
-ipcMain.handle('select-deselect-template', async(event, filename) => {
-  const result  = await selectAndDeselectTemplate(filename)
+ipcMain.handle('select-deselect-template', async(event, filename, templateType) => {
+  const result  = await selectAndDeselectTemplate(filename , templateType)
 
   if (result.success) {
     return 'Database has been updated to select and de-selecte template'
@@ -203,7 +223,7 @@ ipcMain.handle('select-deselect-template', async(event, filename) => {
 
 //find selected template
 ipcMain.handle('find-selected-template', async(event, filename) => {
-  const result = await findSelected(filename)
+  const result = await findTemplate(filename)
   if (result) {
     return result
   } else {

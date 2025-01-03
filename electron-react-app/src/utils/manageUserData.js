@@ -168,7 +168,7 @@ async function getFileDatabyTemplateType(templateType) {
     }
 }
 
-async function selectAndDeselectTemplate(filename) {
+async function selectAndDeselectTemplate(filename, templateType) {
     const databaseObj = await getDatabaseAsObj()
 
     const selectedObj = databaseObj.find(entry => entry.filename === filename)
@@ -178,7 +178,7 @@ async function selectAndDeselectTemplate(filename) {
 
         //deselect the other entry
         databaseObj.forEach(entry => {
-            if (entry.filename != filename) {
+            if (entry.filename != filename && entry.templateType === templateType) {
                 entry.status = 'unselected';
             }
         })
@@ -196,14 +196,22 @@ async function selectAndDeselectTemplate(filename) {
     }
 }
 
-async function findSelected(filename) {
+async function findTemplate(filename) {
     const databaseObj = await getDatabaseAsObj()
-    const selectedObj = databaseObj.find(entry => entry.filename === filename)
-    if (selectedObj) {
+    const requestedObj = databaseObj.find(entry => entry.filename === filename)
+    if (requestedObj) {
 
-        return selectedObj
-
+        return requestedObj
     } 
+}
+
+async function findSelectedTemplate(templateType){
+    const databaseObj = await getDatabaseAsObj()
+
+    const selectedTemplateObj = databaseObj.find(entry => entry.status === 'selected' && 
+        entry.templateType === templateType)
+
+    return selectedTemplateObj
 }
 
 module.exports = {
@@ -218,6 +226,7 @@ module.exports = {
     saveTemplates,
     getFileDatabyTemplateType,
     selectAndDeselectTemplate,
-    findSelected
+    findTemplate,
+    findSelectedTemplate,
 
 };
