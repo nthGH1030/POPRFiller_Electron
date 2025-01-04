@@ -6,8 +6,8 @@ const log = require('electron-log');
 const { toArrayBuffer } = require('./utils/Parser_toArrayBuffer');
 const {ensureDatabaseExist, parseFile, appendtoDatabase, 
       updateDatabase, checkForDuplicate ,getUserConfirmation, ensureTemplateDirectoryExist,
-      saveTemplates, getFileDatabyTemplateType, selectAndDeselectTemplate, findTemplate,
-      findSelectedTemplate} 
+      saveTemplates, getFileDatabyTemplateType, selectAndDeselectTemplate, deselectAllTemplate,
+      findTemplate, findSelectedTemplate} 
       = require('./utils/manageUserData');
 
 
@@ -70,8 +70,18 @@ function handleSquirrelEvent() {
 
       // Install desktop and start menu shortcuts
       spawnUpdate(['--createShortcut', exeName]);
+      Promise.all([
+        deselectAllTemplate('PO'),
+        deselectAllTemplate('PR')
+      ]).then((results) => {
+        results.forEach(result => {
+          if (!result.success) {
+            logToFile(`Failed to deselect templates: ${result.error}`);
+          } 
+        })
+        setTimeout(app.quit, 1000);
+      })
 
-      setTimeout(app.quit, 1000);
       return true;
       
       case '--squirrel-firstrun':
@@ -108,6 +118,13 @@ ipcMain.handle('log-main-process-message' , async (event) => {
   const userDataPath = app.getPath('userData')
   return [`Message: ${userDataPath}, ${databaseExist}, ${POdirectoryExist}, ${PRdirectoryExist}`]
 })
+
+//---------------function that run when update---------------------//
+async function deSelectAllTemplate(templateType) {
+  //query database and change all selected to unselected
+
+}
+
 
 //-------------------functions to be exposed in renderer process--------------------------
 const templatePaths = {

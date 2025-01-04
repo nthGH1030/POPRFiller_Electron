@@ -196,6 +196,26 @@ async function selectAndDeselectTemplate(filename, templateType) {
     }
 }
 
+async function deselectAllTemplate(templateType){
+
+    const databaseObj = await getDatabaseAsObj()
+    databaseObj.forEach(entry => {
+        if(entry.templateType = templateType && entry.status === 'selected') {
+            entry.status = 'unselected'
+        }
+    })
+    try {
+        const userDataPath = app.getPath('userData')
+        const databaseDirectory = path.join(userDataPath,'Database')
+        const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
+        await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
+        return {success: true}
+    } catch(error) {
+        return {success: false, error: error.message}
+    }
+
+}
+
 async function findTemplate(filename) {
     const databaseObj = await getDatabaseAsObj()
     const requestedObj = databaseObj.find(entry => entry.filename === filename)
@@ -226,6 +246,7 @@ module.exports = {
     saveTemplates,
     getFileDatabyTemplateType,
     selectAndDeselectTemplate,
+    deselectAllTemplate,
     findTemplate,
     findSelectedTemplate,
 
