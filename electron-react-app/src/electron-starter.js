@@ -20,16 +20,15 @@ function logToFile(message) {
   log.info(message);
 }
 
-/*
+
 //-------------------------------handle squirrel events----------------------------------
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
   // squirrel event handled and app will exit in 1000ms, so don't do anything else
   return;
 }
-  */
 
-async function handleSquirrelEvent() {
+function handleSquirrelEvent() {
   
   if (process.argv.length === 1) {
     return false;
@@ -72,16 +71,20 @@ async function handleSquirrelEvent() {
 
       // Install desktop and start menu shortcuts
       spawnUpdate(['--createShortcut', exeName]);
-      
-      const POResult = await deselectAllTemplate('PO')
-      const PRResult = await deselectAllTemplate('PR')
-      
-      if(POResult != {success: true} || PRResult != {success: true} ) {
+      (async () => {
+        logToFile('Starting deselectAllTemplates');
+        const startTime = Date.now();
+        const POResult = await deselectAllTemplate('PO')
+        const PRResult = await deselectAllTemplate('PR')
+        const endTime = Date.now();
+        logToFile(`deselectAllTemplates took ${endTime - startTime} ms`);
+
+        if(POResult != {success: true} || PRResult != {success: true} ) {
           logToFile(`Failed to deselect templates: ${result.error}`);
         }
-        
+      })();
+
       setTimeout(app.quit, 1000);
-      
       return true;
       
     case '--squirrel-firstrun':
@@ -111,12 +114,9 @@ async function handleSquirrelEvent() {
 
 
 
+
+
 // Wrap the top-level code in an async function
-(async () => {
-  if (await handleSquirrelEvent()) {
-    // Squirrel event handled and app will exit in 1000ms, so don't do anything else
-    return;
-  }
 
   // Create the browser window and load URL
   const createWindow = () => {
@@ -166,7 +166,6 @@ async function handleSquirrelEvent() {
       app.quit();
     }
   });
-})();
 
 
 //---------------Debug tool---------------------//
@@ -178,13 +177,6 @@ ipcMain.handle('log-main-process-message' , async (event) => {
   const userDataPath = app.getPath('userData')
   return [`Message: ${userDataPath}, ${databaseExist}, ${POdirectoryExist}, ${PRdirectoryExist}`]
 })
-
-//---------------function that run when update---------------------//
-async function deSelectAllTemplate(templateType) {
-  //query database and change all selected to unselected
-
-}
-
 
 //-------------------functions to be exposed in renderer process--------------------------
 const templatePaths = {
