@@ -20,14 +20,16 @@ function logToFile(message) {
   log.info(message);
 }
 
+/*
 //-------------------------------handle squirrel events----------------------------------
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
   // squirrel event handled and app will exit in 1000ms, so don't do anything else
   return;
 }
+  */
 
-function handleSquirrelEvent() {
+async function handleSquirrelEvent() {
   
   if (process.argv.length === 1) {
     return false;
@@ -70,21 +72,19 @@ function handleSquirrelEvent() {
 
       // Install desktop and start menu shortcuts
       spawnUpdate(['--createShortcut', exeName]);
-      Promise.all([
-        deselectAllTemplate('PO'),
-        deselectAllTemplate('PR')
-      ]).then((results) => {
-        results.forEach(result => {
-          if (!result.success) {
-            logToFile(`Failed to deselect templates: ${result.error}`);
-          } 
-        })
-        setTimeout(app.quit, 1000);
-      })
-
+      
+      const POResult = await deselectAllTemplate('PO')
+      const PRResult = await deselectAllTemplate('PR')
+      
+      if(POResult != {success: true} || PRResult != {success: true} ) {
+          logToFile(`Failed to deselect templates: ${result.error}`);
+        }
+        
+      setTimeout(app.quit, 1000);
+      
       return true;
       
-      case '--squirrel-firstrun':
+    case '--squirrel-firstrun':
         //logToFile(`--squirrel-firstrun: ${process.argv}`)
         break
 
@@ -108,6 +108,66 @@ function handleSquirrelEvent() {
       return true;
   }
 };
+
+
+
+// Wrap the top-level code in an async function
+(async () => {
+  if (await handleSquirrelEvent()) {
+    // Squirrel event handled and app will exit in 1000ms, so don't do anything else
+    return;
+  }
+
+  // Create the browser window and load URL
+  const createWindow = () => {
+    const mainWindow = new BrowserWindow({
+      width: 800,
+      height: 600,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js'),
+        contextIsolation: true,
+      }
+    });
+
+    const isDev = process.env.NODE_ENV === 'development';
+    const startUrl = isDev
+      ? 'http://localhost:3000'
+      : url.format({
+          pathname: path.join(__dirname, '../build/index.html'),
+          protocol: 'file:',
+          slashes: true
+        });
+
+    mainWindow.loadURL(startUrl);
+
+    const packageJsonPath = path.join(__dirname, '../package.json');
+    const packageJson = require(packageJsonPath);
+
+    const appName = packageJson.productName;
+    const appVersion = packageJson.version;
+
+    mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.setTitle(`${appName} ${appVersion}`);
+    });
+  };
+
+  app.whenReady().then(() => {
+    createWindow();
+
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+      }
+    });
+  });
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
+})();
+
 
 //---------------Debug tool---------------------//
 
@@ -247,76 +307,5 @@ ipcMain.handle('find-selected-template', async(event, filename) => {
     return 'Fail to find selected template'
   }
 })
-
-
-//-------------------------Create App Window and load URL-------------------------------
-const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    //title: `${packageJson.config.forge.packagerConfig.name} ${packageJson.config.forge.packagerConfig.version}`,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      contextIsolation: true,
-    }
-    
-  });
-    // and load the index.html of the app.
-    const isDev = process.env.NODE_ENV === 'development';
-    const startUrl = isDev
-      ? 'http://localhost:3000'
-      : url.format({
-          pathname: path.join(__dirname, '../build/index.html'),
-          protocol: 'file:',
-          slashes: true
-        });
-    
-
-      //logToFile(`The file path loaded is : ${startUrl}`)
-
-      mainWindow.loadURL(startUrl)
-
-      //Set the app title and version number
-      const packageJsonPath = path.join(__dirname, '../package.json');
-      const packageJson = require(packageJsonPath);
-
-      const appName = packageJson.productName;
-      const appVersion = packageJson.version;
-
-      
-      mainWindow.webContents.on('did-finish-load', () => {
-        mainWindow.setTitle(`${appName} ${appVersion}`);
-      
-        /*
-    ensureDatabaseExist()
-    ensureTemplateDirectoryExist(PO)
-    ensureTemplateDirectoryExist(PR)
-    */
-
-    });
-    
-};
-
-app.whenReady().then(() => {
-
-  createWindow()
-  
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-      
-    }
-  })
-
-})
-
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
 
 

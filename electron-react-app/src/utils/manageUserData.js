@@ -199,16 +199,17 @@ async function selectAndDeselectTemplate(filename, templateType) {
 async function deselectAllTemplate(templateType){
 
     const databaseObj = await getDatabaseAsObj()
-    databaseObj.forEach(entry => {
-        if(entry.templateType = templateType && entry.status === 'selected') {
-            entry.status = 'unselected'
+    const newDatabaseObj = databaseObj.map(entry => {
+        if (entry.templateType === templateType && entry.status === 'selected') {
+          entry.status = 'unselected';
         }
-    })
+        return entry;
+      });
     try {
         const userDataPath = app.getPath('userData')
         const databaseDirectory = path.join(userDataPath,'Database')
         const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
-        await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
+        await fs.writeFile(databaseFilepath, JSON.stringify(newDatabaseObj, null, 2));
         return {success: true}
     } catch(error) {
         return {success: false, error: error.message}
