@@ -1,9 +1,42 @@
+const {findIndexRow, findAllValueInIndexRow} = require('./readFile.js');
 
 //This function writes to a PO worksheet with data provided
 export async function writePO(extractedObj, templateWorksheet) 
 {
     try {
+      const indexRowObj = findIndexRow(templateWorksheet, '#Key_Row') 
+      const IndexRowValueArray = findAllValueInIndexRow(templateWorksheet, indexRowObj)
+      const indexRowNumber = indexRowObj.number
+      
+      let targetKey
+      let targetRowNumber
+      let targetCell
+      
+
+      for(let i = 0 ; i < IndexRowValueArray; i++){
+
+        if (IndexRowValueArray[i] === '#Key_Row') {
+          continue
+        }
+        targetKey = IndexRowValueArray[i];
+        
+        if (targetKey in extractedObj) {
+
+          targetRowNumber = indexRowNumber + 1; 
+          targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i + 1); 
+          targetCell.value = extractedObj[targetKey];
+        }
+
+        if (targetKey === 'staff'){
+          targetCell.value = localStorage.getItem('staff');
+        }
+
+      }
+      //Get all key in keyRow
+      //Match the key with extracted Obj
+      //set the value to the key value to extracted Obj
       //Set up an object in template to be replaced by data in the central table
+      /*
       let PO = {
         "PO Number": "C2",
         "Entity": "C3",
@@ -41,6 +74,7 @@ export async function writePO(extractedObj, templateWorksheet)
         }
         
       }
+      */
   
       // Save as a new file 
       const outputFilename = 'PO'+ extractedObj['PO Number'] + '.xlsx';

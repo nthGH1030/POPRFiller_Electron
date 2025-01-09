@@ -1,5 +1,27 @@
 import * as ExcelJS from "exceljs";
 
+//This function find the indexRow
+function findIndexRow(worksheet, marker) {
+  let rowObject = null;
+  worksheet.eachRow((row, rowNumber)=> {
+    row.eachCell((cell,colNumber) => {
+      if (cell.value === marker) {
+        rowObject = row
+        return
+      }
+    })
+    if(rowObject) return
+  })
+  return rowObject
+}
+
+function findAllValueInIndexRow(indexRowObj) {
+  let indexValue = []
+  indexRowObj.eachCell((cell, colNumber) => {
+    indexValue.push(cell.value)
+  })
+  return indexValue;
+} 
 
 //This function reads the a excel worksheet and extract data from a row
 export async function extractDataFromExcel(worksheet, row) {
@@ -9,9 +31,10 @@ export async function extractDataFromExcel(worksheet, row) {
   }
 
   try {
-
+    /*
     let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
     let indexRow = "7";
+    
 
     const extractedObj = {};
 
@@ -22,7 +45,7 @@ export async function extractDataFromExcel(worksheet, row) {
     const keyAddress = column.concat(indexRow); 
     const keyValue = worksheet.getCell(keyAddress)?.value || "";
 
-    //setting the value of hte object to be the row which user requested
+    //setting the value of the object to be the row which user requested
     const cellAddress = column.concat(row);
     const cell = worksheet.getCell(cellAddress);
     const cellValue = cell.formula ? cell.result : (cell.value ?? ""); 
@@ -31,6 +54,31 @@ export async function extractDataFromExcel(worksheet, row) {
     }
     console.log('the row is',row, extractedObj)
     
+    return extractedObj
+    */
+    const indexRowObj = findIndexRow(worksheet, '#Key_Row') 
+    const IndexRowValueArray = findAllValueInIndexRow(worksheet, indexRowObj)
+    const rowObject = worksheet.getRow(row)
+    const rowValueArray = findAllValueInIndexRow(worksheet, rowObject)
+    
+    let extractedObj = {};
+    let key
+    let value
+
+    for (let i = 0; i < IndexRowValueArray.length; i++) {
+        
+      if (IndexRowValueArray[i] === '#Key_Row') {
+        continue
+      }
+      key = IndexRowValueArray[i];
+      value = rowValueArray[i] || '';
+
+      extractedObj[key] = value;
+
+    }
+
+    console.log('the row is',row, extractedObj)
+
     return extractedObj
     
     } catch(error) {

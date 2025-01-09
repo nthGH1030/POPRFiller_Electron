@@ -201,24 +201,26 @@ ipcMain.handle('load-template', async (event , templateType) => {
   //query the database to see if there is "selected"
   //if "selected", use that instead
   //else, use "default"
-  const selectedTemplateObj = await findSelectedTemplate(templateType)
-  const userDataPath = app.getPath('userData')
-  const templateDirectory = path.join(userDataPath, 'UserUploadedTemplate', templateType)
-  const selectedFilepath = path.join(templateDirectory, selectedTemplateObj.filename)
+  try {
+    const selectedTemplateObj = await findSelectedTemplate(templateType)
+    
+    if (selectedTemplateObj) {
+      const userDataPath = app.getPath('userData')
+      const templateDirectory = path.join(userDataPath, 'UserUploadedTemplate', templateType)
+      const selectedFilepath = path.join(templateDirectory, selectedTemplateObj.filename)
+      const selectedTemplate = await readFileToBufferArray(selectedFilepath);
+      return selectedTemplate
+  
+    } else {
+      const defaultPath = path.join(__dirname, templatePaths[templateType]);
+      const defaultTemplate = await readFileToBufferArray(defaultPath);
+      return defaultTemplate
+    }
+  } catch (error) {
 
-  const defaultPath = path.join(__dirname, templatePaths[templateType]);
-
-  if (selectedTemplateObj) {
-
-    const selectedTemplate = await readFileToBufferArray(selectedFilepath);
-    return selectedTemplate
-
-  } else {
-
-    const defaultTemplate = await readFileToBufferArray(defaultPath);
-    return defaultTemplate
+      log.info(error);
+    
   }
-
 });
 
 
