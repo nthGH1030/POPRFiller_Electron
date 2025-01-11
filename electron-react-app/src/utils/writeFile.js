@@ -9,18 +9,17 @@ export async function writePO(extractedObj, templateWorksheet)
       const indexRowNumber = indexRowObj.number
       const targetRowNumber = indexRowNumber + 1; 
       
-      for(let i = 0 ; i < indexRowValueArray.length; i++){
-        let targetKey
-        let targetCell
 
-        if (indexRowValueArray[i] in extractedObj) {
-          console.log('if condition gets run')
-          targetKey = indexRowValueArray[i];
-          targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i+1); 
+      for(let i = 0 ; i < indexRowValueArray.length; i++){
+        let targetKey = indexRowValueArray[i];
+        let targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i+1); 
+
+        if (extractedObj.hasOwnProperty(targetKey)) {
           targetCell.value = extractedObj[targetKey];
         }
-        
-        if (targetKey === 'staff'){
+
+        if (indexRowValueArray[i] === 'staff'){
+
           targetCell.value = localStorage.getItem('staff');
         }
         
