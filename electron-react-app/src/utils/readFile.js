@@ -1,7 +1,7 @@
-import * as ExcelJS from "exceljs";
+const ExcelJS = require('exceljs');
 
 //This function find the indexRow
-function findIndexRow(worksheet, marker) {
+export function findIndexRow(worksheet, marker) {
   let rowObject = null;
   worksheet.eachRow((row, rowNumber)=> {
     row.eachCell((cell,colNumber) => {
@@ -15,7 +15,7 @@ function findIndexRow(worksheet, marker) {
   return rowObject
 }
 
-function findAllValueInIndexRow(indexRowObj) {
+export function findAllValueInIndexRow(indexRowObj) {
   let indexValue = []
   indexRowObj.eachCell((cell, colNumber) => {
     indexValue.push(cell.value)
@@ -57,23 +57,25 @@ export async function extractDataFromExcel(worksheet, row) {
     return extractedObj
     */
     const indexRowObj = findIndexRow(worksheet, '#Key_Row') 
-    const IndexRowValueArray = findAllValueInIndexRow(worksheet, indexRowObj)
+    //console.log(indexRowObj)
+    const IndexRowValueArray = findAllValueInIndexRow(indexRowObj)
+    const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
+    //onsole.log(IndexRowValueArray)
     const rowObject = worksheet.getRow(row)
-    const rowValueArray = findAllValueInIndexRow(worksheet, rowObject)
+    const rowValueArray = findAllValueInIndexRow(rowObject)
+    //console.log('rowValuearray is: ', rowValueArray)
     
-    let extractedObj = {};
-    let key
-    let value
 
-    for (let i = 0; i < IndexRowValueArray.length; i++) {
-        
-      if (IndexRowValueArray[i] === '#Key_Row') {
-        continue
-      }
-      key = IndexRowValueArray[i];
+    let extractedObj = {};
+    for (let i = 0; i < FilteredIndexRowValueArray.length; i++) {
+      let key
+      let value
+      
+      key = FilteredIndexRowValueArray[i];
       value = rowValueArray[i] || '';
 
       extractedObj[key] = value;
+      
 
     }
 

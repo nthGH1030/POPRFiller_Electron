@@ -5,33 +5,27 @@ export async function writePO(extractedObj, templateWorksheet)
 {
     try {
       const indexRowObj = findIndexRow(templateWorksheet, '#Key_Row') 
-      const IndexRowValueArray = findAllValueInIndexRow(templateWorksheet, indexRowObj)
+      const indexRowValueArray = findAllValueInIndexRow(indexRowObj)
       const indexRowNumber = indexRowObj.number
+      const targetRowNumber = indexRowNumber + 1; 
       
-      let targetKey
-      let targetRowNumber
-      let targetCell
-      
+      for(let i = 0 ; i < indexRowValueArray.length; i++){
+        let targetKey
+        let targetCell
 
-      for(let i = 0 ; i < IndexRowValueArray; i++){
-
-        if (IndexRowValueArray[i] === '#Key_Row') {
-          continue
-        }
-        targetKey = IndexRowValueArray[i];
-        
-        if (targetKey in extractedObj) {
-
-          targetRowNumber = indexRowNumber + 1; 
-          targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i + 1); 
+        if (indexRowValueArray[i] in extractedObj) {
+          console.log('if condition gets run')
+          targetKey = indexRowValueArray[i];
+          targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i+1); 
           targetCell.value = extractedObj[targetKey];
         }
-
+        
         if (targetKey === 'staff'){
           targetCell.value = localStorage.getItem('staff');
         }
-
+        
       }
+
       //Get all key in keyRow
       //Match the key with extracted Obj
       //set the value to the key value to extracted Obj
