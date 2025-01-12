@@ -17,8 +17,8 @@ export function findIndexRow(worksheet, marker) {
 
 export function findAllValueInIndexRow(indexRowObj) {
   let indexValue = []
-  indexRowObj.eachCell((cell, colNumber) => {
-    indexValue.push(cell.value)
+  indexRowObj.eachCell({includeEmpty: true}, (cell, colNumber) => {
+    indexValue.push(cell.value !== undefined && cell.value !== null ? cell.value : '');
   })
   return indexValue;
 } 
@@ -59,7 +59,7 @@ export async function extractDataFromExcel(worksheet, row) {
     const indexRowObj = findIndexRow(worksheet, '#Key_Row') 
     //console.log(indexRowObj)
     const IndexRowValueArray = findAllValueInIndexRow(indexRowObj)
-    const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
+    //const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
     //onsole.log(IndexRowValueArray)
     const rowObject = worksheet.getRow(row)
     const rowValueArray = findAllValueInIndexRow(rowObject)
@@ -67,11 +67,11 @@ export async function extractDataFromExcel(worksheet, row) {
     
 
     let extractedObj = {};
-    for (let i = 0; i < FilteredIndexRowValueArray.length; i++) {
+    for (let i = 0; i < IndexRowValueArray.length; i++) {
       let key
       let value
       
-      key = FilteredIndexRowValueArray[i];
+      key = IndexRowValueArray[i];
       value = rowValueArray[i] || '';
 
       extractedObj[key] = value;
