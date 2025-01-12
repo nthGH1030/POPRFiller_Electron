@@ -14,7 +14,6 @@ function GeneratorStep2() {
     const [template, setTemplate] = useState('PO');
     const [activeStep, setActiveStep] = useState('/generatorStep2');
     const [templateContent, setTemplateContent] = useState(null);
-
     let location = useLocation();
     const {state} = location;
     const {row, file} = state;
@@ -71,7 +70,7 @@ function GeneratorStep2() {
                 console.error('Error:', error);
               }
             } else {
-              alert('You have not uploaded the file ! Go Back to Step 1');
+              alert('You must pick a template type to use !');
             }
           };
 
@@ -87,9 +86,9 @@ function GeneratorStep2() {
                 </SideNavBar>
             </div>
             <div className = 'generatorstep-container'>
-            <StepIndicator
-                activeStep = {activeStep}
-            />
+                <StepIndicator
+                    activeStep = {activeStep}
+                />
             <div className = 'template-container'>
                 <h1>Pick a template</h1>
                 <div className = 'break'></div>

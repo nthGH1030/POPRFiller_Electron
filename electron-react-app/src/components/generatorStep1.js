@@ -14,6 +14,7 @@ function GeneratorStep1() {
 
   const fileInputRef = useRef(null);
 
+  //handle file upload
   const handleFileChange = (uploadedFile) => {
     setFile(uploadedFile);
   }
@@ -25,22 +26,14 @@ function GeneratorStep1() {
   const handleFileDrop = (uploadedFile) => {
     setFile(uploadedFile);
   }
-
+  
+  //handle row input
   const handleRowChange = (e) => {
     setRow(e.target.value);
   }
 
-  useEffect(() => {
-
-    setActiveStep(location.pathname)
-    //console.log(activeStep)
-    console.log(file)
-    //console.log(state)
-
-  },[location.pathname, file])
-
+  //handle check on necessary input
   const state = {'row': row, 'file' : file};
-
   const handleCheckInput = () => {
     let allFieldFilled = true;
     if (!state.row) {
@@ -54,13 +47,24 @@ function GeneratorStep1() {
       return allFieldFilled
     }
 
+    //handle nagvigate to next page
     const navigate = useNavigate();
     const handleNextClick= () => {
       if(handleCheckInput())
       {
         navigate('/generatorStep2', {state:state});
       }
-  }
+    }
+
+    useEffect(() => {
+
+      setActiveStep(location.pathname)
+      //console.log(activeStep)
+      console.log(file)
+      //console.log(state)
+
+    },[location.pathname, file])
+
     return (
       <div className = 'page'>
         <div className = 'sidebar-container'>

@@ -20,7 +20,6 @@ function logToFile(message) {
   log.info(message);
 }
 
-
 //-------------------------------handle squirrel events----------------------------------
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
@@ -112,12 +111,6 @@ function handleSquirrelEvent() {
   }
 };
 
-
-
-
-
-// Wrap the top-level code in an async function
-
   // Create the browser window and load URL
   const createWindow = () => {
     const mainWindow = new BrowserWindow({
@@ -169,7 +162,6 @@ function handleSquirrelEvent() {
 
 
 //---------------Debug tool---------------------//
-
 ipcMain.handle('log-main-process-message' , async (event) => {
   const databaseExist = await ensureDatabaseExist()
   const POdirectoryExist = await ensureTemplateDirectoryExist('PO')
@@ -179,11 +171,6 @@ ipcMain.handle('log-main-process-message' , async (event) => {
 })
 
 //-------------------functions to be exposed in renderer process--------------------------
-const templatePaths = {
-  'PO': './secrets/template PO.xlsx',
-  'PR': './secrets/template PR.xlsx',
-}
-
 // Read a given file path and return its content in buffer array
 async function readFileToBufferArray(filePath) {
     try {
@@ -196,11 +183,13 @@ async function readFileToBufferArray(filePath) {
     }
 }
 
+const templatePaths = {
+  'PO': './secrets/template PO.xlsx',
+  'PR': './secrets/template PR.xlsx',
+}
 // Load template PO from backend and return it as bufferArray
 ipcMain.handle('load-template', async (event , templateType) => {
-  //query the database to see if there is "selected"
-  //if "selected", use that instead
-  //else, use "default"
+
   try {
     const selectedTemplateObj = await findSelectedTemplate(templateType)
     

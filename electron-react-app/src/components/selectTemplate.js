@@ -14,41 +14,7 @@ const SelectTemplate = () => {
     
     const getTemplateList = async (templateType) => {
         const templateList = await window.electronAPI.getFileDatabyTemplateType(templateType)
-        /*
-        const POtemplateList = [{
-            filename: 'POtemplate1',
-            uploadDate: Date.now(),
-            templateType: 'PO',
-            status: "unselected"
-        },
-        {
-            filename: 'POtemplate2',
-            uploadDate: Date.now(),
-            templateType: 'PO',
-            status: "selected"
-        }
-        ]
-        const PRtemplateList = [{
-            filename: 'PRtemplate1',
-            uploadDate: Date.now(),
-            templateType: 'PR',
-            status: "unselected"
-        },
-        {
-            filename: 'PRtemplate2',
-            uploadDate: Date.now(),
-            templateType: 'PR',
-            status: "selected"
-        }
-        ]
-        */
-        /*
-        if(templateType === 'PO') {
-            return templateList
-        } else {
-            return PRtemplateList
-        }
-        */
+
         return templateList
     }
     

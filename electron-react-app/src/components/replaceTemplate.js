@@ -120,12 +120,7 @@ const ReplaceTemplate = () => {
             <div className = 'replaceTemplate-container'>
                 <div className = 'existing-template-container'>
                     <p>This div show the existing history of file</p>
-                    {/* 
-                        1. make a template container that show each history file
-                        2. Display metadata about that file in the container
-                        3. When user click on a container, it should be highlighted
-                        4. Add a button so user can apply the template
-                    */}
+ 
                 </div>
                 <h1>Upload a new template</h1>
                 <div className = 'file-upload-container'>              

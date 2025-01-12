@@ -31,41 +31,11 @@ export async function extractDataFromExcel(worksheet, row) {
   }
 
   try {
-    /*
-    let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
-    let indexRow = "7";
-    
-
-    const extractedObj = {};
-
-    for (let i = 0; i < columns.length; i++) {
-    const column = columns[i];
-
-    //setting the key of the object to be the value in index row
-    const keyAddress = column.concat(indexRow); 
-    const keyValue = worksheet.getCell(keyAddress)?.value || "";
-
-    //setting the value of the object to be the row which user requested
-    const cellAddress = column.concat(row);
-    const cell = worksheet.getCell(cellAddress);
-    const cellValue = cell.formula ? cell.result : (cell.value ?? ""); 
-
-    extractedObj[keyValue] = cellValue;
-    }
-    console.log('the row is',row, extractedObj)
-    
-    return extractedObj
-    */
     const indexRowObj = findIndexRow(worksheet, '#Key_Row') 
-    //console.log(indexRowObj)
     const IndexRowValueArray = findAllValueInIndexRow(indexRowObj)
-    //const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
-    //onsole.log(IndexRowValueArray)
     const rowObject = worksheet.getRow(row)
     const rowValueArray = findAllValueInIndexRow(rowObject)
-    //console.log('rowValuearray is: ', rowValueArray)
     
-
     let extractedObj = {};
     for (let i = 0; i < IndexRowValueArray.length; i++) {
       let key
@@ -76,7 +46,6 @@ export async function extractDataFromExcel(worksheet, row) {
 
       extractedObj[key] = value;
       
-
     }
 
     console.log('the row is',row, extractedObj)
@@ -157,6 +126,8 @@ export async function ifWorkSheetExist(file_bufferArray, sheetName) {
   return foundSheet
 }
 
+//This test function no longer works
+/*
 //This function extract data from a PO / PR file
 export async function extractDataFromPOPR(worksheet) {
 
@@ -192,8 +163,6 @@ export async function extractDataFromPOPR(worksheet) {
   } catch (error) {
     console.log("Failed to extract data from POPR: ", error)
   }
-
-
 }
 
-
+*/
