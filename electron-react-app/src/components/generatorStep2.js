@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import {useLocation} from 'react-router-dom';
 import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
-import {writePO, writePR} from '../utils/writeFile';
+import {writePOPR} from '../utils/writeFile';
 import { extractDataFromExcel, readExcelFile, readFileUpload } from '../utils/readFile';
 import saveAs from 'file-saver'
 import SideNavBar from './sideNavBar';
@@ -53,7 +53,7 @@ function GeneratorStep2() {
                 if (template === 'PO')
                     {
                         const templateWorksheet = await readExcelFile(templateContent, 'PO_Input')
-                        const { filename, buffer } = await writePO(data, templateWorksheet);
+                        const { filename, buffer } = await writePOPR(data, templateWorksheet, template);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
@@ -61,7 +61,7 @@ function GeneratorStep2() {
                 else if (template === 'PR')
                     {
                         const templateWorksheet = await readExcelFile(templateContent, 'PR_Input')
-                        const { filename, buffer } = await writePR(data, templateWorksheet);
+                        const { filename, buffer } = await writePOPR(data, templateWorksheet, template);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
