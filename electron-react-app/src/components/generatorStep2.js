@@ -46,7 +46,7 @@ function GeneratorStep2() {
                 const bufferArray = await readFileUpload(file)
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
-                //console.log(data)
+                console.log(data)
 
                 //write the data into respective template
                 if (template === 'PO')

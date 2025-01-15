@@ -35,15 +35,18 @@ export async function extractDataFromExcel(worksheet, row) {
     const IndexRowValueArray = findAllValueInIndexRow(indexRowObj)
     const rowObject = worksheet.getRow(row)
     const rowValueArray = findAllValueInIndexRow(rowObject)
-    
+    console.log(rowValueArray)
+
     let extractedObj = {};
     for (let i = 0; i < IndexRowValueArray.length; i++) {
-      let key
       let value
+      let key = IndexRowValueArray[i];
+      if (typeof rowValueArray[i] != 'object') {
+        value = rowValueArray[i] || '';
+      } else {
+        value = rowValueArray[i].result
+      }
       
-      key = IndexRowValueArray[i];
-      value = rowValueArray[i] || '';
-
       extractedObj[key] = value;
       
     }
