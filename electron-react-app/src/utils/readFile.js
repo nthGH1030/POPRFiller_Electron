@@ -35,7 +35,7 @@ export async function extractDataFromExcel(worksheet, row) {
     const IndexRowValueArray = findAllValueInIndexRow(indexRowObj)
     const rowObject = worksheet.getRow(row)
     const rowValueArray = findAllValueInIndexRow(rowObject)
-    console.log(rowValueArray)
+    //console.log(rowValueArray)
 
     let extractedObj = {};
     for (let i = 0; i < IndexRowValueArray.length; i++) {

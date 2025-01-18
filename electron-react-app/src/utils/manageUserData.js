@@ -52,10 +52,12 @@ async function checkForDuplicate(newDataEntry) {
     let foundDuplicate = false
 
     const updatedDatabaseObj = databaseObj.map(entry => {
+
         if (entry.filename === newDataEntry.filename) {
             foundDuplicate = true;
-            return {...entry, ...newDataEntry}
+            return newDataEntry
         }
+        return entry;
     })
 
     return foundDuplicate ? updatedDatabaseObj : null;

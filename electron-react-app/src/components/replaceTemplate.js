@@ -86,6 +86,7 @@ const ReplaceTemplate = () => {
             const saveResult = await saveTemplates(fileArrayBuffer ,filename, mode)
             console.log(saveResult)
         } else {
+            console.log(duplicate)
             const updateResult = await updateDatabase(duplicate)
             console.log('The updated database is : ', updateResult)
     
