@@ -14,7 +14,7 @@ export async function writePOPR(extractedObj, templateWorksheet , templateType)
         let targetKey = indexRowValueArray[i];
         let targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i+1); 
 
-        if (extractedObj.hasOwnProperty(targetKey)) {
+        if (targetKey in extractedObj) {
           targetCell.value = extractedObj[targetKey];
         }
 

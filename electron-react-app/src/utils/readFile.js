@@ -16,42 +16,70 @@ export function findIndexRow(worksheet, marker) {
 }
 
 export function findAllValueInIndexRow(indexRowObj) {
+   
   let indexValue = []
-  indexRowObj.eachCell({includeEmpty: true}, (cell, colNumber) => {
-    indexValue.push(cell.value !== undefined && cell.value !== null ? cell.value : '');
+  indexRowObj.eachCell((cell, colNumber) => {
+    
+    indexValue.push({[colNumber]: cell.value});
+    
   })
   return indexValue;
 } 
 
+export function findAllValueInTargetRow(targetRowObj){
+  let targetRowValue = []
+  targetRowObj.eachCell({includeEmpty: true}, (cell, colNumber) => {
+    
+    if (cell.value === undefined || cell.value === null) {
+      cell.value = '';
+    } 
+    else if (typeof cell.value === 'object'  && cell.value.hasOwnProperty('result')) {
+      cell.value = cell.value.result
+    }
+
+    targetRowValue.push({[colNumber]: cell.value});
+    
+  })
+  return targetRowValue;
+} 
+
+
 //This function reads the a excel worksheet and extract data from a row
-export async function extractDataFromExcel(worksheet, row) {
+export async function extractDataFromExcel(worksheet, targetRow) {
   
-  if (isNaN(row)) {
-    throw new TypeError(`The row input: ${row} is not a number`)
+  if (isNaN(targetRow)) {
+    throw new TypeError(`The row input: ${targetRow} is not a number`)
   }
 
   try {
-    const indexRowObj = findIndexRow(worksheet, '#Key_Row') 
-    const IndexRowValueArray = findAllValueInIndexRow(indexRowObj)
-    const rowObject = worksheet.getRow(row)
-    const rowValueArray = findAllValueInIndexRow(rowObject)
-    //console.log(rowValueArray)
-
+    
+    const indexRowObject = findIndexRow(worksheet, '#Key_Row') 
+    const keyValuePairsInIndexRow = findAllValueInIndexRow(indexRowObject)
+    //const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
+    
     let extractedObj = {};
-    for (let i = 0; i < IndexRowValueArray.length; i++) {
-      let value
-      let key = IndexRowValueArray[i];
-      if (typeof rowValueArray[i] != 'object') {
-        value = rowValueArray[i] || '';
-      } else {
-        value = rowValueArray[i].result
+    let colNumberInIndexRow
+    let rowValueInIndexRow
+    let colNumberInTargetRow
+    let rowValueInTargetRow
+
+    //setting the key of the object to be the value in index row
+    const targetRowObj = worksheet.getRow(targetRow)
+    const keyValuePairsInTargetRow =findAllValueInTargetRow(targetRowObj)
+    //console.log('keyValuePairsInTargetRow', keyValuePairsInTargetRow)
+
+    for (let i = 0; i < keyValuePairsInIndexRow.length; i++) {
+      colNumberInIndexRow = Object.keys(keyValuePairsInIndexRow[i])[0]
+      rowValueInIndexRow = Object.values(keyValuePairsInIndexRow[i])[0]
+      colNumberInTargetRow = Object.keys(keyValuePairsInTargetRow[i])[0]
+      rowValueInTargetRow = Object.values(keyValuePairsInTargetRow[i])[0]
+      
+      if( colNumberInIndexRow === colNumberInTargetRow) {
+        extractedObj[rowValueInIndexRow] = rowValueInTargetRow;
       }
-      
-      extractedObj[key] = value;
-      
     }
 
-    console.log('the row is',row, extractedObj)
+    console.log('the target row is',targetRow, extractedObj)
 
     return extractedObj
     
@@ -61,6 +89,7 @@ export async function extractDataFromExcel(worksheet, row) {
     }
   
 } 
+
 
 //This function takes a file uploaded by user and return it as buffer array
 export async function readFileUpload(file) {
