@@ -11,14 +11,15 @@ export async function writePOPR(extractedObj, templateWorksheet , templateType)
       const targetRowNumber = indexRowNumber + 1; 
       
       for(let i = 0 ; i < indexRowValueArray.length; i++){
-        let targetKey = indexRowValueArray[i];
+        let targetKey = Object.values(indexRowValueArray[i])[0];
         let targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i+1); 
-
+        
         if (targetKey in extractedObj) {
           targetCell.value = extractedObj[targetKey];
+         
         }
 
-        if (indexRowValueArray[i] === 'staff'){
+        if (Object.values(indexRowValueArray[i])[0] === 'staff'){
           targetCell.value = localStorage.getItem('staff');
         }
         

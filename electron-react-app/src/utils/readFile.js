@@ -57,7 +57,7 @@ export async function extractDataFromExcel(worksheet, targetRow) {
     const keyValuePairsInIndexRow = findAllValueInIndexRow(indexRowObject)
     //const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
     
-    let extractedObj = {};
+    let extractedObj = {}
     let colNumberInIndexRow
     let rowValueInIndexRow
     let colNumberInTargetRow
@@ -67,16 +67,23 @@ export async function extractDataFromExcel(worksheet, targetRow) {
     const targetRowObj = worksheet.getRow(targetRow)
     const keyValuePairsInTargetRow =findAllValueInTargetRow(targetRowObj)
     //console.log('keyValuePairsInTargetRow', keyValuePairsInTargetRow)
+    //console.log('keyValuePairsInIndexRow', keyValuePairsInIndexRow)
 
     for (let i = 0; i < keyValuePairsInIndexRow.length; i++) {
       colNumberInIndexRow = Object.keys(keyValuePairsInIndexRow[i])[0]
       rowValueInIndexRow = Object.values(keyValuePairsInIndexRow[i])[0]
       colNumberInTargetRow = Object.keys(keyValuePairsInTargetRow[i])[0]
       rowValueInTargetRow = Object.values(keyValuePairsInTargetRow[i])[0]
-      
+      /*
+      console.log(`Index ${i}:`);
+      console.log(`colNumberInIndexRow: ${colNumberInIndexRow}, rowValueInIndexRow: ${rowValueInIndexRow}`);
+      console.log(`colNumberInTargetRow: ${colNumberInTargetRow}, rowValueInTargetRow: ${rowValueInTargetRow}`);
       if( colNumberInIndexRow === colNumberInTargetRow) {
         extractedObj[rowValueInIndexRow] = rowValueInTargetRow;
-      }
+      } 
+        
+        */
+      extractedObj[rowValueInIndexRow] = rowValueInTargetRow;
     }
 
     console.log('the target row is',targetRow, extractedObj)
