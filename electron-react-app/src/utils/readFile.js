@@ -52,25 +52,13 @@ export async function extractDataFromExcel(worksheet, targetRow) {
   }
 
   try {
-    
+    //Construct the extractedObj by using index as key and target as value
+    let extractedObj = {}
     const indexRowObject = findIndexRow(worksheet, '#Key_Row') 
     const indexRowMap = findAllValueInIndexRow(indexRowObject)
-    //console.log('indexRowMap: ', indexRowMap)
-    //const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
-    
-    let extractedObj = {}
-    /*
-    let colNumberInIndexRow
-    let rowValueInIndexRow
-    let colNumberInTargetRow
-    let rowValueInTargetRow
-    */
-    //setting the key of the object to be the value in index row
     const targetRowObj = worksheet.getRow(targetRow)
     const targetRowMap =findAllValueInTargetRow(targetRowObj)
-    //console.log('targetRowMap: ', targetRowMap)
-    //console.log('keyValuePairsInTargetRow', keyValuePairsInTargetRow)
-    //console.log('keyValuePairsInIndexRow', keyValuePairsInIndexRow)
+
 
     indexRowMap.forEach((indexValue, colNumber) => {
       if(targetRowMap.has(colNumber)) {
@@ -89,7 +77,6 @@ export async function extractDataFromExcel(worksheet, targetRow) {
     }
   
 } 
-
 
 //This function takes a file uploaded by user and return it as buffer array
 export async function readFileUpload(file) {
