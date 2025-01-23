@@ -6,10 +6,25 @@ export async function writePOPR(extractedObj, templateWorksheet , templateType)
     try {
       
       const indexRowObj = findIndexRow(templateWorksheet, '#Key_Row') 
-      const indexRowValueArray = findAllValueInIndexRow(indexRowObj)
+      const indexRowMap = findAllValueInIndexRow(indexRowObj)
       const indexRowNumber = indexRowObj.number
       const targetRowNumber = indexRowNumber + 1; 
       
+      indexRowMap.forEach((indexValue, colNumber) => {
+        let targetValue = extractedObj[indexValue]
+        let targetCell = templateWorksheet.getRow(targetRowNumber).getCell(colNumber);
+        //console.log(targetValue) 
+        //console.log(targetCell) 
+
+        if(indexValue in extractedObj) {
+          targetCell.value = targetValue
+        } 
+
+        if(indexValue === 'staff'){
+          targetCell.value = localStorage.getItem('staff');
+        }
+      } )
+      /*
       for(let i = 0 ; i < indexRowValueArray.length; i++){
         let targetKey = Object.values(indexRowValueArray[i])[0];
         let targetCell = templateWorksheet.getRow(targetRowNumber).getCell(i+1); 
@@ -24,6 +39,7 @@ export async function writePOPR(extractedObj, templateWorksheet , templateType)
         }
         
       }
+      */
 
       // Save as a new file 
       const outputFilename = templateType + extractedObj['PO Number'] + '.xlsx';
