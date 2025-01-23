@@ -17,31 +17,31 @@ export function findIndexRow(worksheet, marker) {
 
 export function findAllValueInIndexRow(indexRowObj) {
    
-  let indexValue = []
+  let indexValueMap = new Map();
   indexRowObj.eachCell((cell, colNumber) => {
     
-    indexValue.push({[colNumber]: cell.value});
+    indexValueMap.set(colNumber, cell.value);
     
   })
-  return indexValue;
+  return indexValueMap;
 } 
 
 export function findAllValueInTargetRow(targetRowObj){
-  let targetRowValue = []
-  targetRowObj.eachCell({includeEmpty: true}, (cell, colNumber) => {
-    
-    if (cell.value === undefined || cell.value === null) {
-      cell.value = '';
-    } 
-    else if (typeof cell.value === 'object'  && cell.value.hasOwnProperty('result')) {
-      cell.value = cell.value.result
-    }
-
-    targetRowValue.push({[colNumber]: cell.value});
-    
-  })
-  return targetRowValue;
-} 
+  let targetRowValueMap = new Map();
+    targetRowObj.eachCell({includeEmpty: true}, (cell, colNumber) => {
+      
+      if (cell.value === undefined || cell.value === null) {
+        cell.value = '';
+      } 
+      else if (typeof cell.value === 'object'  && cell.value.hasOwnProperty('result')) {
+        cell.value = cell.value.result
+      }
+  
+      targetRowValueMap.set(colNumber, cell.value);
+      
+    })
+    return targetRowValueMap;
+  } 
 
 
 //This function reads the a excel worksheet and extract data from a row
@@ -54,37 +54,30 @@ export async function extractDataFromExcel(worksheet, targetRow) {
   try {
     
     const indexRowObject = findIndexRow(worksheet, '#Key_Row') 
-    const keyValuePairsInIndexRow = findAllValueInIndexRow(indexRowObject)
+    const indexRowMap = findAllValueInIndexRow(indexRowObject)
+    //console.log('indexRowMap: ', indexRowMap)
     //const FilteredIndexRowValueArray = IndexRowValueArray.filter(item => item != '#Key_Row')
     
     let extractedObj = {}
+    /*
     let colNumberInIndexRow
     let rowValueInIndexRow
     let colNumberInTargetRow
     let rowValueInTargetRow
-
+    */
     //setting the key of the object to be the value in index row
     const targetRowObj = worksheet.getRow(targetRow)
-    const keyValuePairsInTargetRow =findAllValueInTargetRow(targetRowObj)
+    const targetRowMap =findAllValueInTargetRow(targetRowObj)
+    //console.log('targetRowMap: ', targetRowMap)
     //console.log('keyValuePairsInTargetRow', keyValuePairsInTargetRow)
     //console.log('keyValuePairsInIndexRow', keyValuePairsInIndexRow)
 
-    for (let i = 0; i < keyValuePairsInIndexRow.length; i++) {
-      colNumberInIndexRow = Object.keys(keyValuePairsInIndexRow[i])[0]
-      rowValueInIndexRow = Object.values(keyValuePairsInIndexRow[i])[0]
-      colNumberInTargetRow = Object.keys(keyValuePairsInTargetRow[i])[0]
-      rowValueInTargetRow = Object.values(keyValuePairsInTargetRow[i])[0]
-      /*
-      console.log(`Index ${i}:`);
-      console.log(`colNumberInIndexRow: ${colNumberInIndexRow}, rowValueInIndexRow: ${rowValueInIndexRow}`);
-      console.log(`colNumberInTargetRow: ${colNumberInTargetRow}, rowValueInTargetRow: ${rowValueInTargetRow}`);
-      if( colNumberInIndexRow === colNumberInTargetRow) {
-        extractedObj[rowValueInIndexRow] = rowValueInTargetRow;
-      } 
-        
-        */
-      extractedObj[rowValueInIndexRow] = rowValueInTargetRow;
-    }
+    indexRowMap.forEach((indexValue, colNumber) => {
+      if(targetRowMap.has(colNumber)) {
+        const targetValue = targetRowMap.get(colNumber);
+        extractedObj[indexValue] = targetValue
+      }
+    })
 
     console.log('the target row is',targetRow, extractedObj)
 
