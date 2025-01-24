@@ -183,13 +183,17 @@ async function readFileToBufferArray(filePath) {
     }
 }
 
-const templatePaths = {
-  'PO': './secrets/template PO.xlsx',
-  'PR': './secrets/template PR.xlsx',
-}
 // Load template PO from backend and return it as bufferArray
 ipcMain.handle('load-template', async (event , templateType) => {
-
+  const templatePaths = {
+    'PO': './secrets/template PO.xlsx',
+    'PR': './secrets/template PR.xlsx',
+  }
+  
+  const demoPaths = {
+    'PO': './demoTemplate/template PO_demo.xlsx',
+    'PR': './demoTemplate/template PR_demo.xlsx',
+  }
   try {
     const selectedTemplateObj = await findSelectedTemplate(templateType)
     
@@ -201,14 +205,21 @@ ipcMain.handle('load-template', async (event , templateType) => {
       return selectedTemplate
   
     } else {
-      const defaultPath = path.join(__dirname, templatePaths[templateType]);
-      const defaultTemplate = await readFileToBufferArray(defaultPath);
-      return defaultTemplate
+
+      if(templatePaths) {
+        const defaultPath = path.join(__dirname, templatePaths[templateType]);
+        const defaultTemplate = await readFileToBufferArray(defaultPath);
+        return defaultTemplate
+
+      } else {
+        const defaultPath = path.join(__dirname, demoPaths[templateType]);
+        const defaultTemplate = await readFileToBufferArray(defaultPath);
+        return defaultTemplate
+      }
     }
   } catch (error) {
 
       log.info(error);
-    
   }
 });
 
