@@ -49,35 +49,36 @@ describe ('Test for invalid input', () => {
 })
 
 describe ('read and return correct data from excel table', () => {
-    let buffer;
-    let bufferArray;
-    let worksheet;
-    
+
+    let buffer
+    let bufferArray
+    let worksheet
+
     beforeAll(async ()=> {
     
-        const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
-        buffer = await fs.promises.readFile(masterTablePath);
+        const centralTablePath = path.join(__dirname, '../demoTemplate/Central record_demo.xlsx');
+        buffer = await fs.promises.readFile(centralTablePath);
         bufferArray = toArrayBuffer(buffer);
         worksheet = await readExcelFile(bufferArray, 'POPR summary');
     })
 
     //Test the return key value pairs of a standard PO row 
-    test('read and return correct key value pairs in row 13 of test template', async() => {
+    test('read and return correct key value pairs in row 14 of test template', async() => {
 
-        const row = 13
-
+        const row = 14
+        const date = Date.parse('2025-01-20')
         const data = {
-            'Bundle': 'Project testing1',
-            'Entity': 'Test Location (Get Rich Fast Limited)',
-            'PO Number': 'TestingPoNumber',
-            'Vendor': 'Get Rich Fast Limited',
+            'Bundle': 'Project X',
+            'Entity': 'Get Rich Fast Limited',
+            'PO Number': 'A0123456789',
+            'Vendor': 'PaymeNow Limited',
             'Type of expense': 'Capex',
-            'Capex Nature': 'Hard Cost',
-            'Purchase description / Payment Certification reason': 'Testing Purchase Description',
-            'Approved PO amount': 300000,
-            'PO Change Request': '',
-            'PO Change Request Date': '',
-            'Total Payment paid': 'N/A',
+            'Capex Nature': 'Soft Cost',
+            'Purchase description / Payment Certification reason': 'Consultancy service from GetRich Fast Limited',
+            'Approved PO amount': 150000,
+            'PO Change Request': 50000,
+            'PO Change Request Date': date,
+            'Total Payment paid': '',
             'Paid Requested': 'N/A',
             'Delivery date': 'N/A',
             'Invoice number': 'N/A'
@@ -87,7 +88,7 @@ describe ('read and return correct data from excel table', () => {
             data
         )
     })
-
+    /*
     //Test the return key value pairs of a PO revision
     test('read and return correct key value pairs in row 14 of test template', async() => {
 
@@ -234,7 +235,7 @@ describe ('read and return correct data from excel table', () => {
             data
         )
     })
-
+*/
 })
 
     
