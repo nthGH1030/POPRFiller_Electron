@@ -18,10 +18,12 @@ export async function writePOPR(extractedObj, templateWorksheet , templateType)
         if(indexValue in extractedObj) {
           targetCell.value = targetValue
         } 
-
-        if(indexValue === 'staff'){
+        else if(indexValue === 'staff'){
           targetCell.value = localStorage.getItem('staff');
         }
+        else if (targetValue === undefined){
+          alert(`The name of ${indexValue} in Key_Row of template does not match with the one in central table`)
+        }  
       } )
 
       // Save as a new file 

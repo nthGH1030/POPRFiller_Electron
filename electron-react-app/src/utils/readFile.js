@@ -59,7 +59,6 @@ export async function extractDataFromExcel(worksheet, targetRow) {
     const targetRowObj = worksheet.getRow(targetRow)
     const targetRowMap =findAllValueInTargetRow(targetRowObj)
 
-
     indexRowMap.forEach((indexValue, colNumber) => {
       if(targetRowMap.has(colNumber)) {
         const targetValue = targetRowMap.get(colNumber);
