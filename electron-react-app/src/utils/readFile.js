@@ -144,43 +144,33 @@ export async function ifWorkSheetExist(file_bufferArray, sheetName) {
   return foundSheet
 }
 
-//This test function no longer works
-/*
-//This function extract data from a PO / PR file
+
+//This function extract data from a PO / PR file for testing purpose
 export async function extractDataFromPOPR(worksheet) {
 
   try {
-  let keyColumn = "B"
-  let valueColumn = "C"
-  let indexRow = ['2','3','4','5','6','7','8','9','10','11','12','13']
+    let extractedObj = {}
+    const indexRowObject = findIndexRow(worksheet, '#Key_Row') 
+    const indexRowMap = findAllValueInIndexRow(indexRowObject)
+    const indexRowNumber = indexRowObject.number
+    const targetRowNumber = indexRowNumber + 1;
+    const targetRowObj = worksheet.getRow(targetRowNumber)
+    const targetRowMap =findAllValueInTargetRow(targetRowObj)
   
-  const data = {}
-  for (let i = 0; i < indexRow.length; i++) {
-
-    const keyAddress = keyColumn.concat(indexRow[i]);
-    let keyValue
-      if (!worksheet.getCell(keyAddress).value) {
-        continue
-      } 
-      else
-      {
-        keyValue = worksheet.getCell(keyAddress).value
+    indexRowMap.forEach((indexValue, colNumber) => {
+      if(targetRowMap.has(colNumber)) {
+        const targetValue = targetRowMap.get(colNumber);
+        extractedObj[indexValue] = targetValue
       }
-
-    const valueAddress = valueColumn.concat(indexRow[i]);
-    const value = worksheet.getCell(valueAddress);
-    const valueValue = value.formula ? value.result : (value.value ?? ""); 
-
-    data[keyValue] = valueValue;
-    
-  }
+    })
   
-  console.log(`POPR data is: ${data}`)
+  console.log(`POPR data is: ${extractedObj}`)
 
-    return data
+    return extractedObj
+    
   } catch (error) {
     console.log("Failed to extract data from POPR: ", error)
   }
 }
 
-*/
+

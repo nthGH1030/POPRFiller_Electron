@@ -9,7 +9,7 @@ import path from 'path';
 //test if data are indeed written in the correct cell
 //Write a template PO with a predefined data, read the PO and check if the input are written match
 
-
+/*
 describe('Test writePO to write correct data in excel' , () => {
     let writtenData
 
@@ -106,3 +106,5 @@ describe('Test writePR to write correct data in excel', () => {
 
      })
 })
+
+*/

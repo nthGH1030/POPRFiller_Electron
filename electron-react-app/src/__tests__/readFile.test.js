@@ -1,4 +1,4 @@
-import {extractDataFromExcel, readExcelFile} from '../utils/readFile.js';
+import {extractDataFromExcel, readExcelFile, extractDataFromPOPR} from '../utils/readFile.js';
 import { toArrayBuffer } from '../utils/Parser_toArrayBuffer.js';
 import fs from 'fs';
 import path from 'path';
@@ -39,6 +39,8 @@ describe ('read and return correct data from excel table', () => {
     let buffer
     let bufferArray
     let worksheet
+    let poBuffer
+    let poWorksheet
 
     beforeAll(async ()=> {
     
@@ -46,10 +48,15 @@ describe ('read and return correct data from excel table', () => {
         buffer = await fs.promises.readFile(centralTablePath);
         bufferArray = toArrayBuffer(buffer);
         worksheet = await readExcelFile(bufferArray, 'POPR summary');
+
+        const POtemplatePath = path.join(__dirname, '../demoTemplate/template PO_demo.xlsx');
+        poBuffer = await fs.promises.readFile(POtemplatePath);
+        bufferArray = toArrayBuffer(poBuffer);
+        poWorksheet = await readExcelFile(bufferArray, 'PO_Input');
     })
 
     //Test the return key value pairs of a standard PO row 
-    test('read and return correct key value pairs in row 14 of test template', async() => {
+    test('read and return correct key value pairs in row 5 of test template', async() => {
 
         const row = 5
         const date = new Date('2025-01-20');
@@ -76,153 +83,33 @@ describe ('read and return correct data from excel table', () => {
         )
     })
     /*
-    //Test the return key value pairs of a PO revision
-    test('read and return correct key value pairs in row 14 of test template', async() => {
-
-        const row = 14
-
+    //Test the data written in a PO to see if it match
+    test('read a PO written with data and check with the expected value using row 5' , async() => {
+        const row = 5
+        const date = new Date('2025-01-20')
         const data = {
-            'Bundle': 'Project testing1',
-            'Entity': 'Test Location (Get Rich Fast Limited)',
-            'PO Number': 'TestingPoNumber-R1',
-            'Vendor': 'Get Rich Fast Limited',
+            '#Key_Row': "",
+            'Bundle': 'Project X',
+            'Entity': 'Get Rich Fast Limited',
+            'PO Number': 'A0123456789',
+            'Vendor': 'PaymeNow Limited',
             'Type of expense': 'Capex',
-            'Capex Nature': 'Hard Cost',
-            'Purchase description / Payment Certification reason': 'Testing Purchase Description',
-            'Approved PO amount': 350000,
+            'Capex Nature': 'Soft Cost',
+            'Purchase description / Payment Certification reason': 'Additional Consultancy service from GetRich Fast Limited',
+            'Approved PO amount': 150000,
             'PO Change Request': 50000,
-            'PO Change Request Date': "2024-05-08T00:00:00.000Z",
-            'Total Payment paid': 'N/A',
+            'PO Change Request Date': date,
+            'Total Payment paid': '',
             'Paid Requested': 'N/A',
             'Delivery date': 'N/A',
             'Invoice number': 'N/A'
         }
-        //handle date format
-        data['PO Change Request Date'] = new Date(data['PO Change Request Date'])
-        
-        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
+        await expect(Promise.resolve(extractDataFromPOPR(poWorksheet))).resolves.toStrictEqual(
             data
         )
     })
+        */
 
-        //Test the return key value pairs of a PO revision
-        test('read and return correct key value pairs in row 15 of test template', async() => {
-
-            const row = 15
-    
-            const data = {
-                'Bundle': 'Project testing1',
-                'Entity': 'Test Location (Get Rich Fast Limited)',
-                'PO Number': 'TestingPoNumber-R2',
-                'Vendor': 'Get Rich Fast Limited',
-                'Type of expense': 'Capex',
-                'Capex Nature': 'Hard Cost',
-                'Purchase description / Payment Certification reason': 'Testing Purchase Description',
-                'Approved PO amount': 550000,
-                'PO Change Request': 200000,
-                'PO Change Request Date': "2024-09-08T00:00:00.000Z",
-                'Total Payment paid': 'N/A',
-                'Paid Requested': 'N/A',
-                'Delivery date': 'N/A',
-                'Invoice number': 'N/A'
-            }
-            //handle date format
-            data['PO Change Request Date'] = new Date(data['PO Change Request Date'])
-            
-            await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
-                data
-            )
-        })
-    
-    
-
-
-    //Test the return key value pairs of a PR
-    test('read and return correct key value pairs in row 16 of test template', async() => {
-
-        const row = 16
-
-        const data = {
-            Bundle: 'Project testing1',
-            Entity: 'Test Location (Get Rich Fast Limited)',
-            'PO Number': 'TestingPoNumber',
-            Vendor: 'Get Rich Fast Limited',
-            'Type of expense': 'Capex',
-            'Capex Nature': 'Hard Cost',
-            'Purchase description / Payment Certification reason': 'Testing Purchase Description - Interim payment 1',
-            'Approved PO amount': 450000,
-            'PO Change Request': '',
-            'PO Change Request Date': '',
-            'Total Payment paid': 10000,
-            'Paid Requested': 10000,
-            'Delivery date': '2024-01-08T00:00:00.000Z',
-            'Invoice number': '006537'
-        }
-        //handle date format
-        data['Delivery date'] = new Date(data['Delivery date'])
-        
-        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
-            data
-        )
-    })
-
-    //Test the return key value pairs of a PR - 2
-    test('read and return correct key value pairs in row 17 of test template', async() => {
-        const row = 17
-
-        const data = {
-            'Bundle': 'Project testing1',
-            'Entity': 'Test Location (Get Rich Fast Limited)',
-            'PO Number': 'TestingPoNumber',
-            'Vendor': 'Get Rich Fast Limited',
-            'Type of expense': 'Capex',
-            'Capex Nature': 'Hard Cost',
-            'Purchase description / Payment Certification reason': 'Testing Purchase Description - Interim payment 2',
-            'Approved PO amount': 450000,
-            'PO Change Request': '',
-            'PO Change Request Date': '',
-            'Total Payment paid': 110000,
-            'Paid Requested': 100000,
-            'Delivery date': '2024-01-24T00:00:00.000Z',
-            'Invoice number': '/testing/testing/123'
-        }
-        //handle date format
-        data['Delivery date'] = new Date(data['Delivery date'])
-        
-        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
-            data
-        )
-    })
-
-    //Test the return key value pairs of a PR - 3
-    test('read and return correct key value pairs in row 18 of test template', async() => {
-
-        const row = 18
-
-        const data = {
-            'Bundle': 'Project testing1',
-            'Entity': 'Test Location (Get Rich Fast Limited)',
-            'PO Number': 'TestingPoNumber',
-            'Vendor': 'Get Rich Fast Limited',
-            'Type of expense': 'Capex',
-            'Capex Nature': 'Hard Cost',
-            'Purchase description / Payment Certification reason': 'Testing Purchase Description - Interim payment 3',
-            'Approved PO amount': 300000,
-            'PO Change Request': '',
-            'PO Change Request Date': '',
-            'Total Payment paid': 310000,
-            'Paid Requested': 50000,
-            'Delivery date': '2024-03-24T00:00:00.000Z',
-            'Invoice number': '5135'
-        }
-        //handle date format
-        data['Delivery date'] = new Date(data['Delivery date'])
-        
-        await expect(Promise.resolve(extractDataFromExcel(worksheet,row))).resolves.toStrictEqual(
-            data
-        )
-    })
-*/
 })
 
     
