@@ -9,7 +9,7 @@ describe ('Test for invalid input', () => {
 
     beforeAll(async ()=> {
     
-        const masterTablePath = path.join(__dirname, '../secrets/Master table_test.xlsx');
+        const masterTablePath = path.join(__dirname, '../demoTemplate/Central record_demo.xlsx');
         buffer = await fs.promises.readFile(masterTablePath);
         bufferArray = toArrayBuffer(buffer);
     })
@@ -32,20 +32,6 @@ describe ('Test for invalid input', () => {
                 TypeError(`The row input: ${row} is not a number`)
             );
     });
-    /*
-    //Test if excel is malformed
-    test('read an corrupted excel file', async() => {
-        const corruptedExcelPath = path.join(__dirname, '../secrets/test_corrupted_excel.xlsx');
-        const sheet = 'non-existing-worksheet';
-
-        buffer = await fs.promises.readFile(corruptedExcelPath);
-        bufferArray = toArrayBuffer(buffer);
-
-        await expect(
-            readExcelFile(bufferArray, sheet)).rejects.toThrow(
-                TypeError('The file passed in is not a buffer Array'));
-    })
-    */
 })
 
 describe ('read and return correct data from excel table', () => {
@@ -65,16 +51,17 @@ describe ('read and return correct data from excel table', () => {
     //Test the return key value pairs of a standard PO row 
     test('read and return correct key value pairs in row 14 of test template', async() => {
 
-        const row = 14
-        const date = Date.parse('2025-01-20')
+        const row = 5
+        const date = new Date('2025-01-20');
         const data = {
+            '#Key_Row': "",
             'Bundle': 'Project X',
             'Entity': 'Get Rich Fast Limited',
             'PO Number': 'A0123456789',
             'Vendor': 'PaymeNow Limited',
             'Type of expense': 'Capex',
             'Capex Nature': 'Soft Cost',
-            'Purchase description / Payment Certification reason': 'Consultancy service from GetRich Fast Limited',
+            'Purchase description / Payment Certification reason': 'Additional Consultancy service from GetRich Fast Limited',
             'Approved PO amount': 150000,
             'PO Change Request': 50000,
             'PO Change Request Date': date,
