@@ -11,14 +11,12 @@ const SelectTemplate = () => {
     const [POList, setPOList] = useState([]);
     const [PRList, setPRList] = useState([]);
 
-    
     const getTemplateList = async (templateType) => {
         const templateList = await window.electronAPI.getFileDatabyTemplateType(templateType)
 
         return templateList
     }
     
-
     const fetchTemplates = async () => {
         const POList = await getTemplateList('PO')
         const PRList = await getTemplateList('PR')
