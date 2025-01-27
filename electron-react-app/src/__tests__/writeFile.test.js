@@ -19,13 +19,13 @@ async function writeTestPOPR(row) {
     return {
         getItem: jest.fn((key) => localStorage[key] || null),
         setItem: jest.fn((key, value) => {
-        localStorage[key] = value.toString();
+            localStorage[key] = value.toString();
         }),
         removeItem: jest.fn((key) => {
-        delete localStorage[key];
+            delete localStorage[key];
         }),
         clear: jest.fn(() => {
-        localStorage = {};
+            localStorage = {};
         })
     };
     })();
