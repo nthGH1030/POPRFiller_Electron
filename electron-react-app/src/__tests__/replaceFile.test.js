@@ -1,3 +1,5 @@
+const fs = require ('fs').promises;
+import path from 'path'
 //This unit test check if the upload new template and select new template works correctly
 
 /*
@@ -8,11 +10,38 @@
 */
 
 describe( 'Test upload a new template function', () => {
-    test('If an uploaded template is saved to correct directory' , () => {
+    const testPath = path.join(__dirname, 'testDirectory')
+    const testFilePath = path.join(__dirname, 'userDatabase.json');
+    
+    beforeAll(async() => {
+
+        try {
+         await fs.access(testPath)
+        } catch (err) {
+         if (err.code === 'ENOENT') {
+             await fs.mkdir(testPath, {recursive: false})
+             await fs.writeFile(testFilePath , '[]')
+         }
+        }
+    })
+
+    afterAll(async() => {
+        try {
+            await fs.rm(testFilePath ,  { recursive: true, force: true });
+            await fs.rmdir(testPath);
+        } catch (err) {
+            console.log('faile to remove scaffold',err)
+        }
+    })
+
+
+    test('If an uploaded template is saved to correct directory' , async() => {
         /*
             i can use file system from nodejs here
             but how do i mock a file system without actually creating a file and check
         */
+
+
     })
     test('if the database is created and can be accessed' , () => {
         /*
