@@ -11,7 +11,7 @@ import path from 'path'
 
 describe( 'Test upload a new template function', () => {
     const testPath = path.join(__dirname, 'testDirectory')
-    const testFilePath = path.join(__dirname, 'userDatabase.json');
+    const testFilePath = path.join(testPath, 'userDatabase.json');
     
     beforeAll(async() => {
 
@@ -27,20 +27,19 @@ describe( 'Test upload a new template function', () => {
 
     afterAll(async() => {
         try {
-            await fs.rm(testFilePath ,  { recursive: true, force: true });
-            await fs.rmdir(testPath);
+            await fs.rm(testFilePath);
+            
         } catch (err) {
             console.log('faile to remove scaffold',err)
         }
     })
 
 
-    test('If an uploaded template is saved to correct directory' , async() => {
+    test('If an uploaded template is saved to correct directory' , () => {
         /*
             i can use file system from nodejs here
             but how do i mock a file system without actually creating a file and check
         */
-
 
     })
     test('if the database is created and can be accessed' , () => {
