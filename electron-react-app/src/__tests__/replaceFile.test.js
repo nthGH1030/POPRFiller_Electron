@@ -16,11 +16,14 @@ const { ensureDatabaseExist, parseFile, appendtoDatabase,
 
 jest.mock('../utils/manageUserData' , () => {
     const originalModule = jest.requireActual('../utils/manageUserData');
+    
     return {
         ...originalModule,
         saveTemplates: jest.fn(),
+        appendtoDatabase: jest.fn()
     };
 })
+
 
 
 describe( 'Test upload a new template function', () => {
@@ -31,9 +34,9 @@ describe( 'Test upload a new template function', () => {
     const mockFilename = 'mockFile.xlsx';
     const mockFileBufferArray = [1, 2, 3, 4];
     const mockTestFilePath = path.join(testPath, mockFilename);
-    
-    beforeAll(async() => {
 
+    beforeAll(async() => {
+        
     })
     
     afterAll(async() => {
@@ -46,12 +49,12 @@ describe( 'Test upload a new template function', () => {
         }
     })
 
-    test('If an uploaded template is saved to correct directory' , async() => {
+    test('If an uploaded template is could be saved to a directory' , async() => {
         /*
             i can use file system from nodejs here
             check if saveTemplate works
         */
-        //await saveTemplates('mocked array buffer', filename, templateType) 
+
         saveTemplates.mockImplementation(async(fileBufferArray, filename, templateType)=> {
             const buffer = Buffer.from(fileBufferArray)
             const testFilePath = path.join(testPath, filename)
@@ -66,13 +69,24 @@ describe( 'Test upload a new template function', () => {
         expect(fileExists).toBe(true);
 
     })
-    test('if the database is created and can be accessed' , () => {
+
+    test('if the database is created, accessed and parsed as object' , async() => {
         /*
             see if database directory is created
             see if database is saved to the directory
             see if database can be accessed
             see if the database content can be parsed
         */
+        const fileExists = await fs.access(testDatabasePath).then(()=> true).catch(()=> false)
+        const databaseObj = await parseFile("template PO_test.xlsx", "PO")
+
+        expect(fileExists).toBe(true)
+        expect(databaseObj).toEqual({
+            "filename": "template PO_test.xlsx",
+            "uploadDate": expect.any(Number),
+            "templateType": "PO",
+            "status": "unselected"
+        })
     })
     test('if the database is appended correctly' , () => {
         /*
