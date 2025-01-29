@@ -34,19 +34,11 @@ describe( 'Test upload a new template function', () => {
     
     beforeAll(async() => {
 
-        try {
-         await fs.access(testPath)
-        } catch (err) {
-         if (err.code === 'ENOENT') {
-             await fs.mkdir(testPath, {recursive: false})
-         }
-        } 
-        await fs.writeFile(testDatabasePath , '[]')
     })
     
     afterAll(async() => {
         try {
-            await fs.rm(testDatabasePath, { force: true });
+            //await fs.rm(testDatabasePath, { force: true });
             await fs.rm(mockTestFilePath, { force: true });
             
         } catch (err) {
