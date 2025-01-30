@@ -115,7 +115,7 @@ describe( 'Test upload a new template function', () => {
         */
         const mockEntry = {
             "filename": "template PO_test_newEntry.xlsx",
-            "uploadDate": Date.now(),
+            "uploadDate": 1737687395921,
             "templateType": "PO",
             "status": "unselected"
         }
@@ -129,12 +129,16 @@ describe( 'Test upload a new template function', () => {
 
         appendtoDatabase.mockImplementation(async(mockEntry) => {
             try {
+                //appended tha database
                 const databaseObj = await getDatabaseAsObj()
                 databaseObj.push(mockEntry) 
                 const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
                 const databaseFilePath = path.join(__dirname, './testDirectory/userDatabase.json')
                 await fs.writeFile(databaseFilePath, newDataInJSONString)
-                return {success : true}
+                //get the new database as object
+                const appendedDatabase = await getDatabaseAsObj()
+
+                return {success : true , database: appendedDatabase}
             } catch(error) {
                 return { success: false, error: error.message };
             }
@@ -142,8 +146,22 @@ describe( 'Test upload a new template function', () => {
 
         const result = await appendtoDatabase(mockEntry)
         expect(result.success).toEqual(true)
-
-
+        expect(result.database).toEqual(
+            [
+                {
+                  "filename": "template PO_test.xlsx",
+                  "uploadDate": 1737687395921,
+                  "templateType": "PO",
+                  "status": "unselected"
+                }, 
+                {
+                    "filename": "template PO_test_newEntry.xlsx",
+                    "uploadDate": 1737687395921,
+                    "templateType": "PO",
+                    "status": "unselected"
+                }
+              ]
+        )
     })
 
     test('if the database is updated correctly in case of duplicated entry', () => {
