@@ -37,13 +37,26 @@ describe( 'Test upload a new template function', () => {
     const mockTestFilePath = path.join(testPath, mockFilename);
 
     beforeAll(async() => {
-        
+        try {
+            await fs.access(testDatabasePath)
+            return 'There is already an existing database'
+    
+        } catch(err) {
+            if(err.code === 'ENOENT') {
+                await fs.mkdir(testPath, {recursive: true});
+                await fs.writeFile(testDatabasePath, '[]')
+                return 'database has been created'
+            } else {
+                return `Error: ${err}, There is an error in creating the database`
+            }
+        }
     })
     
     afterAll(async() => {
         try {
-            //await fs.rm(testDatabasePath, { force: true });
             await fs.rm(mockTestFilePath, { force: true });
+            await fs.rm(testDatabasePath, { force: true });
+            await fs.rmdir(testPath, { force: true });
             
         } catch (err) {
             console.log('failed to remove scaffold',err)
