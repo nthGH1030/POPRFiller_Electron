@@ -179,7 +179,7 @@ describe( 'Test upload a new template function', () => {
             write the database
             check if the updated database is as expected
         */
-       /*
+       
         const updatedDataObj = 
         [
             {
@@ -221,7 +221,7 @@ describe( 'Test upload a new template function', () => {
                 "status": "selected"
             }
         ])
-            */
+            
     })
 })
 
