@@ -22,6 +22,7 @@ jest.mock('../utils/manageUserData' , () => {
         saveTemplates: jest.fn(),
         appendtoDatabase: jest.fn(),
         getDatabaseAsObj: jest.fn(),
+        updateDatabase: jest.fn(),
     };
 })
 
@@ -36,7 +37,9 @@ describe( 'Test upload a new template function', () => {
     const mockFileBufferArray = [1, 2, 3, 4];
     const mockTestFilePath = path.join(testPath, mockFilename);
 
-    beforeAll(async() => {
+
+
+    beforeEach(async() => {
         try {
             await fs.access(testDatabasePath)
             return 'There is already an existing database'
@@ -44,7 +47,12 @@ describe( 'Test upload a new template function', () => {
         } catch(err) {
             if(err.code === 'ENOENT') {
                 await fs.mkdir(testPath, {recursive: true});
-                await fs.writeFile(testDatabasePath, '[]')
+                await fs.writeFile(testDatabasePath, JSON.stringify([{
+                    "filename": "template PO_test.xlsx",
+                    "uploadDate": 1737687395921,
+                    "templateType": "PO",
+                    "status": "unselected"
+                }]))
                 return 'database has been created'
             } else {
                 return `Error: ${err}, There is an error in creating the database`
@@ -52,7 +60,7 @@ describe( 'Test upload a new template function', () => {
         }
     })
     
-    afterAll(async() => {
+    afterEach(async() => {
         try {
             await fs.rm(mockTestFilePath, { force: true });
             await fs.rm(testDatabasePath, { force: true });
@@ -126,7 +134,7 @@ describe( 'Test upload a new template function', () => {
             const databaseObj = JSON.parse(databaseBuffer);
             return databaseObj
         })
-
+        
         appendtoDatabase.mockImplementation(async(mockEntry) => {
             try {
                 //appended tha database
@@ -163,11 +171,57 @@ describe( 'Test upload a new template function', () => {
               ]
         )
     })
-
-    test('if the database is updated correctly in case of duplicated entry', () => {
+    
+    test('if the database is updated correctly in case of duplicated entry', async() => {
         /*
-
+            get the database as object
+            update the database entry with the new one
+            write the database
+            check if the updated database is as expected
         */
+       /*
+        const updatedDataObj = 
+        [
+            {
+                "filename": "template PO_test.xlsx",
+                "uploadDate": 1737687395921,
+                "templateType": "PO",
+                "status": "selected"
+            }
+        ]
+        getDatabaseAsObj.mockImplementation(async() => {
+            const databaseFilePath = path.join(__dirname, './testDirectory/userDatabase.json')
+            const databaseBuffer = await fs.readFile(databaseFilePath);
+            const databaseObj = JSON.parse(databaseBuffer);
+            return databaseObj
+        })
+            
+       updateDatabase.mockImplementation(async(updatedDatabaseObj) => {
+            const databaseFilePath = path.join(__dirname, './testDirectory/userDatabase.json')
+            const newDataInJSONString = JSON.stringify(updatedDatabaseObj, null, 2)
+            
+            try { 
+                await fs.writeFile(databaseFilePath, newDataInJSONString)
+                const newDatabase = await getDatabaseAsObj()
+                return {success: true , result: newDatabase}
+        
+            } catch(error) {
+                return { success: false, error: error.message };
+            }
+       })
+
+       const result = await updateDatabase(updatedDataObj)
+       expect(result.success).toBe(true)
+       expect(result.result).toEqual(      
+        [
+            {
+                "filename": "template PO_test.xlsx",
+                "uploadDate": 1737687395921,
+                "templateType": "PO",
+                "status": "selected"
+            }
+        ])
+            */
     })
 })
 
