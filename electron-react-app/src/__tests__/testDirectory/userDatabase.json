@@ -1,6 +1,14 @@
-[{
+[
+  {
     "filename": "template PO_test.xlsx",
     "uploadDate": 1737687395921,
     "templateType": "PO",
     "status": "unselected"
-}]
+  },
+  {
+    "filename": "template PO_test_newEntry.xlsx",
+    "uploadDate": 1738207869469,
+    "templateType": "PO",
+    "status": "unselected"
+  }
+]

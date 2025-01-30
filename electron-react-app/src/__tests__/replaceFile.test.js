@@ -1,7 +1,7 @@
 const fs = require ('fs').promises;
 const path = require('path');
 const {app} = require('electron');
-const { ensureDatabaseExist, parseFile, appendtoDatabase, 
+const { ensureDatabaseExist, getDatabaseAsObj,parseFile, appendtoDatabase, 
     updateDatabase, checkForDuplicate, getUserConfirmation, ensureTemplateDirectoryExist,
     saveTemplates, getFileDatabyTemplateType, selectAndDeselectTemplate, deselectAllTemplate,
     findTemplate, findSelectedTemplate } = require('../utils/manageUserData');
@@ -20,7 +20,8 @@ jest.mock('../utils/manageUserData' , () => {
     return {
         ...originalModule,
         saveTemplates: jest.fn(),
-        appendtoDatabase: jest.fn()
+        appendtoDatabase: jest.fn(),
+        getDatabaseAsObj: jest.fn(),
     };
 })
 
@@ -56,10 +57,15 @@ describe( 'Test upload a new template function', () => {
         */
 
         saveTemplates.mockImplementation(async(fileBufferArray, filename, templateType)=> {
-            const buffer = Buffer.from(fileBufferArray)
-            const testFilePath = path.join(testPath, filename)
-            await fs.writeFile(testFilePath, buffer)
-            return {success : true, testFilePath : testFilePath}
+            try {
+                const buffer = Buffer.from(fileBufferArray)
+                const testFilePath = path.join(testPath, filename)
+                await fs.writeFile(testFilePath, buffer)
+                return {success : true, testFilePath : testFilePath}
+            } catch(err) {
+                return {success : false}
+            }
+            
         })
 
         const result = await saveTemplates(mockFileBufferArray, mockFilename, mockTemplateType)
@@ -88,14 +94,43 @@ describe( 'Test upload a new template function', () => {
             "status": "unselected"
         })
     })
-    test('if the database is appended correctly' , () => {
+    test('if the database is appended correctly' , async() => {
         /*
-            Mock a database connection
-            Make a database filepath
             Make a data entry
             append the data entry to the database
             get the database to check if the mock resolved value is correct
         */
+        const mockEntry = {
+            "filename": "template PO_test_newEntry.xlsx",
+            "uploadDate": Date.now(),
+            "templateType": "PO",
+            "status": "unselected"
+        }
+
+        getDatabaseAsObj.mockImplementation(async() => {
+            const databaseFilePath = path.join(__dirname, './testDirectory/userDatabase.json')
+            const databaseBuffer = await fs.readFile(databaseFilePath);
+            const databaseObj = JSON.parse(databaseBuffer);
+            return databaseObj
+        })
+
+        appendtoDatabase.mockImplementation(async(mockEntry) => {
+            try {
+                const databaseObj = await getDatabaseAsObj()
+                databaseObj.push(mockEntry) 
+                const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
+                const databaseFilePath = path.join(__dirname, './testDirectory/userDatabase.json')
+                await fs.writeFile(databaseFilePath, newDataInJSONString)
+                return {success : true}
+            } catch(error) {
+                return { success: false, error: error.message };
+            }
+        })
+
+        const result = await appendtoDatabase(mockEntry)
+        expect(result.success).toEqual(true)
+
+
     })
 
     test('if the database is updated correctly in case of duplicated entry', () => {

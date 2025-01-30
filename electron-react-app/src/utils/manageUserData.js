@@ -240,6 +240,7 @@ async function findSelectedTemplate(templateType){
 module.exports = {
     
     ensureDatabaseExist,
+    getDatabaseAsObj,
     parseFile,
     appendtoDatabase,
     updateDatabase,

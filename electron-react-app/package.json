@@ -19,7 +19,7 @@
   "scripts": {
     "start": "cross-env react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "electron": "cross-env NODE_ENV=development electron .",
     "electron-prd": "electron .",
