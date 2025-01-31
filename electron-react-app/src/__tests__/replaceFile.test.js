@@ -26,6 +26,7 @@ jest.mock('../utils/manageUserData' , () => {
         updateDatabase: jest.fn(),
         findTemplate: jest.fn(),
         selectAndDeselectTemplate: jest.fn(),
+        deselectAllTemplate: jest.fn()
     };
 })
 
@@ -308,10 +309,74 @@ describe( 'Test upload a new template function', () => {
 
     })
 
-    test('deselectAllTempalte', () => {
+    test('deselectAllTempalte', async() => {
         /*
             Check that all temlplates are deselected
         */
+        getDatabaseAsObj.mockImplementation(async() => {
+            const databaseFilePath = path.join(__dirname, './testDirectory/userDatabase.json')
+            const databaseBuffer = await fs.readFile(databaseFilePath);
+            const databaseObj = JSON.parse(databaseBuffer);
+            return databaseObj
+        })
+        selectAndDeselectTemplate.mockImplementation(async(filename, templateType)=> {
+            const databaseObj = await getDatabaseAsObj()
+
+            const selectedObj = databaseObj.find(entry => entry.filename === filename)
+            if (selectedObj) {
+                //select the entry
+                selectedObj.status = 'selected';
+        
+                //deselect the other entry
+                databaseObj.forEach(entry => {
+                    if (entry.filename != filename && entry.templateType === templateType) {
+                        entry.status = 'unselected';
+                    }
+                })
+        
+                // Write the updated database back to the file
+                await fs.writeFile(testDatabasePath, JSON.stringify(databaseObj, null, 2));
+        
+                return {success: true}
+        
+            } else {
+                return { success: false };
+            }
+        })
+        deselectAllTemplate.mockImplementation(async(templateType) =>{
+            const databaseObj = await getDatabaseAsObj()
+                const newDatabaseObj = databaseObj.map(entry => {
+                    if (entry.templateType === templateType && entry.status === 'selected') {
+                      entry.status = 'unselected';
+                    }
+                    return entry;
+                  });
+                try {
+ 
+                    await fs.writeFile(testDatabasePath, JSON.stringify(newDatabaseObj, null, 2));
+                    return {success: true, newDatabase : newDatabaseObj}
+                } catch(error) {
+                    return {success: false, error: error.message}
+                }
+        })
+
+        await selectAndDeselectTemplate('template PO_test.xlsx', 'PO') 
+        const result = await deselectAllTemplate('PO')
+        expect(result.success).toBe(true)
+        expect(result.newDatabase).toEqual([{
+            "filename": "template PO_test.xlsx",
+            "uploadDate": 1737687395921,
+            "templateType": "PO",
+            "status": "unselected"
+        },
+        {
+            "filename": "template PO_test2.xlsx",
+            "uploadDate": 1737687395922,
+            "templateType": "PO",
+            "status": "unselected"
+        },
+         
+    ])
     })
 
 
