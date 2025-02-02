@@ -24,10 +24,11 @@ function logToFile(message) {
 // this should be placed at top of main.js to handle setup events quickly
 
 function handleSquirrelEvent() {
-  
+  /*
   if (process.platform !== 'win32') {
     return false;
   }
+    */
 
   if (process.argv.length === 1) {
     return false;
@@ -116,6 +117,7 @@ function handleSquirrelEvent() {
 };
 //------------------------------------------------------------------------------
 function main() {
+
   if (handleSquirrelEvent()) {
     // squirrel event handled and app will exit in 1000ms, so don't do anything else
     return
@@ -170,7 +172,7 @@ function main() {
       }
     });
 
-    //---------------Debug tool---------------------//
+    //---------------Debug tool-------------------------------------------------//
   ipcMain.handle('log-main-process-message' , async (event) => {
     const databaseExist = await ensureDatabaseExist()
     const POdirectoryExist = await ensureTemplateDirectoryExist('PO')
@@ -179,7 +181,7 @@ function main() {
     return [`Message: ${userDataPath}, ${databaseExist}, ${POdirectoryExist}, ${PRdirectoryExist}`]
   })
 
-  //-------------------functions to be exposed in renderer process--------------------------
+  //functions to be exposed in renderer process---------------------------------//
   // Read a given file path and return its content in buffer array
   async function readFileToBufferArray(filePath) {
       try {
