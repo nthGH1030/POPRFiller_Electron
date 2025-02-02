@@ -25,6 +25,10 @@ function logToFile(message) {
 
 function handleSquirrelEvent() {
   
+  if (process.platform !== 'win32') {
+    return false;
+  }
+
   if (process.argv.length === 1) {
     return false;
   }
@@ -55,7 +59,7 @@ function handleSquirrelEvent() {
   switch (squirrelEvent) {
     case '--squirrel-install':
       //logToFile(`--squirrel-install: ${process.argv}`)
-      
+      //falls through
       
     case '--squirrel-updated':
       //logToFile(`--squirrel-updated: ${process.argv}`)
@@ -75,7 +79,7 @@ function handleSquirrelEvent() {
         logToFile(`deselectAllTemplates took ${endTime - startTime} ms`);
 
         if(POResult != {success: true} || PRResult != {success: true} ) {
-          logToFile(`Failed to deselect templates: ${result.error}`);
+          logToFile(`Failed to deselect templates: ${POResult.error} ,${PRResult.error}`);
         }
       })();
 
@@ -102,6 +106,10 @@ function handleSquirrelEvent() {
       // we update to the new version - it's the opposite of
       // --squirrel-updated
       
+      app.quit();
+      return true;
+
+    default:
       app.quit();
       return true;
   }
