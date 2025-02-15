@@ -40,5 +40,43 @@ export async function checkEntity(centralEntityWorksheet, extractedObj) {
   
 }
 //Devliery date / PO Change Date: Check if it is a valid date Object
+export async function checkDate(extractedObj) {
+    const poChangeDate = Date.parse(extractedObj['PO Change Request Date'])
+    if(!isNaN(poChangeDate) || 
+        extractedObj['PO Change Request Date'] === 'N/A' || 
+        extractedObj['PO Change Request Date'] === '') {
+        return {isPOChangeDateValid : false, message:
+            'The Field "PO Change Date should either be a date, N/A or empty"'
+        }
+    }
+
+    const deliveryDate = Date.parse(extractedObj['Delivery date']) 
+    if(!isNaN(deliveryDate) || 
+        extractedObj['Delivery date'] === 'N/A' || 
+        extractedObj['Delivery date'] === '') {
+        return {isDeliveryDateValid : false, message:
+            'The Field "PO Change Date should either be a date, N/A or empty"'
+        }
+    }
+}
 
 //Payment related: Check if they are valid Numbers
+export async function checkNumber(extractedObj) {
+
+    for (const value in extractedObj) {
+        if(value === extractedObj['Approved PO amount'] || 
+            value === extractedObj['PO Change Request'] ||
+            value === extractedObj['Paid Requested'] ||
+            value === extractedObj['Total Payment paid']
+        ) {
+
+            if(!isNaN(value) || value !== 'N/A' || value !== '')
+            return {
+                valid: false,
+                message: `${extractedObj['Approved PO amount']} 
+                    should either be a date, N/A or empty`
+            } 
+        }
+    }
+}
+

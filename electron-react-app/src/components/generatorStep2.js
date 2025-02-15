@@ -6,7 +6,7 @@ import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
 import {writePOPR} from '../utils/writeFile';
 import { extractDataFromExcel, readExcelFile, readFileUpload } from '../utils/readFile';
-import {checkEntity} from '../utils/checkUserExcelInput';
+import {checkEntity, checkDate, checkNumber} from '../utils/checkUserExcelInput';
 import saveAs from 'file-saver'
 import SideNavBar from './sideNavBar';
 
