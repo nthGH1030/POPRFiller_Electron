@@ -1,5 +1,4 @@
-import{findIndexRow, findAllValueInIndexRow, findAllValueInTargetRow, 
-    extractDataFromExcel} from './readFile'
+import{findIndexRow} from './readFile'
 
 /*
     This script provide function that check the excel uploaded by user,
@@ -7,14 +6,38 @@ import{findIndexRow, findAllValueInIndexRow, findAllValueInTargetRow,
 */
 
 //Entity check: check whether they are of an approved list of entity
-function checkEntity(worksheet) {
-    const indexRowObj = findIndexRow(worksheet, '#Key_Row')
-    const indexValueMap = findAllValueInIndexRow(indexRowObj)
-    const endPoint = findIndexRow(worksheet, 'End of reference information')
+export async function checkEntity(centralEntityWorksheet, extractedObj) {
 
+    const indexRowObj = findIndexRow(centralEntityWorksheet, '#Key_Row')
+    const endPoint = findIndexRow(centralEntityWorksheet, 'End of reference information')
     //find and return a list of approved entity
-    console.log(indexRowObj)
+    let column
+    indexRowObj.eachCell((cell, colNumber) => {
+        if(cell.value === 'Approved Entity') {
+        column =  colNumber
+        }
+    })
+    
+    //Get a Map of column value
+    const columnObj = centralEntityWorksheet.getColumn(column);
+    let columnMap = new Map();
+    columnObj.eachCell((cell, rowNumber) => {
+      if(rowNumber >= indexRowObj.number + 1 && rowNumber <= endPoint.number - 1) {
+        columnMap.set(rowNumber, cell.value)
+      }
+    })
 
+    //check if the entity in extractedObj is inside the list of approved entity
+    columnMap.forEach((value) => {
+
+        if(extractedObj['Entity'] === value) {
+          return true
+        }
+    })
+
+    return {isEntityValid: false, 
+        message: 'The Entity you input is not valid, please revise the excel and re-upload a new file'}
+  
 }
 //Devliery date / PO Change Date: Check if it is a valid date Object
 

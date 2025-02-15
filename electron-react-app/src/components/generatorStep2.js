@@ -6,6 +6,7 @@ import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
 import {writePOPR} from '../utils/writeFile';
 import { extractDataFromExcel, readExcelFile, readFileUpload } from '../utils/readFile';
+import {checkEntity} from '../utils/checkUserExcelInput';
 import saveAs from 'file-saver'
 import SideNavBar from './sideNavBar';
 
@@ -47,6 +48,14 @@ function GeneratorStep2() {
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
                 console.log(data)
+
+                //Check user input
+                const entityWorksheet = await readExcelFile(bufferArray, 'ApprovedEntity')
+                const entityValidity = await checkEntity(entityWorksheet, data)
+                if(entityValidity.isEntityValid === false) {
+                    alert(entityValidity.message)
+                    return
+                }
 
                 //write the data into respective template
                 if (template === 'PO')
