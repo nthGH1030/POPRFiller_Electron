@@ -72,19 +72,20 @@ export async function checkDate(extractedObj) {
 //Payment related: Check if they are valid Numbers
 export async function checkNumber(extractedObj) {
 
-    for (const value in extractedObj) {
-        if(value === extractedObj['Approved PO amount'] || 
-            value === extractedObj['PO Change Request'] ||
-            value === extractedObj['Paid Requested'] ||
-            value === extractedObj['Total Payment paid']
+    for (const key in extractedObj) {
+        if (key === 'Approved PO amount' || 
+            key === 'PO Change Request' ||
+            key === 'Paid Requested' ||
+            key === 'Total Payment paid'
         ) {
-
-            if(!isNaN(value)) {
-                if(value !== 'N/A' || value !== '') {
+            console.log('the key is , ' , key)
+            if(!isNaN(extractedObj[key])) {
+                console.log(extractedObj[key], 'is not a number')
+                if(extractedObj[key] !== 'N/A' || extractedObj[key] !== '') {
+                    console.log(extractedObj[key], 'is N/A or empty string')
                     return {
                         isPaymentValid: false,
-                        message: `"Approved PO amount"} 
-                        should either be a date, N/A or empty`
+                        message: `"${key}" should either be a Number, N/A or empty`
                     }
                 }
             }
