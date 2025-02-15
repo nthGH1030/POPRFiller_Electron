@@ -45,8 +45,8 @@ export async function checkDate(extractedObj) {
     if(!isNaN(poChangeDate) || 
         extractedObj['PO Change Request Date'] === 'N/A' || 
         extractedObj['PO Change Request Date'] === '') {
-        return {isPOChangeDateValid : false, message:
-            'The Field "PO Change Date should either be a date, N/A or empty"'
+        return {isDateValid : false, message:
+            `The Field "${extractedObj['PO Change Request Date']}" should either be a date, N/A or empty`
         }
     }
 
@@ -54,8 +54,8 @@ export async function checkDate(extractedObj) {
     if(!isNaN(deliveryDate) || 
         extractedObj['Delivery date'] === 'N/A' || 
         extractedObj['Delivery date'] === '') {
-        return {isDeliveryDateValid : false, message:
-            'The Field "PO Change Date should either be a date, N/A or empty"'
+        return {isDateValid : false, message:
+            `The Field "${extractedObj['Delivery date']}" should either be a date, N/A or empty`
         }
     }
 }
@@ -72,7 +72,7 @@ export async function checkNumber(extractedObj) {
 
             if(!isNaN(value) || value !== 'N/A' || value !== '')
             return {
-                valid: false,
+                isPaymentValid: false,
                 message: `${extractedObj['Approved PO amount']} 
                     should either be a date, N/A or empty`
             } 

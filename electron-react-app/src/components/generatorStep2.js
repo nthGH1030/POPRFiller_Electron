@@ -57,6 +57,18 @@ function GeneratorStep2() {
                     return
                 }
 
+                const checkDateValidity = await checkDate(data)
+                if(!checkDateValidity.isDateValid) {
+                    alert(checkDateValidity.message)
+                    return
+                }
+
+                const checkPaymentValidity = await checkNumber(data) 
+                if(!checkPaymentValidity.isPaymentValid) {
+                    alert(checkPaymentValidity.message)
+                    return
+                }
+
                 //write the data into respective template
                 if (template === 'PO')
                     {
