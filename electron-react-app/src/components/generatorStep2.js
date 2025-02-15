@@ -52,7 +52,7 @@ function GeneratorStep2() {
                 //Check user input
                 const entityWorksheet = await readExcelFile(bufferArray, 'ApprovedEntity')
                 const entityValidity = await checkEntity(entityWorksheet, data)
-                if(entityValidity.isEntityValid === false) {
+                if(!entityValidity.isEntityValid) {
                     alert(entityValidity.message)
                     return
                 }

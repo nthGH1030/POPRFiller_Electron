@@ -28,12 +28,14 @@ export async function checkEntity(centralEntityWorksheet, extractedObj) {
     })
 
     //check if the entity in extractedObj is inside the list of approved entity
-    columnMap.forEach((value) => {
 
+    for(const [key,value] of columnMap) {
+        
         if(extractedObj['Entity'] === value) {
-          return true
-        }
-    })
+            
+              return {isEntityValid: true}
+            }
+    }
 
     return {isEntityValid: false, 
         message: 'The Entity you input is not valid, please revise the excel and re-upload a new file'}
@@ -42,22 +44,29 @@ export async function checkEntity(centralEntityWorksheet, extractedObj) {
 //Devliery date / PO Change Date: Check if it is a valid date Object
 export async function checkDate(extractedObj) {
     const poChangeDate = Date.parse(extractedObj['PO Change Request Date'])
-    if(!isNaN(poChangeDate) || 
-        extractedObj['PO Change Request Date'] === 'N/A' || 
-        extractedObj['PO Change Request Date'] === '') {
-        return {isDateValid : false, message:
-            `The Field "${extractedObj['PO Change Request Date']}" should either be a date, N/A or empty`
-        }
-    }
+    
+    if(!isNaN(poChangeDate)) {
+        if (extractedObj['PO Change Request Date'] !== 'N/A' || 
+            extractedObj['PO Change Request Date'] !== ''){
+                return {isDateValid : false, message:
+                    `The Field "PO Change Request Date" should either be a date, N/A or empty`
+                    }
+            }
+    } 
+        
 
     const deliveryDate = Date.parse(extractedObj['Delivery date']) 
-    if(!isNaN(deliveryDate) || 
-        extractedObj['Delivery date'] === 'N/A' || 
-        extractedObj['Delivery date'] === '') {
-        return {isDateValid : false, message:
-            `The Field "${extractedObj['Delivery date']}" should either be a date, N/A or empty`
-        }
+
+    if(!isNaN(deliveryDate)) {
+        if(extractedObj['Delivery date'] !== 'N/A' || 
+            extractedObj['Delivery date'] !== '') {
+                return {isDateValid : false, message:
+                    `The Field "Delivery date" should either be a date, N/A or empty`
+                }
+            }
     }
+
+    return {isDateValid : true}
 }
 
 //Payment related: Check if they are valid Numbers
@@ -70,13 +79,18 @@ export async function checkNumber(extractedObj) {
             value === extractedObj['Total Payment paid']
         ) {
 
-            if(!isNaN(value) || value !== 'N/A' || value !== '')
-            return {
-                isPaymentValid: false,
-                message: `${extractedObj['Approved PO amount']} 
-                    should either be a date, N/A or empty`
-            } 
+            if(!isNaN(value)) {
+                if(value !== 'N/A' || value !== '') {
+                    return {
+                        isPaymentValid: false,
+                        message: `"Approved PO amount"} 
+                        should either be a date, N/A or empty`
+                    }
+                }
+            }
         }
     }
+    return {isPaymentValid: true}
+
 }
 
