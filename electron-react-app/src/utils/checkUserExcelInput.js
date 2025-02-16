@@ -1,10 +1,5 @@
 import{findIndexRow} from './readFile'
 
-/*
-    This script provide function that check the excel uploaded by user,
-    it provide feedbacks on whether there is anything wrong with the user input
-*/
-
 //Entity check: check whether they are of an approved list of entity
 export async function checkEntity(centralEntityWorksheet, extractedObj) {
 
@@ -29,7 +24,7 @@ export async function checkEntity(centralEntityWorksheet, extractedObj) {
 
     //check if the entity in extractedObj is inside the list of approved entity
 
-    for(const [key,value] of columnMap) {
+    for(const [key, value] of columnMap) {
         
         if(extractedObj['Entity'] === value) {
             
@@ -45,24 +40,32 @@ export async function checkEntity(centralEntityWorksheet, extractedObj) {
 export async function checkDate(extractedObj) {
     const poChangeDate = Date.parse(extractedObj['PO Change Request Date'])
     
-    if(!isNaN(poChangeDate)) {
-        if (extractedObj['PO Change Request Date'] !== 'N/A' || 
+    if(isNaN(poChangeDate)) {
+        if (extractedObj['PO Change Request Date'] !== 'N/A' && 
             extractedObj['PO Change Request Date'] !== ''){
                 return {isDateValid : false, message:
                     `The Field "PO Change Request Date" should either be a date, N/A or empty`
                     }
             }
+            else {
+                return {isDateValid : true}
+            }
     } 
         
-
     const deliveryDate = Date.parse(extractedObj['Delivery date']) 
-
-    if(!isNaN(deliveryDate)) {
-        if(extractedObj['Delivery date'] !== 'N/A' || 
+    console.log ('parsed delivery date is ' , deliveryDate)
+    console.log('1 extractedObj Delivery date is' , extractedObj['Delivery date'])
+    if(isNaN(deliveryDate)) {
+        console.log('2 extractedObj Delivery date is' , extractedObj['Delivery date'])
+        if(extractedObj['Delivery date'] !== 'N/A' && 
             extractedObj['Delivery date'] !== '') {
+                console.log('3 extractedObj Delivery date is' , extractedObj['Delivery date'])
                 return {isDateValid : false, message:
                     `The Field "Delivery date" should either be a date, N/A or empty`
                 }
+            }
+            else {
+                return {isDateValid : true}
             }
     }
 
@@ -79,9 +82,9 @@ export async function checkNumber(extractedObj) {
             key === 'Total Payment paid'
         ) {
             console.log('the key is , ' , key)
-            if(!isNaN(extractedObj[key])) {
+            if(isNaN(extractedObj[key])) {
                 console.log(extractedObj[key], 'is not a number')
-                if(extractedObj[key] !== 'N/A' || extractedObj[key] !== '') {
+                if(extractedObj[key] !== 'N/A' && extractedObj[key] !== '') {
                     console.log(extractedObj[key], 'is N/A or empty string')
                     return {
                         isPaymentValid: false,

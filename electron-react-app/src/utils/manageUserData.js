@@ -3,20 +3,20 @@ const {dialog } = require('electron');
 const path = require('path');
 const app = require('electron').app;
 
+const userDataPath = app.getPath('userData')
+const databaseDirectory = path.join(userDataPath,'Database')
+const databasePath = path.join(databaseDirectory,'userDatabase.json')
 
 async function ensureDatabaseExist(){
-    const userDataPath = app.getPath('userData')
-    const databaseDirectory = path.join(userDataPath,'Database')
-    const filePath = path.join(databaseDirectory,'userDatabase.json');
 
     try {
-        await fs.access(filePath)
+        await fs.access(databasePath)
         return 'There is already an existing database'
 
     } catch(err) {
         if(err.code === 'ENOENT') {
             await fs.mkdir(databaseDirectory, {recursive: true});
-            await fs.writeFile(filePath, '[]')
+            await fs.writeFile(databasePath, '[]')
             return 'database has been created'
         } else {
             return `Error: ${err}, There is an error in creating the database`
@@ -25,9 +25,8 @@ async function ensureDatabaseExist(){
 }
 
 async function getDatabaseAsObj() {
-    const userDataPath = app.getPath('userData')
-    const databaseFilepath = path.join(userDataPath,'Database','userDatabase.json')
-    const databaseBuffer = await fs.readFile(databaseFilepath);
+
+    const databaseBuffer = await fs.readFile(databasePath);
     const databaseObj = JSON.parse(databaseBuffer);
 
     return databaseObj
@@ -83,13 +82,11 @@ async function getUserConfirmation(message) {
 
 //Update the database
 async function updateDatabase(updatedDatabaseObj) {
-    const userDataPath = app.getPath('userData')
-    const databaseDirectory = path.join(userDataPath,'Database')
-    const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
+
     const newDataInJSONString = JSON.stringify(updatedDatabaseObj, null, 2)
 
     try { 
-        await fs.writeFile(databaseFilepath, newDataInJSONString)
+        await fs.writeFile(databasePath, newDataInJSONString)
         return {success: true}
 
     } catch(error) {
@@ -105,10 +102,7 @@ async function appendtoDatabase(dataEntry) {
         databaseObj.push(dataEntry)
     
         const newDataInJSONString = JSON.stringify(databaseObj, null, 2)
-        const userDataPath = app.getPath('userData')
-        const databaseDirectory = path.join(userDataPath,'Database')
-        const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
-        await fs.writeFile(databaseFilepath, newDataInJSONString)
+        await fs.writeFile(databasePath, newDataInJSONString)
 
         return {success: true}
 
@@ -121,16 +115,16 @@ async function appendtoDatabase(dataEntry) {
 
 // Ensure template directory exists
 async function ensureTemplateDirectoryExist(templateType) {
-    const userDataPath = app.getPath('userData')
-    const fileDirectory = path.join(userDataPath, 'UserUploadedTemplate' ,templateType)
+
+    const userTemplateDirectory = path.join(userDataPath, 'UserUploadedTemplate' ,templateType)
 
     try {
-        await fs.access(fileDirectory)
+        await fs.access(userTemplateDirectory)
         return 'There is already an existing database'
 
     } catch(err) {
         if(err.code === 'ENOENT') {
-            await fs.mkdir(fileDirectory, {recursive: true});
+            await fs.mkdir(userTemplateDirectory, {recursive: true});
 
             return 'Template Directory has been created'
         } else {
@@ -142,12 +136,11 @@ async function ensureTemplateDirectoryExist(templateType) {
 //Save database in destination
 async function saveTemplates(fileBufferArray, filename, templateType) {
 
-    const userDataPath = app.getPath('userData')
-    const templateDirectory = path.join(userDataPath, 'UserUploadedTemplate', templateType)
-    const filepath = path.join(templateDirectory, filename)
+    const userTemplateDirectory = path.join(userDataPath, 'UserUploadedTemplate', templateType)
+    const savePath = path.join(userTemplateDirectory, filename)
     const buffer = Buffer.from(fileBufferArray)
     try { 
-        await fs.writeFile(filepath, buffer)
+        await fs.writeFile(savePath, buffer)
         return {success: true}
         
     } catch(error) {
@@ -180,16 +173,13 @@ async function selectAndDeselectTemplate(filename, templateType) {
 
         //deselect the other entry
         databaseObj.forEach(entry => {
-            if (entry.filename != filename && entry.templateType === templateType) {
+            if (entry.filename !== filename && entry.templateType === templateType) {
                 entry.status = 'unselected';
             }
         })
 
         // Write the updated database back to the file
-        const userDataPath = app.getPath('userData')
-        const databaseDirectory = path.join(userDataPath,'Database')
-        const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
-        await fs.writeFile(databaseFilepath, JSON.stringify(databaseObj, null, 2));
+        await fs.writeFile( databasePath, JSON.stringify(databaseObj, null, 2));
 
         return {success: true}
 
@@ -208,11 +198,9 @@ async function deselectAllTemplate(templateType){
         return entry;
       });
     try {
-        const userDataPath = app.getPath('userData')
-        const databaseDirectory = path.join(userDataPath,'Database')
-        const databaseFilepath = path.join(databaseDirectory,'userDatabase.json');
-        await fs.writeFile(databaseFilepath, JSON.stringify(newDatabaseObj, null, 2));
+        await fs.writeFile( databasePath, JSON.stringify(newDatabaseObj, null, 2));
         return {success: true}
+
     } catch(error) {
         return {success: false, error: error.message}
     }
