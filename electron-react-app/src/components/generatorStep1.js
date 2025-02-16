@@ -77,7 +77,7 @@ function GeneratorStep1() {
           />
         <div className = 'row-container'>
 
-          <h1>Upload your file</h1>
+          <h2>Generate Form</h2>
           <div className = 'break'>
           </div>
           <div>

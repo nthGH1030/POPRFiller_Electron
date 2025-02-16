@@ -243,6 +243,11 @@ input[type = 'file']{
 
 .span-cursor{
   cursor:pointer;
+  font-weight: bold;
+  background-color: lightgray;
+  border-radius: 20px;
+  padding: 10px 50px;
+  white-space: nowrap;
 }
 
 /*template card*/

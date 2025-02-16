@@ -41,7 +41,7 @@ const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputR
             {file ? (
                 <span className='span-cursor'>File uploaded: {file.name}</span>
                 ) : (
-                <span className='span-cursor'>Drop your file here</span>
+                <span className='span-cursor'>Drop the central excel here</span>
             )}
             <input
                 ref = {fileInputRef}
