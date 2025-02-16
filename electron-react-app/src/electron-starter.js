@@ -117,12 +117,14 @@ function handleSquirrelEvent() {
 };
 //------------------------------------------------------------------------------
 function main() {
-
-  if (handleSquirrelEvent()) {
-    // squirrel event handled and app will exit in 1000ms, so don't do anything else
-    return
+  
+  const isDev = process.env.NODE_ENV === 'development';
+  if (!isDev) {
+    if (handleSquirrelEvent()) {
+      // squirrel event handled and app will exit in 1000ms, so don't do anything else
+      return
+    }
   }
-    
     // Create the browser window and load URL
     const createWindow = () => {
       const mainWindow = new BrowserWindow({
@@ -133,8 +135,7 @@ function main() {
           contextIsolation: true,
         }
       });
-  
-      const isDev = process.env.NODE_ENV === 'development';
+
       const startUrl = isDev
         ? 'http://localhost:3000'
         : url.format({

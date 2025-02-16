@@ -53,13 +53,12 @@ export async function checkDate(extractedObj) {
     } 
         
     const deliveryDate = Date.parse(extractedObj['Delivery date']) 
-    console.log ('parsed delivery date is ' , deliveryDate)
-    console.log('1 extractedObj Delivery date is' , extractedObj['Delivery date'])
+
     if(isNaN(deliveryDate)) {
-        console.log('2 extractedObj Delivery date is' , extractedObj['Delivery date'])
+
         if(extractedObj['Delivery date'] !== 'N/A' && 
             extractedObj['Delivery date'] !== '') {
-                console.log('3 extractedObj Delivery date is' , extractedObj['Delivery date'])
+               
                 return {isDateValid : false, message:
                     `The Field "Delivery date" should either be a date, N/A or empty`
                 }
@@ -81,11 +80,11 @@ export async function checkNumber(extractedObj) {
             key === 'Paid Requested' ||
             key === 'Total Payment paid'
         ) {
-            console.log('the key is , ' , key)
+            
             if(isNaN(extractedObj[key])) {
-                console.log(extractedObj[key], 'is not a number')
+                
                 if(extractedObj[key] !== 'N/A' && extractedObj[key] !== '') {
-                    console.log(extractedObj[key], 'is N/A or empty string')
+                    
                     return {
                         isPaymentValid: false,
                         message: `"${key}" should either be a Number, N/A or empty`
