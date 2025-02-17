@@ -77,7 +77,7 @@ function GeneratorStep1() {
           />
         <div className = 'row-container'>
 
-          <h2>Generate Form</h2>
+          <h2>Payment Form Generator</h2>
           <div className = 'break'>
           </div>
           <div>

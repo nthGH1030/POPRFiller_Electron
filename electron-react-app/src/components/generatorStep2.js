@@ -13,7 +13,7 @@ import SideNavBar from './sideNavBar';
 
 function GeneratorStep2() {
     const [template, setTemplate] = useState('PO');
-    const [activeStep, setActiveStep] = useState('/generatorStep2');
+    const [activeStep, setActiveStep] = useState('');
     const [templateContent, setTemplateContent] = useState(null);
     let location = useLocation();
     const {state} = location;
@@ -32,7 +32,7 @@ function GeneratorStep2() {
     };
     
     useEffect(() => {
-        setActiveStep("/generatorStep2")
+        setActiveStep(location.pathname)
         loadTemplate(template);
     }, [location.pathname, template])
   

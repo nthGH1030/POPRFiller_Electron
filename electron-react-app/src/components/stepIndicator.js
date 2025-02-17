@@ -15,7 +15,7 @@ const StepIndicator = ({activeStep}) => {
                         Step 1
                     </li>
                     <li 
-                        className={`nav-il ${activeStep === '/step2' ? 'active' : ''}`}
+                        className={`nav-il ${activeStep === '/generatorStep2' ? 'active' : ''}`}
                     >
                         Step 2
                     </li>

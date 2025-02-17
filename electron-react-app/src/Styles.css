@@ -202,11 +202,29 @@ input::-webkit-inner-spin-button {
   border: 0.3rem;
   border-radius: 5px;
   border-style: dashed;
+  border-color: gray;
   padding: 3rem 9rem 3rem 9rem;
 }
 
 .File-Drop-Zone.has-file {
   border-style: solid;
+  border-color: black;
+}
+
+.span-cursor{
+  cursor:pointer;
+  font-weight: bold;
+  background-color: lightgray;
+  border-radius: 20px;
+  padding: 10px 50px;
+  white-space: nowrap;
+}
+
+.file-drop-zone-container {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
 }
 
 /*input */
@@ -241,14 +259,7 @@ input[type = 'file']{
   text-align: center;
 }
 
-.span-cursor{
-  cursor:pointer;
-  font-weight: bold;
-  background-color: lightgray;
-  border-radius: 20px;
-  padding: 10px 50px;
-  white-space: nowrap;
-}
+
 
 /*template card*/
 .template-container {
