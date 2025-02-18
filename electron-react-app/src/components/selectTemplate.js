@@ -54,7 +54,7 @@ const SelectTemplate = () => {
                     <h1>Select your Template</h1>
                 </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
-                    <h3>PO</h3>
+                    <h3>Payment Order</h3>
                     {POList.map((template, index)=> (
                         <Template 
                         key = {index} 
@@ -66,7 +66,7 @@ const SelectTemplate = () => {
                     ))}
                 </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
-                    <h3>PR</h3>
+                    <h3>Payment Request</h3>
                     {PRList.map((template, index)=> (
                             <Template 
                             key = {index} 

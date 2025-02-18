@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom'
 import SideNavBar from './sideNavBar';
 import FileUpload from './fileUpload';
 import ModeBtn from './modeBtn';
-
+import SelectTemplate from './selectTemplate';
 
 //Figure out how to receive message from main process
 const ReplaceTemplate = () => {
@@ -85,6 +85,8 @@ const ReplaceTemplate = () => {
     
             const saveResult = await saveTemplates(fileArrayBuffer ,filename, mode)
             console.log(saveResult)
+
+            
         } else {
             console.log(duplicate)
             const updateResult = await updateDatabase(duplicate)
@@ -123,7 +125,7 @@ const ReplaceTemplate = () => {
                     <p>This div show the existing history of file</p>
  
                 </div>
-                <h1>Upload a new template</h1>
+                <h2>Upload a new template</h2>
                 <div className = 'file-upload-container'>              
                     <FileUpload
                         file = {file}
@@ -133,15 +135,15 @@ const ReplaceTemplate = () => {
                         fileInputRef = {fileInputRef}
                     />
                 </div>
-                <h1>Pick a template Type</h1>
+                <h2>Select template Type</h2>
                 <div className = 'template-btn-container'>
                     <ModeBtn 
-                        text = "PO"
+                        text = "Payment Order"
                         onChange = {() => setMode('PO')}
                         isChecked = {mode === 'PO'}
                     />
                     <ModeBtn 
-                        text = "PR"
+                        text = "Payment Request"
                         onChange = {() => setMode('PR')}
                         isChecked = {mode === 'PR'}
                     />
