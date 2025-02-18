@@ -92,7 +92,7 @@ function GeneratorStep1() {
         </div>
 
         <div className = 'row-container'>
-          <p>Which row of data you want to extract ?</p>
+          <h3>Row number of payment information</h3>
           <div className = 'break'></div>
           <input 
           className = 'row-input'

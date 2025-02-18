@@ -111,23 +111,23 @@ function GeneratorStep2() {
                     activeStep = {activeStep}
                 />
             <div className = 'template-container'>
-                <h1>Pick a template</h1>
+                <h3>Select template type</h3>
                 <div className = 'break'></div>
                 <div className = 'template-btn-container'>
                     <ModeBtn 
-                        text = "PO"
+                        text = "Payment Order"
                         onChange = {() => setTemplate('PO')}
                         isChecked = {template === 'PO'}
                     />
                     <ModeBtn 
-                        text = "PR"
+                        text = "Payment Request"
                         onChange = {() => setTemplate('PR')}
                         isChecked = {template === 'PR'}
                     />
                 </div>
             </div>
             <div className = 'staff-input-container'>
-                <p>Who is preparing this submission?</p>
+                <h3>Who is preparing the form?</h3>
 
                 <input type = 'text' className = 'staff-name-input'
                 placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
