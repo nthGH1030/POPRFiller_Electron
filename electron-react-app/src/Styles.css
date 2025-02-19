@@ -310,13 +310,13 @@ input[type = 'file']{
 }
 
 .flex-container-POPR-selectTemplate {
-  max-width: 800px;
+  width: 800px;
   overflow: auto;
   display: flex;
   flex-direction: row;
   justify-content: left;
   align-items: left;
-  text-align: center;
+  text-align: left;
 }
 
 .flex-container-POPR-selectTemplate:hover {
