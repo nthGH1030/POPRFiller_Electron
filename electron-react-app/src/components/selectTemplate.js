@@ -45,16 +45,15 @@ const SelectTemplate = () => {
 
     return(
         <div className = 'page'>
-            <div className = 'sidebar-container'>
-                <SideNavBar currentRoute = {activeStep}>
-                </SideNavBar>
-            </div>
             <div className = 'flex-container-selectTemplate'>
                 <div className = 'flex-container-selectTemplate'>
-                    <h1>Select your Template</h1>
+                    <h1>Your Templates</h1>
                 </div>
-                <div className = 'flex-container-POPR-selectTemplate'>
+                <div className = 'flex-container-template-type-header' >
                     <h3>Payment Order</h3>
+                </div>
+                
+                <div className = 'flex-container-POPR-selectTemplate'>
                     {POList.map((template, index)=> (
                         <Template 
                         key = {index} 
@@ -65,8 +64,11 @@ const SelectTemplate = () => {
                         />
                     ))}
                 </div>
+                <div className = 'flex-container-template-type-header' >
+                        <h3>Payment Request</h3>
+                </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
-                    <h3>Payment Request</h3>
+                    
                     {PRList.map((template, index)=> (
                             <Template 
                             key = {index} 

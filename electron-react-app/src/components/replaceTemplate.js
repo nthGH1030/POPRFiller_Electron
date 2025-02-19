@@ -122,7 +122,7 @@ const ReplaceTemplate = () => {
             </div>
             <div className = 'replaceTemplate-container'>
                 <div className = 'existing-template-container'>
-                    <p>This div show the existing history of file</p>
+                    <SelectTemplate/>
  
                 </div>
                 <h2>Upload a new template</h2>
