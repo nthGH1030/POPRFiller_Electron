@@ -44,10 +44,10 @@ const SelectTemplate = () => {
       },[location.pathname])
 
     return(
-        <div className = 'page'>
+        <>
             <div className = 'flex-container-selectTemplate'>
                 <div className = 'flex-container-selectTemplate'>
-                    <h1>Your Templates</h1>
+                    <h2>Your Templates</h2>
                 </div>
                 <div className = 'flex-container-template-type-header' >
                     <h3>Payment Order</h3>
@@ -81,7 +81,7 @@ const SelectTemplate = () => {
                 </div>
             </div>
 
-        </div>
+        </>
     )
 }
 

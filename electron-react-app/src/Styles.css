@@ -4,9 +4,10 @@
   justify-content:left;
   align-items:flex-start;
   width: 100%; /* Ensure it occupies the full width */
-  height: 100%;
+  min-height: 100vh;
   margin: 0; /* Remove any default margin */
   padding: 0; /* Remove any default padding */
+  flex-grow: 1;
 }
 
 html, body {
@@ -31,11 +32,13 @@ html, body {
 
 /* sidebar style*/
 .sidebar-container {
-  min-width: 200px; /* Minimum size of the sidebar */
-  max-width: 400px; /* Maximum size of the sidebar */
-  flex-shrink: 0; /* Prevents the sidebar from shrinking */
+  width: 200px; /* Fixed width of the sidebar */
   border-right: medium solid black;
-  height: 100%;
+  display:flex;
+  flex-direction: column;
+  align-items: stretch; /* Ensure it stretches to the full height */
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .image-icon {
@@ -80,12 +83,11 @@ html, body {
 
 /* replace template */
 .replaceTemplate-container {
-  flex: 4;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 5%;
+  margin: 3%;
 }
 
 
@@ -117,6 +119,7 @@ html, body {
 .next-btn-container{
   margin-top: 5%;
   margin-right: 10% ;
+  margin-bottom: 10% ;
   display: flex;
   justify-content: flex-end;
   width: 100%;

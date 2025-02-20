@@ -9,7 +9,7 @@ import imageSelect from '../image/imageSelect.png';
 const SideNavBar = ({currentRoute}) => {
 
     return (
-        <div>
+        <>
             <LinkToFeature
             route = "/"
             imagePath = {imageDownload}
@@ -31,7 +31,7 @@ const SideNavBar = ({currentRoute}) => {
             >
             </LinkToFeature>
 
-        </div>
+        </>
         
     )
 }

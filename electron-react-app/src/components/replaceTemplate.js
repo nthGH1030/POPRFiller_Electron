@@ -164,9 +164,6 @@ const ReplaceTemplate = () => {
                 </button>
                 </div>
             </div>
-
-
-
         </div>
     )
 } 
