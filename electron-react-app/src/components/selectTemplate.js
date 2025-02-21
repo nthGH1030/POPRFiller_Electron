@@ -46,11 +46,11 @@ const SelectTemplate = () => {
     return(
         <>
             <div className = 'flex-container-selectTemplate'>
-                <div className = 'flex-container-selectTemplate'>
-                    <h2>Your Templates</h2>
+                <div className = 'flex-container-template-type-header'>
+                    <h3>Your Templates</h3>
                 </div>
                 <div className = 'flex-container-template-type-header' >
-                    <h3>Payment Order</h3>
+                    <h4>Payment Order</h4>
                 </div>
                 
                 <div className = 'flex-container-POPR-selectTemplate'>
@@ -65,7 +65,7 @@ const SelectTemplate = () => {
                     ))}
                 </div>
                 <div className = 'flex-container-template-type-header' >
-                        <h3>Payment Request</h3>
+                        <h4>Payment Request</h4>
                 </div>
                 <div className = 'flex-container-POPR-selectTemplate'>
                     

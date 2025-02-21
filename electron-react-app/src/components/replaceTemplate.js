@@ -125,7 +125,7 @@ const ReplaceTemplate = () => {
                     <SelectTemplate/>
  
                 </div>
-                <h2>Upload a new template</h2>
+                <h3>Upload a new template</h3>
                 <div className = 'file-upload-container'>              
                     <FileUpload
                         file = {file}
@@ -135,7 +135,7 @@ const ReplaceTemplate = () => {
                         fileInputRef = {fileInputRef}
                     />
                 </div>
-                <h2>Select template Type</h2>
+                <h3>Select template Type</h3>
                 <div className = 'template-btn-container'>
                     <ModeBtn 
                         text = "Payment Order"

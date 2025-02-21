@@ -9,6 +9,8 @@
   margin: 0; /* Remove any default margin */
   padding: 0; /* Remove any default padding */
   font-family: 'Poppins', sans-serif;
+  flex-grow: 1;
+  background-color: lightgrey;
 }
 
 html, body {
@@ -29,13 +31,14 @@ html, body {
 
 /* sidebar style*/
 .sidebar-container {
-  width: 200px; /* Fixed width of the sidebar */
-  border-right: medium solid black;
+  min-width: 200px; /* Fixed width of the sidebar */
   display:flex;
   flex-direction: column;
   align-items: stretch; /* Ensure it stretches to the full height */
-  height: 100vh
-
+  height: 100vh;
+  background-color: white;
+  margin: 1%;
+  border-radius: 10px
 }
 
 .image-icon {
@@ -76,15 +79,6 @@ html, body {
 .StepIndicator-center .active{
   border-bottom:1px dashed black;
   font-size: 1.2rem;
-}
-
-/* replace template */
-.replaceTemplate-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 3%;
 }
 
 
@@ -294,6 +288,17 @@ input[type = 'file']{
   color: gray;
 }
 
+
+/* replace template */
+.replaceTemplate-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1%;
+}
+
+
 /*container in selectTemplate*/
 .flex-container-template-type-header {
   display: flex;
@@ -301,16 +306,27 @@ input[type = 'file']{
   width: 100%;
   margin-left: 3%;
 }
+
+.flex-container-template-type-header h4{
+  display: inline;
+  line-height: 1;
+  margin:1%
+}
+
+
 .flex-container-selectTemplate {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  width: 800px;
 }
 
 .flex-container-POPR-selectTemplate {
-  width: 800px;
+  max-width: calc(100% - 40px);
   overflow: auto;
   display: flex;
   flex-direction: row;
@@ -322,3 +338,4 @@ input[type = 'file']{
 .flex-container-POPR-selectTemplate:hover {
   cursor: pointer;
 }
+
