@@ -47,10 +47,10 @@ const SelectTemplate = () => {
         <>
             <div className = 'flex-container-selectTemplate'>
                 <div className = 'flex-container-template-type-header'>
-                    <h3>Your Templates</h3>
+                    <h4>Template History</h4>
                 </div>
-                <div className = 'flex-container-template-type-header' >
-                    <h4>Payment Order</h4>
+                <div className = 'flex-container-template-type-header-h5' >
+                    <h5>Payment Order </h5>
                 </div>
                 
                 <div className = 'flex-container-POPR-selectTemplate'>
@@ -65,8 +65,8 @@ const SelectTemplate = () => {
                     ))}
                 </div>
                 
-                <div className = 'flex-container-template-type-header' >
-                        <h4>Payment Request</h4>
+                <div className = 'flex-container-template-type-header-h5' >
+                        <h5>Payment Request</h5>
                 </div>
                 
                 <div className = 'flex-container-POPR-selectTemplate'>
