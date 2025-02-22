@@ -125,44 +125,47 @@ const ReplaceTemplate = () => {
                     <SelectTemplate/>
  
                 </div>
+            <div className = 'file-upload-function-container'>
                 <h3>Upload a new template</h3>
-                <div className = 'file-upload-container'>              
-                    <FileUpload
-                        file = {file}
-                        onFileChange = {handleFileChange}
-                        onFileDrop = {handleFileDrop}
-                        onDropZoneClick = {handleDropZoneClick}
-                        fileInputRef = {fileInputRef}
-                    />
-                </div>
-                <h3>Select template Type</h3>
-                <div className = 'template-btn-container'>
-                    <ModeBtn 
-                        text = "Payment Order"
-                        onChange = {() => setMode('PO')}
-                        isChecked = {mode === 'PO'}
-                    />
-                    <ModeBtn 
-                        text = "Payment Request"
-                        onChange = {() => setMode('PR')}
-                        isChecked = {mode === 'PR'}
-                    />
-                </div>
-                <div className = 'next-btn-container'>
-                    <button 
-                        type = 'button' 
-                        className = "button"
-                        onClick = {() => handleApplyClick(
-                            parseFile, 
-                            checkForDuplicate,
-                            getUserConfirmation,
-                            updateDatabase, 
-                            appendFileToDatabase,
-                            saveTemplates)}
-                    >
-                    Apply
-                </button>
-                </div>
+                    <div className = 'file-upload-container'>              
+                        <FileUpload
+                            file = {file}
+                            onFileChange = {handleFileChange}
+                            onFileDrop = {handleFileDrop}
+                            onDropZoneClick = {handleDropZoneClick}
+                            fileInputRef = {fileInputRef}
+                        />
+                    </div>
+                    <h3>Select template Type</h3>
+                    <div className = 'template-btn-container'>
+                        <ModeBtn 
+                            text = "Payment Order"
+                            onChange = {() => setMode('PO')}
+                            isChecked = {mode === 'PO'}
+                        />
+                        <ModeBtn 
+                            text = "Payment Request"
+                            onChange = {() => setMode('PR')}
+                            isChecked = {mode === 'PR'}
+                        />
+                    </div>
+                    <div className = 'next-btn-container'>
+                        <button 
+                            type = 'button' 
+                            className = "button"
+                            onClick = {() => handleApplyClick(
+                                parseFile, 
+                                checkForDuplicate,
+                                getUserConfirmation,
+                                updateDatabase, 
+                                appendFileToDatabase,
+                                saveTemplates)}
+                        >
+                        Apply
+                    </button>
+                    </div>
+               
+            </div>
             </div>
         </div>
     )

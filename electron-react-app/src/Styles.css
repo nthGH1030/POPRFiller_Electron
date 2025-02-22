@@ -292,41 +292,66 @@ input[type = 'file']{
 /* replace template */
 .replaceTemplate-container {
   display: flex;
+  flex:1;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: 1%;
 }
 
+/*file upload*/
+.file-upload-function-container {
+  display:flex;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+  width: 100%;
+  margin: 1%;
+}
 
 /*container in selectTemplate*/
+.existing-template-container{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  align-items: left;
+  justify-content: left;
+  width: 100%;
+}
+
 .flex-container-template-type-header {
   display: flex;
+  flex:1;
   text-align: left;
-  width: 100%;
   margin-left: 3%;
+  width: 100%;
 }
 
 .flex-container-template-type-header h4{
-  display: inline;
+  display: flex;
+  flex:1;
+  text-align: left;
   line-height: 1;
-  margin:1%
+  margin:1%;
+  width: 100%;
 }
 
 
 .flex-container-selectTemplate {
   display: flex;
+  flex:1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   background-color: white;
   border-radius: 10px;
-  width: 800px;
 }
 
 .flex-container-POPR-selectTemplate {
-  max-width: calc(100% - 40px);
+  
   overflow: auto;
   display: flex;
   flex-direction: row;

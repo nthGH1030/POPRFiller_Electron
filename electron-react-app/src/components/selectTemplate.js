@@ -64,9 +64,11 @@ const SelectTemplate = () => {
                         />
                     ))}
                 </div>
+                
                 <div className = 'flex-container-template-type-header' >
                         <h4>Payment Request</h4>
                 </div>
+                
                 <div className = 'flex-container-POPR-selectTemplate'>
                     
                     {PRList.map((template, index)=> (
@@ -79,6 +81,7 @@ const SelectTemplate = () => {
                             />
                     ))}
                 </div>
+                
             </div>
 
         </>
