@@ -76,17 +76,14 @@ function GeneratorStep1() {
             <p>1. Upload a central excel</p>
             <p>2. Input the row number that contains the payment information</p>
             <p>3. Click "Next" button</p>
+            <p>4. Follow through Step 2</p>
           </div>
           <div className = 'generatorstep-container'>
-          <h2>Payment Form Generator</h2>
+            <h3>Payment Form Generator</h3>
             <StepIndicator
               activeStep = {activeStep}
             />
-          <div className = 'row-container'>
-
-            
-            <div className = 'break'>
-            </div>
+            <div className = 'generator-row-container'>
               <FileUpload
                 file = {file}
                 onFileChange = {handleFileChange}
@@ -94,29 +91,27 @@ function GeneratorStep1() {
                 onDropZoneClick = {handleDropZoneClick}
                 fileInputRef = {fileInputRef}
               />
-          </div>
-
-          <div className = 'row-container'>
-            <h3>Row number of payment information</h3>
-            <div className = 'break'></div>
-            <input 
-            className = 'row-input'
-            type = 'number' 
-            min = "1" 
-            placeholder = 'Eg. 134'
-            onChange = {handleRowChange}
-            />
-          </div>
+              <div className = 'row-container'>
+                <h5>Row number</h5>
+                <input 
+                className = 'row-input'
+                type = 'number' 
+                min = "1" 
+                placeholder = 'Eg. 134'
+                onChange = {handleRowChange}
+                />
+              </div>
+            </div>
           
-          <div className = 'next-btn-container'>
-            <button 
-              type = 'button' 
-              className = "button"
-              onClick = {handleNextClick}
-              >
-                Next
-            </button>
-          </div>
+            <div className = 'next-btn-container'>
+              <button 
+                type = 'button' 
+                className = "button"
+                onClick = {handleNextClick}
+                >
+                  Next
+              </button>
+            </div>
           </div>
         </div>
       </div>
