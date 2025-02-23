@@ -161,7 +161,7 @@ const ReplaceTemplate = () => {
                                 appendFileToDatabase,
                                 saveTemplates)}
                         >
-                        Apply
+                        Submit 
                     </button>
                     </div>
                
