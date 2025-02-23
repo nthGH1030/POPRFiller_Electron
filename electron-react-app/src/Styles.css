@@ -92,21 +92,47 @@ html, body {
 
 
 /*Generator */
-.generatorstep-container {
-  flex: 4;
+.user-manuel-container {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 5%;
+  margin: 1%;
+  border-radius: 10px;
+  background-color: white;
+  width: 100%;
+}
+
+.user-manual-and-generator-container{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.generatorstep-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 1% 1% 1%;
+  border-radius: 10px;
+  background-color: white;
+  width: 100%;
 }
 
 .row-container{
   margin-top: 10px;
   flex-direction: column;
   display:flex;
+  flex:1;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .button-container{
@@ -212,7 +238,13 @@ input::-webkit-inner-spin-button {
   border-radius: 10px;
   border-style: dashed;
   border-color: gray;
-  padding: 3rem 9rem 3rem 9rem;
+  width:50%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex:1;
+  padding: 5%
 }
 
 .File-Drop-Zone:hover {

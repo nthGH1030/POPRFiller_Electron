@@ -70,50 +70,55 @@ function GeneratorStep1() {
         <div className = 'sidebar-container'>
           <SideNavBar currentRoute = {activeStep}/>
         </div>
-
-        <div className = 'generatorstep-container'>
-          <StepIndicator
-            activeStep = {activeStep}
-          />
-        <div className = 'row-container'>
-
-          <h2>Payment Form Generator</h2>
-          <div className = 'break'>
+        <div className = 'user-manual-and-generator-container'>
+          <div className = 'user-manuel-container'> 
+            <h4>How to use</h4>
+            <p>1. Upload a central excel</p>
+            <p>2. Input the row number that contains the payment information</p>
+            <p>3. Click "Next" button</p>
           </div>
-          <div>
-            <FileUpload
-              file = {file}
-              onFileChange = {handleFileChange}
-              onFileDrop = {handleFileDrop}
-              onDropZoneClick = {handleDropZoneClick}
-              fileInputRef = {fileInputRef}
+          <div className = 'generatorstep-container'>
+          <h2>Payment Form Generator</h2>
+            <StepIndicator
+              activeStep = {activeStep}
+            />
+          <div className = 'row-container'>
+
+            
+            <div className = 'break'>
+            </div>
+              <FileUpload
+                file = {file}
+                onFileChange = {handleFileChange}
+                onFileDrop = {handleFileDrop}
+                onDropZoneClick = {handleDropZoneClick}
+                fileInputRef = {fileInputRef}
+              />
+          </div>
+
+          <div className = 'row-container'>
+            <h3>Row number of payment information</h3>
+            <div className = 'break'></div>
+            <input 
+            className = 'row-input'
+            type = 'number' 
+            min = "1" 
+            placeholder = 'Eg. 134'
+            onChange = {handleRowChange}
             />
           </div>
+          
+          <div className = 'next-btn-container'>
+            <button 
+              type = 'button' 
+              className = "button"
+              onClick = {handleNextClick}
+              >
+                Next
+            </button>
+          </div>
+          </div>
         </div>
-
-        <div className = 'row-container'>
-          <h3>Row number of payment information</h3>
-          <div className = 'break'></div>
-          <input 
-          className = 'row-input'
-          type = 'number' 
-          min = "1" 
-          placeholder = 'Eg. 134'
-          onChange = {handleRowChange}
-          />
-        </div>
-        
-        <div className = 'next-btn-container'>
-          <button 
-            type = 'button' 
-            className = "button"
-            onClick = {handleNextClick}
-            >
-              Next
-          </button>
-        </div>
-        </div>
-        
       </div>
     );
 }

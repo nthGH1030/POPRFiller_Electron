@@ -128,8 +128,7 @@ const ReplaceTemplate = () => {
             <div className = 'file-upload-function-container'>
                 <div className = 'file-upload-function-header-container'>
                     <h4>Upload a new template</h4>
-                </div>
-                    <div className = 'file-upload-container'>              
+                </div>            
                         <FileUpload
                             file = {file}
                             onFileChange = {handleFileChange}
@@ -137,7 +136,6 @@ const ReplaceTemplate = () => {
                             onDropZoneClick = {handleDropZoneClick}
                             fileInputRef = {fileInputRef}
                         />
-                    </div>
                     <h4>Select template Type</h4>
                     <div className = 'template-btn-container'>
                         <ModeBtn 
