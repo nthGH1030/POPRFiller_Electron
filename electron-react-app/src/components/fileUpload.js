@@ -40,7 +40,7 @@ const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputR
         >
             {file ? (
                 <div className = 'file-drop-zone-container'>
-                    <p>File uploaded: {file.name}</p>
+                    <p className = 'file-uploaded-name'>File uploaded: {file.name}</p>
                     <span className='span-cursor'>Select a new file</span>
                 </div>
                 ) : (

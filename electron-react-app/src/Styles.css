@@ -197,6 +197,8 @@ input::-webkit-inner-spin-button {
 
 .mode-label.checked{
   background-color: white;
+  color: darkred;
+  font-weight: bold;
 }
 
 .custom-mode {
@@ -221,6 +223,11 @@ input::-webkit-inner-spin-button {
   border-style: solid;
   border-color: black;
   background-color: whitesmoke;
+}
+
+.file-uploaded-name {
+  color: firebrick;
+  font-weight: bold;
 }
 
 .span-cursor{
@@ -318,7 +325,7 @@ input[type = 'file']{
 .selected-status.selected{
   font-size: 14px;
   font-weight: bold;
-  color: crimson;
+  color: firebrick;
 }
 
 
