@@ -1,5 +1,6 @@
 import '../Styles.css';
 import React, {useState} from 'react';
+import cloudArrowUp from '../image/cloud-arrow-up.svg';
 
 const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputRef}) => {
 
@@ -37,7 +38,11 @@ const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputR
             onDragOver = {(e) => e.preventDefault()}
             onDrop = {handleFileDrop}
             onClick = {handleDropZoneClick}
-        >
+        >   
+            <div className = 'image-container'>
+                <img src={cloudArrowUp} alt = "file upload icon" 
+                    className = 'file-upload-image'/>
+            </div>
             {file ? (
                 <div className = 'file-drop-zone-container'>
                     <p className = 'file-uploaded-name'>File uploaded: {file.name}</p>
@@ -45,7 +50,7 @@ const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputR
                 </div>
                 ) : (
                 <div className = 'file-drop-zone-container'>
-                    <p>Drag and drop the central excel file</p>
+                    <p>Drag&drop the central excel file here</p>
                     <span className='span-cursor'>Select a file</span>
                 </div>
             )}

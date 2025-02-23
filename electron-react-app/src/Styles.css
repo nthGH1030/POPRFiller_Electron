@@ -351,16 +351,38 @@ input[type = 'file']{
   margin: 1%;
 }
 
+.file-upload-function-header-container{
+  display: flex;
+  flex:1;
+  width: 100%;
+  text-align: left;
+  text-wrap: nowrap;
+}
+
+.file-upload-function-header-container h4{
+  margin: 2% 0 2% 2% ;
+}
+
+.image-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-upload-image{
+  height: 75px;
+  width: 75px;
+}
+
 /*container in selectTemplate*/
-
-
 .flex-container-template-type-header {
   display: flex;
   flex:1;
   text-align: left;
-  margin-left: 1%;
+  margin-left: 2%;
   width: 100%;
   text-wrap: nowrap;
+  
 }
 .flex-container-template-type-header h4 {
   margin: 1% 0 1% 0;
@@ -373,7 +395,7 @@ input[type = 'file']{
   text-align: left;
   line-height: 1;
   max-width: 100%;
-  margin-left: 1%;
+  margin-left: 2%;
   text-wrap: nowrap;
   align-items:center;
 }
@@ -416,6 +438,7 @@ input[type = 'file']{
   justify-content: left;
   align-items: left;
   text-align: left;
+  margin: 0 0 1% 1%;
 }
 
 .flex-container-POPR-selectTemplate:hover {
