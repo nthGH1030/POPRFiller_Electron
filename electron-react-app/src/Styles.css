@@ -120,7 +120,7 @@ html, body {
 .button{
   cursor:pointer;
   font-weight: bold;
-  background-color: lightgray;
+  background-color: silver;
   border-radius: 20px;
   padding: 10px 50px;
   white-space: nowrap;
@@ -130,7 +130,7 @@ html, body {
 
 
 .button:hover {
-  background-color: silver;
+  background-color: lightgray;
 }
 
 input::-webkit-outer-spin-button,
@@ -158,12 +158,13 @@ input::-webkit-inner-spin-button {
 
 .template-btn-container{
   margin-top: 10px;
-  background-color: lightgrey;
+  background-color: silver;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 /* Styles for RaioBtn */
 .mode-label {
   border-radius: 5px;
@@ -177,7 +178,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: lightgrey;
+  background-color: silver;
 }
 
 .mode-input {
@@ -188,7 +189,7 @@ input::-webkit-inner-spin-button {
 }
 
 .mode-label:hover{
-  background-color: whitesmoke
+  background-color: lightgray
 }
 
 .mode-label.checked{
@@ -222,10 +223,14 @@ input::-webkit-inner-spin-button {
 .span-cursor{
   cursor:pointer;
   font-weight: bold;
-  background-color: lightgray;
+  background-color: silver;
   border-radius: 20px;
   padding: 10px 50px;
   white-space: nowrap;
+}
+
+.span-cursor:hover{
+  background-color:lightgray ;
 }
 
 .file-drop-zone-container {
