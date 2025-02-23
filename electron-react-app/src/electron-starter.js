@@ -128,8 +128,8 @@ function main() {
     // Create the browser window and load URL
     const createWindow = () => {
       const mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 1000,
+        width: 800,
+        height: 700,
         webPreferences: {
           preload: path.join(__dirname, 'preload.js'),
           contextIsolation: true,

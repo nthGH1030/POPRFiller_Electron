@@ -160,9 +160,11 @@ const ReplaceTemplate = () => {
                                 updateDatabase, 
                                 appendFileToDatabase,
                                 saveTemplates)}
+                            
                         >
                         Submit 
-                    </button>
+                        
+                        </button>
                     </div>
                
             </div>

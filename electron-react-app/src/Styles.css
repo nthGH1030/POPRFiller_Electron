@@ -31,7 +31,7 @@ html, body {
 
 /* sidebar style*/
 .sidebar-container {
-  min-width: 200px; /* Fixed width of the sidebar */
+  min-width: 100px; /* Fixed width of the sidebar */
   display:flex;
   flex-direction: column;
   align-items: stretch; /* Ensure it stretches to the full height */
@@ -42,20 +42,29 @@ html, body {
 }
 
 .image-icon {
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 65px;
 }
 
 .link-To-Feature-Container{
-  border: thick solid transparent;
+  border: solid transparent;
   text-align: center;
-  margin: 25%;
+  margin: 10%;
+  padding: 3%;
+  box-sizing: border-box; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.link-To-Feature-Container:hover{
+  opacity: 0.7;
 }
 
 .link-To-Feature-Container.Active{
-  border: thick solid grey;
+  border: solid grey;
   border-radius: 10%;
+  box-sizing: border-box
 }
 
 
@@ -204,7 +213,7 @@ input::-webkit-inner-spin-button {
 .File-Drop-Zone {
   margin: 0.3rem;
   border: 0.3rem;
-  border-radius: 5px;
+  border-radius: 10px;
   border-style: dashed;
   border-color: gray;
   padding: 3rem 9rem 3rem 9rem;
@@ -406,3 +415,32 @@ input[type = 'file']{
   cursor: pointer;
 }
 
+/* Tooltip container */
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Tooltip text */
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%; /* Position above the element */
+  left: 75%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  z-index: 1;
+}
+
+/* Show the tooltip text on hover */
+[data-tooltip]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
