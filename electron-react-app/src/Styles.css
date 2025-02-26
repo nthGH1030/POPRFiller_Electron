@@ -168,20 +168,28 @@ html, body {
 .next-btn-container{
   margin: 3% 0 3% 0;
   display: flex;
+  flex:1;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
   width: 100%;
+  box-sizing: border-box
+}
+
+.next-btn-container .button{
+  margin-right: 19%;
 }
 
 /* button styles */
 .button{
   cursor:pointer;
   font-weight: bold;
-  background-color: silver;
-  border-radius: 20px;
-  padding: 10px 50px;
+  color: white;
+  background-color: midnightblue;
+  border-radius: 10px;
+  padding: 1.5%;
   border: none;
-  font-size: 16px;
+  font-size: 12px;
+  width: 10%;
 }
 
 

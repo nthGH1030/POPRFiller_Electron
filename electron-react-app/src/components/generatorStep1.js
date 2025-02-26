@@ -67,10 +67,13 @@ function GeneratorStep1() {
 
     return (
       <div className = 'page'>
+
         <div className = 'sidebar-container'>
           <SideNavBar currentRoute = {activeStep}/>
         </div>
+
         <div className = 'user-manual-and-generator-container'>
+          
           <div className = 'user-manuel-container'> 
             <h4>How to use</h4>
             <p>1. Upload a central excel</p>
@@ -78,6 +81,7 @@ function GeneratorStep1() {
             <p>3. Click "Next" button</p>
             <p>4. Follow through Step 2</p>
           </div>
+
           <div className = 'generatorstep-container'>
             <h3>Payment Form Generator</h3>
             <StepIndicator
@@ -109,9 +113,10 @@ function GeneratorStep1() {
                 className = "button"
                 onClick = {handleNextClick}
                 >
-                  Next
+                  {'Next  >'}
               </button>
             </div>
+
           </div>
         </div>
       </div>
