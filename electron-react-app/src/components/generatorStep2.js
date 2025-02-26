@@ -1,6 +1,6 @@
 import '../Styles.css';
 import React , {useState, useEffect} from 'react';
-import { Link } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import {useLocation} from 'react-router-dom';
 import StepIndicator from "./stepIndicator";
 import ModeBtn from "./modeBtn";
@@ -30,6 +30,12 @@ function GeneratorStep2() {
             console.error('Error loading template:', error);
         }
     };
+
+    //handle nagvigate back to first page
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+        navigate('/')
+    }
     
     useEffect(() => {
         setActiveStep(location.pathname)
@@ -112,7 +118,6 @@ function GeneratorStep2() {
                 />
             <div className = 'template-container'>
                 <h4>Select template type</h4>
-                <div className = 'break'></div>
                 <div className = 'template-btn-container'>
                     <ModeBtn 
                         text = "Payment Order"
@@ -134,12 +139,13 @@ function GeneratorStep2() {
                 onChange = {handleStaff}/>
             </div>
             <div className = 'back-generator-button-container'>
-                <Link to="/">
-                    <button type = 'button' className = "button back" >
-                        Back
-                    </button>
-                </Link>
-                <button type = 'button' className = "button generate" onClick={handleGenerate}>
+                
+                <button type = 'button' className = "button button-back" 
+                    onClick = {handleBackClick} >
+                    {"< Back"}
+                </button>
+                <button type = 'button' className = "button" 
+                    onClick={handleGenerate}>
                     Generate
                 </button>
             </div>
