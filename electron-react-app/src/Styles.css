@@ -98,7 +98,7 @@ html, body {
   align-items: left;
   justify-content: left;
   flex-direction: column;
-  margin: 1%;
+  margin: 1% 1% 0 1%;
   border-radius: 10px;
   background-color: white;
   width: 100%;
@@ -121,13 +121,25 @@ html, body {
   width: 100%;
 }
 
-.generatorstep-container {
+.generatorstep1-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 0 1% 1% 1%;
+  margin: 1% 1% 1% 1%;
+  border-radius: 10px;
+  background-color: white;
+  width: 100%;
+}
+
+.generatorstep2-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1% 1% 1% 0;
   border-radius: 10px;
   background-color: white;
   width: 100%;
@@ -157,12 +169,14 @@ html, body {
   margin: 0 0 1% 0
 }
 
-.button-container{
+.back-generator-button-container{
   margin-top: 20px;
   width: 100%;
   display:flex;
-  justify-content: space-around;
+  flex: 1;
+  justify-content: flex-end;
   align-items: center;
+  box-sizing: border-box
 }
 
 .next-btn-container{
@@ -194,7 +208,7 @@ html, body {
 
 
 .button:hover {
-  background-color: lightgray;
+  opacity: 0.7;
 }
 
 input::-webkit-outer-spin-button,
@@ -252,7 +266,7 @@ input::-webkit-inner-spin-button {
 
 .mode-label.checked{
   background-color: white;
-  color: darkred;
+  color: midnightblue;
   font-weight: bold;
 }
 
@@ -285,21 +299,22 @@ input::-webkit-inner-spin-button {
 }
 
 .file-uploaded-name {
-  color: firebrick;
+  color: midnightblue;
   font-weight: bold;
 }
 
 .span-cursor{
   cursor:pointer;
   font-weight: bold;
-  background-color: silver;
+  color: white;
+  background-color: midnightblue;
   border-radius: 20px;
   padding: 10px 50px;
   white-space: nowrap;
 }
 
 .span-cursor:hover{
-  background-color:lightgray ;
+  opacity: 0.7 ;
 }
 
 .file-drop-zone-container {

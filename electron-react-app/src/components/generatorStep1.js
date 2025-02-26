@@ -82,7 +82,7 @@ function GeneratorStep1() {
             <p>4. Follow through Step 2</p>
           </div>
 
-          <div className = 'generatorstep-container'>
+          <div className = 'generatorstep1-container'>
             <h3>Payment Form Generator</h3>
             <StepIndicator
               activeStep = {activeStep}

@@ -106,12 +106,12 @@ function GeneratorStep2() {
                 <SideNavBar>
                 </SideNavBar>
             </div>
-            <div className = 'generatorstep-container'>
+            <div className = 'generatorstep2-container '>
                 <StepIndicator
                     activeStep = {activeStep}
                 />
             <div className = 'template-container'>
-                <h3>Select template type</h3>
+                <h4>Select template type</h4>
                 <div className = 'break'></div>
                 <div className = 'template-btn-container'>
                     <ModeBtn 
@@ -127,15 +127,15 @@ function GeneratorStep2() {
                 </div>
             </div>
             <div className = 'staff-input-container'>
-                <h3>Who is preparing the form?</h3>
+                <h4>Who is preparing the form?</h4>
 
                 <input type = 'text' className = 'staff-name-input'
                 placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
                 onChange = {handleStaff}/>
             </div>
-            <div className = 'button-container'>
+            <div className = 'back-generator-button-container'>
                 <Link to="/">
-                    <button type = 'button' className = "button" >
+                    <button type = 'button' className = "button back" >
                         Back
                     </button>
                 </Link>
