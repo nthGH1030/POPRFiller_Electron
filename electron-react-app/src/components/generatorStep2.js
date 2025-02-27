@@ -134,19 +134,22 @@ function GeneratorStep2() {
                 </SideNavBar>
             </div>
             <div className = 'generatorstep2-wrapper-container'>
-                <div className = 'generatorstep2-container'>
-                    The table
-                    <pre>{JSON.stringify(excelData, null, 2)}</pre> {/* Display the object as a string */}
-                    <table>
+                <div className = 'excel-data-table-container'>
+                    
+                    <h5>Data</h5>
+                    <table className = 'extracted-excel-data'>
                         <thead>
                             <tbody>
-                                {Object.entries(excelData).map(([key, value]) => (
-                                <tr key = {key}>
-                                    <th>{key}</th>
-                                    <td>{value}</td>
-                                </tr>
+                                {Object.entries(excelData).map(([key , value]) => (
+                                    <tr>
+                                        <th key = {key}>
+                                            {key}
+                                        </th>
+                                        <td>
+                                            {value}
+                                        </td>
+                                    </tr>
                                 ))}
-                        
                             </tbody>
                         </thead>
                         
