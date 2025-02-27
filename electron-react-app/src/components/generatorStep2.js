@@ -55,7 +55,15 @@ function GeneratorStep2() {
                 const bufferArray = await readFileUpload(file)
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
-                setExcelData(data);
+
+                const dataWithChecked = {}
+                //Check input and append check status
+                for (const [key, value] of Object.entries(data)) {
+                    dataWithChecked[key] = {value, status: 'checked'}
+                }
+                console.log(dataWithChecked)
+
+                setExcelData(dataWithChecked);
                 
             } catch(error) {
                 console.error('Error:', error);
@@ -140,13 +148,16 @@ function GeneratorStep2() {
                     <table className = 'extracted-excel-data'>
                         <thead>
                             <tbody>
-                                {Object.entries(excelData).map(([key , value]) => (
+                                {Object.entries(excelData).map(([key , {value, status}]) => (
                                     <tr>
-                                        <th key = {key}>
+                                        <th key = {key} className='extracted-excel-data-key '>
                                             {key}
                                         </th>
-                                        <td>
+                                        <td className = 'extracted-excel-data-value'>
                                             {value}
+                                        </td>
+                                        <td className = 'extracted-excel-data-status'>
+                                            {status}
                                         </td>
                                     </tr>
                                 ))}

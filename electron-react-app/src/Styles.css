@@ -168,14 +168,14 @@ html, body {
 }
 
 .excel-data-table-container h5 {
-  margin: 3% 0 1% 20%;
+  margin: 1% 0 1% 5%;
   text-wrap: nowrap;
 }
 
 
 .excel-data-table-container table {
-  margin: 0 0 1% 20%;
-  text-wrap: nowrap;
+  margin: 0 5% 1% 5%;
+  
 }
 
 .generator-row-container{
@@ -376,16 +376,31 @@ input::-webkit-inner-spin-button {
   text-align: left;
   border-collapse: collapse;
   margin:1%;
-  font-size: 14px;
+  font-size: 13px;
+  table-layout: fixed;
+  
 }
 
 
-.extracted-excel-data th,  
-.extracted-excel-data td {
+.extracted-excel-data-key {
   text-align: left;
   border: solid;
-  padding: 0.5%
+  padding: 0.5%;
+  width: 10%;
+} 
+.extracted-excel-data-value {
+  text-align: left;
+  border: solid;
+  padding: 0.5%;
+  width: 20%;
 }
+.extracted-excel-data-status {
+  text-align: left;
+  border: solid;
+  padding: 0.5%;
+  width: 3%;
+}
+
 
 /*input */
 .row-input {
