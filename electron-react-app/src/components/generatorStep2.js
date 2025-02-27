@@ -132,7 +132,7 @@ function GeneratorStep2() {
                 </div>
             </div>
             <div className = 'staff-input-container'>
-                <h4>Who is preparing the form?</h4>
+                <h5>Applicant Name</h5>
 
                 <input type = 'text' className = 'staff-name-input'
                 placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
@@ -144,7 +144,7 @@ function GeneratorStep2() {
                     onClick = {handleBackClick} >
                     {"< Back"}
                 </button>
-                <button type = 'button' className = "button" 
+                <button type = 'button' className = "button button-generate" 
                     onClick={handleGenerate}>
                     Generate
                 </button>
