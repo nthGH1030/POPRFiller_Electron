@@ -42,8 +42,8 @@ function GeneratorStep2() {
     useEffect(() => {
         setActiveStep(location.pathname)
         loadTemplate(template);
-        setExcelData(getExcelData);
-    }, [location.pathname, template])
+        getExcelData()
+    }, [location.pathname, template, file])
     
     const getExcelData = async() => {
         if(file) {
@@ -52,8 +52,8 @@ function GeneratorStep2() {
                 const bufferArray = await readFileUpload(file)
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
+                setExcelData(data);
                 
-                return data
             } catch(error) {
                 console.error('Error:', error);
             }
@@ -133,13 +133,19 @@ function GeneratorStep2() {
             <div className = 'generatorstep2-wrapper-container'>
                 <div className = 'generatorstep2-container'>
                     The table
+                    <pre>{JSON.stringify(excelData, null, 2)}</pre> {/* Display the object as a string */}
                     <table>
-                        {Object.entries(excelData).map(([key, value]) => (
-                            <tr key = {key}>
-                                <th>{key}</th>
-                                <td>{value}</td>
-                            </tr>
-                        ))}
+                        <thead>
+                            <tbody>
+                                {Object.entries(excelData).map(([key, value]) => (
+                                <tr key = {key}>
+                                    <th>{key}</th>
+                                    <td>{value}</td>
+                                </tr>
+                                ))}
+                        
+                            </tbody>
+                        </thead>
                         
                     </table>
                 </div>
