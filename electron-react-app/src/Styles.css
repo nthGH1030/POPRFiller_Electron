@@ -133,13 +133,23 @@ html, body {
   width: 100%;
 }
 
+.generatorstep2-wrapper-container{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 1% 1% 0;
+  width: 100%;
+}
+
 .generatorstep2-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 1% 1% 1% 0;
+  margin: 1% 1% 0 0;
   border-radius: 10px;
   background-color: white;
   width: 100%;

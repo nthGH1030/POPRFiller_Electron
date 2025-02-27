@@ -15,9 +15,11 @@ function GeneratorStep2() {
     const [template, setTemplate] = useState('PO');
     const [activeStep, setActiveStep] = useState('');
     const [templateContent, setTemplateContent] = useState(null);
+    const [excelData, setExcelData] = useState({});
     let location = useLocation();
     const {state} = location;
     const {row, file} = state;
+    
 
     const loadTemplate = async (template) => {
         try {
@@ -40,8 +42,24 @@ function GeneratorStep2() {
     useEffect(() => {
         setActiveStep(location.pathname)
         loadTemplate(template);
+        setExcelData(getExcelData);
     }, [location.pathname, template])
-  
+    
+    const getExcelData = async() => {
+        if(file) {
+            try {
+                //extract data from uploaded excel file
+                const bufferArray = await readFileUpload(file)
+                const worksheet = await readExcelFile(bufferArray, 'POPR summary')
+                const data = await extractDataFromExcel(worksheet, row);
+                
+                return data
+            } catch(error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+
     const handleGenerate = async() => {
         if (file) {
             try {
@@ -112,43 +130,57 @@ function GeneratorStep2() {
                 <SideNavBar>
                 </SideNavBar>
             </div>
-            <div className = 'generatorstep2-container '>
-                <StepIndicator
-                    activeStep = {activeStep}
-                />
-            <div className = 'template-container'>
-                <h4>Select template type</h4>
-                <div className = 'template-btn-container'>
-                    <ModeBtn 
-                        text = "Payment Order"
-                        onChange = {() => setTemplate('PO')}
-                        isChecked = {template === 'PO'}
-                    />
-                    <ModeBtn 
-                        text = "Payment Request"
-                        onChange = {() => setTemplate('PR')}
-                        isChecked = {template === 'PR'}
-                    />
+            <div className = 'generatorstep2-wrapper-container'>
+                <div className = 'generatorstep2-container'>
+                    The table
+                    <table>
+                        {Object.entries(excelData).map(([key, value]) => (
+                            <tr key = {key}>
+                                <th>{key}</th>
+                                <td>{value}</td>
+                            </tr>
+                        ))}
+                        
+                    </table>
                 </div>
-            </div>
-            <div className = 'staff-input-container'>
-                <h5>Applicant Name</h5>
+                <div className = 'generatorstep2-container '>
+                    <StepIndicator
+                        activeStep = {activeStep}
+                    />
+                    <div className = 'template-container'>
+                        <h4>Select template type</h4>
+                        <div className = 'template-btn-container'>
+                            <ModeBtn 
+                                text = "Payment Order"
+                                onChange = {() => setTemplate('PO')}
+                                isChecked = {template === 'PO'}
+                            />
+                            <ModeBtn 
+                                text = "Payment Request"
+                                onChange = {() => setTemplate('PR')}
+                                isChecked = {template === 'PR'}
+                            />
+                        </div>
+                    </div>
+                    <div className = 'staff-input-container'>
+                        <h5>Applicant Name</h5>
 
-                <input type = 'text' className = 'staff-name-input'
-                placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
-                onChange = {handleStaff}/>
-            </div>
-            <div className = 'back-generator-button-container'>
-                
-                <button type = 'button' className = "button button-back" 
-                    onClick = {handleBackClick} >
-                    {"< Back"}
-                </button>
-                <button type = 'button' className = "button button-generate" 
-                    onClick={handleGenerate}>
-                    Generate
-                </button>
-            </div>
+                        <input type = 'text' className = 'staff-name-input'
+                        placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
+                        onChange = {handleStaff}/>
+                    </div>
+                    <div className = 'back-generator-button-container'>
+                        
+                        <button type = 'button' className = "button button-back" 
+                            onClick = {handleBackClick} >
+                            {"< Back"}
+                        </button>
+                        <button type = 'button' className = "button button-generate" 
+                            onClick={handleGenerate}>
+                            Generate
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         </>
