@@ -40,10 +40,13 @@ function GeneratorStep2() {
     }
     
     useEffect(() => {
-        setActiveStep(location.pathname)
-        loadTemplate(template);
-        getExcelData()
-    }, [location.pathname, template, file])
+        setActiveStep(location.pathname);
+        (async() => {
+            loadTemplate(template);
+            getExcelData()
+        })();
+        
+    }, [location.pathname, template])
     
     const getExcelData = async() => {
         if(file) {
