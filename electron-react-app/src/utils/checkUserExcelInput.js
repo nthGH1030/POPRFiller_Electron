@@ -36,8 +36,27 @@ export async function checkEntity(centralEntityWorksheet, extractedObj) {
         message: 'The Entity you input is not valid, please revise the excel and re-upload a new file'}
   
 }
-//Devliery date / PO Change Date: Check if it is a valid date Object
-export async function checkDate(extractedObj) {
+
+export async function checkDate(field, extractedObj) {
+    const dateToCheck = Date.parse(extractedObj[field])
+
+    if(isNaN(dateToCheck)) {
+        if (extractedObj[field] !== 'N/A' && 
+            extractedObj[field] !== ''){
+                return {isDateValid : false, message:
+                    `The Field ${field} should either be a date, N/A or empty`
+                    }
+            }
+            else {
+                return {isDateValid : true}
+            }
+    } 
+    return {isDateValid : true}
+}
+
+/*
+// PO Change Date: Check if it is a valid date Object
+export async function checkPORequestDate(extractedObj) {
     const poChangeDate = Date.parse(extractedObj['PO Change Request Date'])
     
     if(isNaN(poChangeDate)) {
@@ -51,7 +70,12 @@ export async function checkDate(extractedObj) {
                 return {isDateValid : true}
             }
     } 
-        
+    return {isDateValid : true}
+}
+
+//Devliery date : Check if it is a valid date Object
+export async function checkDeliveryDate(extractedObj) {    
+
     const deliveryDate = Date.parse(extractedObj['Delivery date']) 
 
     if(isNaN(deliveryDate)) {
@@ -67,9 +91,9 @@ export async function checkDate(extractedObj) {
                 return {isDateValid : true}
             }
     }
-
     return {isDateValid : true}
 }
+*/
 
 //Payment related: Check if they are valid Numbers
 export async function checkNumber(extractedObj) {
@@ -86,6 +110,7 @@ export async function checkNumber(extractedObj) {
                 if(extractedObj[key] !== 'N/A' && extractedObj[key] !== '') {
                     
                     return {
+                        
                         isPaymentValid: false,
                         message: `"${key}" should either be a Number, N/A or empty`
                     }

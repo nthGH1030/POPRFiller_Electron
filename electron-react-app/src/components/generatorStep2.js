@@ -56,11 +56,35 @@ function GeneratorStep2() {
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
 
+                //Check user input
+                const entityWorksheet = await readExcelFile(bufferArray, 'ApprovedEntity')
+                const entityValidity = await checkEntity(entityWorksheet, data)
+                const checkDeliveryDateValidity = await checkDate('Delivery date', data)  
+                const checkPORequestDateValidity =  await checkDate('PO Change Request Date', data) 
+                const checkPaymentValidity = await checkNumber(data)
+                
+
                 const dataWithChecked = {}
                 //Check input and append check status
                 for (const [key, value] of Object.entries(data)) {
                     if(key !== '#Key_Row') {
                         dataWithChecked[key] = {value, status: 'Accepted'}
+
+                        if(!entityValidity.isEntityValid) {
+                            dataWithChecked['Entity'] = {value, status: 'Failed'}
+                        }
+                        if(!checkDeliveryDateValidity.isDateValid) {
+                            dataWithChecked['Delivery date'] = {value, status: 'Failed'}
+                        }
+                        if(!checkPORequestDateValidity.isDateValid) {
+                            dataWithChecked['PO Change Request Date'] = {value, status: 'Failed'}
+                        }
+                        if(!checkPaymentValidity.isPaymentValid) {
+                            
+                        }
+                        
+
+                        
                     }
                 }
 
@@ -92,12 +116,13 @@ function GeneratorStep2() {
                     alert(entityValidity.message)
                     return
                 }
-
+                /*
                 const checkDateValidity = await checkDate(data)
                 if(!checkDateValidity.isDateValid) {
                     alert(checkDateValidity.message)
                     return
                 }
+                */
 
                 const checkPaymentValidity = await checkNumber(data) 
                 if(!checkPaymentValidity.isPaymentValid) {
@@ -144,8 +169,8 @@ function GeneratorStep2() {
             </div>
             <div className = 'generatorstep2-wrapper-container'>
                 <div className = 'excel-data-table-container'>
-                    
-                    <h5>Data</h5>
+                    <div className = 'excel-data-table-header-table-container'>
+                    <h4>Data</h4>
                     <table className = 'extracted-excel-data'>
                         <thead>
                             <tbody>
@@ -166,8 +191,8 @@ function GeneratorStep2() {
                                 ))}
                             </tbody>
                         </thead>
-                        
                     </table>
+                    </div>
                 </div>
                 <div className = 'generatorstep2-container '>
                     <StepIndicator
