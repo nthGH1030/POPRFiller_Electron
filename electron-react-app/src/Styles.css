@@ -416,7 +416,9 @@ input::-webkit-inner-spin-button {
   color: green;
 }
 
-
+.extracted-excel-data-status.failed {
+  color: red;
+}
 
 /*input */
 .row-input {

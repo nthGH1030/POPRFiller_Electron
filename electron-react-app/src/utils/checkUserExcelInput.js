@@ -97,28 +97,34 @@ export async function checkDeliveryDate(extractedObj) {
 
 //Payment related: Check if they are valid Numbers
 export async function checkNumber(extractedObj) {
+    let isPOAmountValid = true;
+    let isPOChangeAmountValid = true;
+    let isPaidReuqestValid = true;
+    let isTotalPaidValid = true;
 
     for (const key in extractedObj) {
-        if (key === 'Approved PO amount' || 
-            key === 'PO Change Request' ||
-            key === 'Paid Requested' ||
-            key === 'Total Payment paid'
-        ) {
+        
+        if(isNaN(extractedObj[key])) {
             
-            if(isNaN(extractedObj[key])) {
+            if(extractedObj[key] !== 'N/A' && extractedObj[key] !== '') {
                 
-                if(extractedObj[key] !== 'N/A' && extractedObj[key] !== '') {
-                    
-                    return {
-                        
-                        isPaymentValid: false,
-                        message: `"${key}" should either be a Number, N/A or empty`
-                    }
+                if (key === 'Approved PO amount') {
+                    isPOAmountValid = false;
+                } else if (key === 'PO Change Request') {
+                    isPOChangeAmountValid = false;
+                } else if (key === 'Paid Requested') {
+                    isPaidReuqestValid = false;
+                } else if (key === 'Total Payment paid') {
+                    isTotalPaidValid = false;
                 }
             }
         }
     }
-    return {isPaymentValid: true}
+    return {isPOAmountValid ,  
+            isPOChangeAmountValid,     
+            isPaidReuqestValid, 
+            isTotalPaidValid,
+            }
 
 }
 

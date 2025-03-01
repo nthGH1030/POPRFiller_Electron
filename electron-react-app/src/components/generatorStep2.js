@@ -79,12 +79,18 @@ function GeneratorStep2() {
                         if(!checkPORequestDateValidity.isDateValid) {
                             dataWithChecked['PO Change Request Date'] = {value, status: 'Failed'}
                         }
-                        if(!checkPaymentValidity.isPaymentValid) {
-                            
+                        if(!checkPaymentValidity.isPOAmountValid) {
+                            dataWithChecked['Approved PO amount'] = {value, status: 'Failed'}
                         }
-                        
-
-                        
+                        if(!checkPaymentValidity.isPOChangeAmountValid) {
+                            dataWithChecked['PO Change Request'] = {value, status: 'Failed'}
+                        }
+                        if(!checkPaymentValidity.isPaidReuqestValid) {
+                            dataWithChecked['Paid Requested'] = {value, status: 'Failed'}
+                        }
+                        if(!checkPaymentValidity.isTotalPaidValid) {
+                            dataWithChecked['Total Payment paid'] = {value, status: 'Failed'}
+                        }
                     }
                 }
 
@@ -123,12 +129,13 @@ function GeneratorStep2() {
                     return
                 }
                 */
-
+                /*
                 const checkPaymentValidity = await checkNumber(data) 
                 if(!checkPaymentValidity.isPaymentValid) {
                     alert(checkPaymentValidity.message)
                     return
                 }
+                    */
 
                 //write the data into respective template
                 if (template === 'PO')
@@ -184,7 +191,7 @@ function GeneratorStep2() {
                                         </td>
                                         <td key = {status} 
                                             className = {`extracted-excel-data-status 
-                                            ${status === 'Accepted' ? 'accepted' : ''}`}>
+                                            ${status === 'Accepted' ? 'accepted' : 'failed'}`}>
                                             {status}
                                         </td>
                                     </tr>
