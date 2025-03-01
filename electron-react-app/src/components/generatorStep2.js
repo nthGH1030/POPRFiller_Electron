@@ -59,9 +59,10 @@ function GeneratorStep2() {
                 const dataWithChecked = {}
                 //Check input and append check status
                 for (const [key, value] of Object.entries(data)) {
-                    dataWithChecked[key] = {value, status: 'checked'}
+                    if(key !== '#Key_Row') {
+                        dataWithChecked[key] = {value, status: 'Accepted'}
+                    }
                 }
-                console.log(dataWithChecked)
 
                 setExcelData(dataWithChecked);
                 
@@ -153,10 +154,12 @@ function GeneratorStep2() {
                                         <th key = {key} className='extracted-excel-data-key '>
                                             {key}
                                         </th>
-                                        <td className = 'extracted-excel-data-value'>
+                                        <td key = {value} className = 'extracted-excel-data-value'>
                                             {value}
                                         </td>
-                                        <td className = 'extracted-excel-data-status'>
+                                        <td key = {status} 
+                                            className = {`extracted-excel-data-status 
+                                            ${status === 'Accepted' ? 'accepted' : ''}`}>
                                             {status}
                                         </td>
                                     </tr>

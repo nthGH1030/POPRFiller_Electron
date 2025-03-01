@@ -376,7 +376,7 @@ input::-webkit-inner-spin-button {
   text-align: left;
   border-collapse: collapse;
   margin:1%;
-  font-size: 13px;
+  font-size: 14px;
   table-layout: fixed;
   
 }
@@ -384,22 +384,29 @@ input::-webkit-inner-spin-button {
 
 .extracted-excel-data-key {
   text-align: left;
-  border: solid;
   padding: 0.5%;
   width: 10%;
+  color: gray;
 } 
+
 .extracted-excel-data-value {
   text-align: left;
-  border: solid;
   padding: 0.5%;
   width: 20%;
+  font-weight: bold;
 }
+
 .extracted-excel-data-status {
   text-align: left;
-  border: solid;
   padding: 0.5%;
   width: 3%;
+  font-weight: bold;
 }
+
+.extracted-excel-data-status.accepted {
+  color: green;
+}
+
 
 
 /*input */
