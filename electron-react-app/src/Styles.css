@@ -396,6 +396,7 @@ input::-webkit-inner-spin-button {
   padding: 0.5%;
   width: 10%;
   color: gray;
+  border-right-style: groove;
 } 
 
 .extracted-excel-data-value {
@@ -403,6 +404,7 @@ input::-webkit-inner-spin-button {
   padding: 0.5%;
   width: 20%;
   font-weight: bold;
+  border-right-style: groove;
 }
 
 .extracted-excel-data-status {

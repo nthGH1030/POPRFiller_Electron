@@ -110,11 +110,11 @@ export async function checkNumber(extractedObj) {
                 
                 if (key === 'Approved PO amount') {
                     isPOAmountValid = false;
-                } else if (key === 'PO Change Request') {
+                } if (key === 'PO Change Request') {
                     isPOChangeAmountValid = false;
-                } else if (key === 'Paid Requested') {
+                } if (key === 'Paid Requested') {
                     isPaidReuqestValid = false;
-                } else if (key === 'Total Payment paid') {
+                } if (key === 'Total Payment paid') {
                     isTotalPaidValid = false;
                 }
             }
