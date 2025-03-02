@@ -62,9 +62,17 @@ function GeneratorStep2() {
                 const checkDeliveryDateValidity = await checkDate('Delivery date', data)  
                 const checkPORequestDateValidity =  await checkDate('PO Change Request Date', data) 
                 const checkPaymentValidity = await checkNumber(data)
-                console.log('data is' , data)
                 
-
+                const validatedResult = {
+                    'Entity': entityValidity.isEntityValid,
+                    'Delivery date': checkDeliveryDateValidity.isDateValid,
+                    'PO Change Request Date': checkPORequestDateValidity.isDateValid,
+                    'Approved PO amount': checkPaymentValidity.isPOAmountValid,
+                    'PO Change Request': checkPaymentValidity.isPOChangeAmountValid,
+                    'Paid Requested': checkPaymentValidity.isPaidReuqestValid,
+                    'Total Payment paid': checkPaymentValidity.isTotalPaidValid
+                }
+                
                 const dataWithChecked = {}
                 //Check input and append check status
                 for (const [key, value] of Object.entries(data)) {
@@ -72,31 +80,10 @@ function GeneratorStep2() {
                     if (key === '#Key_Row') {
                         continue
                     }
-                    
-                    dataWithChecked[key] = {value, status: 'Accepted'}
 
-                    if(!entityValidity.isEntityValid && key === 'Entity') {
-                        dataWithChecked['Entity'] = {value, status: 'Failed'}
-                    }
-                    if(!checkDeliveryDateValidity.isDateValid && key === 'Delivery date') {
-                        dataWithChecked['Delivery date'] = {value, status: 'Failed'}
-                    }
-                    if(!checkPORequestDateValidity.isDateValid && key === 'PO Change Request Date') {
-                        dataWithChecked['PO Change Request Date'] = {value, status: 'Failed'}
-                    }
-                    if(!checkPaymentValidity.isPOAmountValid && key === 'Approved PO amount') {
-                        dataWithChecked['Approved PO amount'] = {value, status: 'Failed'}
-                    }
-                    if(!checkPaymentValidity.isPOChangeAmountValid && key === 'PO Change Request') {
-                        dataWithChecked['PO Change Request'] = {value, status: 'Failed'}
-                    }
-                    if(!checkPaymentValidity.isPaidReuqestValid && key === 'Paid Requested') {
-                        dataWithChecked['Paid Requested'] = {value, status: 'Failed'}
-                    }
-                    if(!checkPaymentValidity.isTotalPaidValid && key === 'Total Payment paid') {
-                        dataWithChecked['Total Payment paid'] = {value, status: 'Failed'}
-                    
-                    }
+                    const isValid = validatedResult[key] !== undefined ? validatedResult[key] : true;
+                    dataWithChecked[key] = {value, status: isValid? 'Accepted' : "Failed"}
+
                 }
 
                 setExcelData(dataWithChecked);
