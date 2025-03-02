@@ -16,6 +16,7 @@ function GeneratorStep2() {
     const [activeStep, setActiveStep] = useState('');
     const [templateContent, setTemplateContent] = useState(null);
     const [excelData, setExcelData] = useState({});
+    const [tips, setTips] = useState({});
     let location = useLocation();
     const {state} = location;
     const {row, file} = state;
@@ -47,6 +48,29 @@ function GeneratorStep2() {
         })();
         
     }, [location.pathname, template])
+
+    const generateTips = async() => {
+
+        const tipsMessage = {
+            'Entity' : 'The Entity does not match any existing Entity, please check for typos',
+            'Delivery date': 'The date must be either a date, N/A or empty',
+            'PO Change Request Date' : 'The date must be either a date, N/A or empty',
+            'Approved PO amount' : 'The amount must be a number, N/A or empty',
+            'PO Change Request' : 'The amount must be a number, N/A or empty',
+            'Paid Requested' : 'The amount must be a number, N/A or empty',
+            'Total Payment paid' : 'The amount must be a number, N/A or empty'
+        }
+
+        const filteredTips = {}
+
+        for(const [key, status] of Object.entries(excelData)) {
+            if(status === 'Failed') {
+                filteredTips[key] = tipsMessage[key]
+            }
+        }
+
+        setTips(filteredTips)
+    }
     
     const getExcelData = async() => {
         if(file) {
@@ -192,6 +216,11 @@ function GeneratorStep2() {
                         </thead>
                     </table>
                     </div>
+                </div>
+                <div className = 'generatorstep2-container'>
+                    <div>{tips}</div>
+                    
+                    
                 </div>
                 <div className = 'generatorstep2-container '>
                     <StepIndicator
