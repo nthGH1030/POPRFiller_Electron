@@ -45,6 +45,7 @@ function GeneratorStep2() {
         (async() => {
             loadTemplate(template);
             getExcelData()
+            generateTips()
         })();
         
     }, [location.pathname, template])
@@ -62,14 +63,19 @@ function GeneratorStep2() {
         }
 
         const filteredTips = {}
+        console.log('excelData is ' , excelData)
 
-        for(const [key, status] of Object.entries(excelData)) {
-            if(status === 'Failed') {
+        for(const [key, nestedObject] of Object.entries(excelData)) {
+
+            if(nestedObject.status === 'Failed') {
+                
                 filteredTips[key] = tipsMessage[key]
+                console.log(filteredTips[key])
             }
         }
 
         setTips(filteredTips)
+        console.log('tips is , ' , tips)
     }
     
     const getExcelData = async() => {
@@ -218,7 +224,10 @@ function GeneratorStep2() {
                     </div>
                 </div>
                 <div className = 'generatorstep2-container'>
-                    <div>{tips}</div>
+
+                    <div className = 'tips-container'>
+                        tips {tips['Approved PO amount']}
+                    </div>
                     
                     
                 </div>

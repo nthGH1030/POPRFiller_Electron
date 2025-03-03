@@ -143,6 +143,13 @@ html, body {
   width: 100%;
 }
 
+.tips-container {
+
+  width: 100%;
+  margin: 1% 1% 1% 5%;
+  
+}
+
 .generatorstep2-container {
   flex: 1;
   display: flex;
