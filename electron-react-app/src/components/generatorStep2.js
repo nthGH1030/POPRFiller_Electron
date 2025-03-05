@@ -43,12 +43,17 @@ function GeneratorStep2() {
     useEffect(() => {
         setActiveStep(location.pathname);
         (async() => {
-            loadTemplate(template);
-            getExcelData()
-            generateTips()
+            await loadTemplate(template);
+            await getExcelData()
         })();
         
     }, [location.pathname, template])
+
+    useEffect(() => {
+        (async() => {
+            await generateTips()
+        })();
+    }, [excelData]) 
 
     const generateTips = async() => {
 
@@ -63,14 +68,14 @@ function GeneratorStep2() {
         }
 
         const filteredTips = {}
-        console.log('excelData is ' , excelData)
+        
 
         for(const [key, nestedObject] of Object.entries(excelData)) {
-
+            
             if(nestedObject.status === 'Failed') {
                 
                 filteredTips[key] = tipsMessage[key]
-                console.log(filteredTips[key])
+                console.log('filtered tips',filteredTips[key])
             }
         }
 
