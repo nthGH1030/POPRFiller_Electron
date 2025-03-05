@@ -69,7 +69,6 @@ function GeneratorStep2() {
 
         const filteredTips = {}
         
-
         for(const [key, nestedObject] of Object.entries(excelData)) {
             
             if(nestedObject.status === 'Failed') {
@@ -202,6 +201,16 @@ function GeneratorStep2() {
                 </SideNavBar>
             </div>
             <div className = 'generatorstep2-wrapper-container'>
+                <div className = 'generatorstep2-container'>
+                    {Object.keys(tips).length > 0 &&(
+                        <div className = 'user-manuel-container'>
+                            <h4>Tips </h4>
+                            {Object.entries(tips).map(([key,value] , index) => (
+                                <p>{index + 1}. {value}</p>
+                            ))}
+                        </div>
+                    )}
+                </div>
                 <div className = 'excel-data-table-container'>
                     <div className = 'excel-data-table-header-table-container'>
                     <h4>Data</h4>
@@ -228,14 +237,7 @@ function GeneratorStep2() {
                     </table>
                     </div>
                 </div>
-                <div className = 'generatorstep2-container'>
 
-                    <div className = 'tips-container'>
-                        tips {tips['Approved PO amount']}
-                    </div>
-                    
-                    
-                </div>
                 <div className = 'generatorstep2-container '>
                     <StepIndicator
                         activeStep = {activeStep}
