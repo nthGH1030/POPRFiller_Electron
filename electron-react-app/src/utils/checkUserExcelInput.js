@@ -1,7 +1,7 @@
 import{findIndexRow} from './readFile'
 
 //Entity check: check whether they are of an approved list of entity
-export async function checkEntity(centralEntityWorksheet, extractedObj) {
+export function checkEntity(centralEntityWorksheet, extractedObj) {
 
     const indexRowObj = findIndexRow(centralEntityWorksheet, '#Key_Row')
     const endPoint = findIndexRow(centralEntityWorksheet, 'End of reference information')
@@ -37,7 +37,7 @@ export async function checkEntity(centralEntityWorksheet, extractedObj) {
   
 }
 
-export async function checkDate(field, extractedObj) {
+export function checkDate(field, extractedObj) {
     const dateToCheck = Date.parse(extractedObj[field])
 
     if(isNaN(dateToCheck)) {
@@ -96,7 +96,7 @@ export async function checkDeliveryDate(extractedObj) {
 */
 
 //Payment related: Check if they are valid Numbers
-export async function checkNumber(extractedObj) {
+export function checkNumber(extractedObj) {
     let isPOAmountValid = true;
     let isPOChangeAmountValid = true;
     let isPaidReuqestValid = true;

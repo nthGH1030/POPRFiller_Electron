@@ -56,7 +56,7 @@ function GeneratorStep2() {
     }, [excelData]) 
 
     const generateTips = async() => {
-
+        console.time('rendering tips message')
         const tipsMessage = {
             'Entity' : 'The Entity does not match any existing Entity, please check for typos',
             'Delivery date': 'The date must be either a date, N/A or empty',
@@ -79,10 +79,12 @@ function GeneratorStep2() {
         }
 
         setTips(filteredTips)
+        console.timeEnd('rendering tips message')
         console.log('tips is , ' , tips)
     }
     
     const getExcelData = async() => {
+        console.time('getExcelData')
         if(file) {
             try {
                 //extract data from uploaded excel file
@@ -92,10 +94,10 @@ function GeneratorStep2() {
 
                 //Check user input
                 const entityWorksheet = await readExcelFile(bufferArray, 'ApprovedEntity')
-                const entityValidity = await checkEntity(entityWorksheet, data)
-                const checkDeliveryDateValidity = await checkDate('Delivery date', data)  
-                const checkPORequestDateValidity =  await checkDate('PO Change Request Date', data) 
-                const checkPaymentValidity = await checkNumber(data)
+                const entityValidity =  checkEntity(entityWorksheet, data)
+                const checkDeliveryDateValidity = checkDate('Delivery date', data)  
+                const checkPORequestDateValidity =  checkDate('PO Change Request Date', data) 
+                const checkPaymentValidity =  checkNumber(data)
                 
                 const validatedResult = {
                     'Entity': entityValidity.isEntityValid,
@@ -121,6 +123,7 @@ function GeneratorStep2() {
                 }
 
                 setExcelData(dataWithChecked);
+                console.timeEnd('getExcelData')
                 
             } catch(error) {
                 console.error('Error:', error);
@@ -128,9 +131,15 @@ function GeneratorStep2() {
         }
     }
 
+    const getUserConfirmation = async (message) => {
+        const result = await window.electronAPI.getUserConfirmation(message)
+        return result
+    }
+
     const handleGenerate = async() => {
         if (file) {
             try {
+                
                 if(!localStorage.getItem('staff')) {
                     alert('Please enter the name of the staff preparing the submission')
                     return;
@@ -140,29 +149,17 @@ function GeneratorStep2() {
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
                 const data = await extractDataFromExcel(worksheet, row);
                 console.log(data)
-
-                //Check user input
-                const entityWorksheet = await readExcelFile(bufferArray, 'ApprovedEntity')
-                const entityValidity = await checkEntity(entityWorksheet, data)
-                if(!entityValidity.isEntityValid) {
-                    alert(entityValidity.message)
-                    return
+                
+                //if there is a failed data entry, get user confirmation
+                for (const [key,value] of Object.entries(excelData)) {
+                    if (value.status === 'Failed') {
+                        const userConfirmation = await getUserConfirmation(
+                            'A data entry has failed, the excel geenrated might not be what you expected, do you wishes to continue? ')
+                        if(userConfirmation === 'No') {
+                            return
+                        }
+                    } 
                 }
-                /*
-                const checkDateValidity = await checkDate(data)
-                if(!checkDateValidity.isDateValid) {
-                    alert(checkDateValidity.message)
-                    return
-                }
-                */
-                /*
-                const checkPaymentValidity = await checkNumber(data) 
-                if(!checkPaymentValidity.isPaymentValid) {
-                    alert(checkPaymentValidity.message)
-                    return
-                }
-                    */
-
                 //write the data into respective template
                 if (template === 'PO')
                     {
@@ -211,6 +208,7 @@ function GeneratorStep2() {
                         </div>
                     )}
                 </div>
+                
                 <div className = 'excel-data-table-container'>
                     <div className = 'excel-data-table-header-table-container'>
                     <h4>Data</h4>
@@ -237,6 +235,7 @@ function GeneratorStep2() {
                     </table>
                     </div>
                 </div>
+                
 
                 <div className = 'generatorstep2-container '>
                     <StepIndicator
