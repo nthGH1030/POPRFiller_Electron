@@ -9,6 +9,8 @@ import { extractDataFromExcel, readExcelFile, readFileUpload } from '../utils/re
 import {checkEntity, checkDate, checkNumber} from '../utils/checkUserExcelInput';
 import saveAs from 'file-saver'
 import SideNavBar from './sideNavBar';
+import StatusBar from './statusBar';
+
 
 
 function GeneratorStep2() {
@@ -200,6 +202,8 @@ function GeneratorStep2() {
             </div>
             <div className = 'generatorstep2-wrapper-container'>
                 <div className = 'generatorstep2-container'>
+                    <StatusBar>
+                    </StatusBar>
                     {Object.keys(tips).length > 0 &&(
                         <div className = 'user-manuel-container'>
                             <h4>Tips </h4>
