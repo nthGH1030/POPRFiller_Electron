@@ -136,7 +136,7 @@ function GeneratorStep2() {
         return result
     }
 
-    const handleGenerate = async() => {
+    const handleGenerate = async(getUserConfirmation) => {
         if (file) {
             try {
                 
@@ -154,7 +154,8 @@ function GeneratorStep2() {
                 for (const [key,value] of Object.entries(excelData)) {
                     if (value.status === 'Failed') {
                         const userConfirmation = await getUserConfirmation(
-                            'A data entry has failed, the excel geenrated might not be what you expected, do you wishes to continue? ')
+                            'A data entry has failed, the excel geenrated might not be what you expected,' 
+                             ,'do you wishes to continue? ')
                         if(userConfirmation === 'No') {
                             return
                         }
@@ -270,7 +271,7 @@ function GeneratorStep2() {
                             {"< Back"}
                         </button>
                         <button type = 'button' className = "button button-generate" 
-                            onClick={handleGenerate}>
+                            onClick={() => handleGenerate(getUserConfirmation)}>
                             Generate
                         </button>
                     </div>
