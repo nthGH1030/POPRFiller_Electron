@@ -5,9 +5,10 @@ import iconDelete from '../image/delete.png';
 
 const StatusBar = (extractedData, tips) => {
     return (
-        <div>
+        <div className = 'status-bar-container'>
             <img alt = 'checkIcon' src = {iconCheck}/>
-            <img alt = 'deleteIcon' src = {iconDelete}/>
+            <h4>Key</h4>
+            <p>value</p>
         </div>
     )
     

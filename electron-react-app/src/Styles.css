@@ -301,6 +301,32 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
+/* Styles for status bar */
+.status-bar-container {
+  background-color: white;
+  border-radius: 5px;
+  margin: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+
+.status-bar-container img {
+  flex: 0 0 10%;
+  height: 50%;
+  object-fit: contain;
+}
+
+.status-bar-container h4 {
+  flex: 0 0 30%;
+}
+
+.status-bar-container p {
+  flex: 0 0 50%;
+}
+
 /* Styles for RaioBtn */
 .mode-label {
   border-radius: 5px;
