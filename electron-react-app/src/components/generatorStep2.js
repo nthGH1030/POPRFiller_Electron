@@ -197,13 +197,22 @@ function GeneratorStep2() {
         <>
         <div className = 'page'>
             <div className = 'sidebar-container'>
+                
                 <SideNavBar>
                 </SideNavBar>
             </div>
             <div className = 'generatorstep2-wrapper-container'>
                 <div className = 'generatorstep2-container'>
-                    <StatusBar>
-                    </StatusBar>
+                    {Object.entries(excelData).map(([key,{value, status}]) => (
+                        <StatusBar
+                            key = {key}   
+                            keyprop = {key}
+                            value = {value} 
+                            status = {status}
+                        />
+                     ))}
+                    
+                   
                     {Object.keys(tips).length > 0 &&(
                         <div className = 'user-manuel-container'>
                             <h4>Tips </h4>
@@ -213,34 +222,6 @@ function GeneratorStep2() {
                         </div>
                     )}
                 </div>
-                
-                <div className = 'excel-data-table-container'>
-                    <div className = 'excel-data-table-header-table-container'>
-                    <h4>Data</h4>
-                    <table className = 'extracted-excel-data'>
-                        <thead>
-                            <tbody>
-                                {Object.entries(excelData).map(([key , {value, status}]) => (
-                                    <tr>
-                                        <th key = {key} className='extracted-excel-data-key '>
-                                            {key}
-                                        </th>
-                                        <td key = {value} className = 'extracted-excel-data-value'>
-                                            {value}
-                                        </td>
-                                        <td key = {status} 
-                                            className = {`extracted-excel-data-status 
-                                            ${status === 'Accepted' ? 'accepted' : 'failed'}`}>
-                                            {status}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </thead>
-                    </table>
-                    </div>
-                </div>
-                
 
                 <div className = 'generatorstep2-container '>
                     <StepIndicator

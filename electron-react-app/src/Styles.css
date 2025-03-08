@@ -165,38 +165,6 @@ html, body {
   width: 100%;
 }
 
-.excel-data-table-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 1% 1% 0 0;
-  border-radius: 10px;
-  background-color: white;
-  width: 100%;
-}
-
-.excel-data-table-header-table-container {
-  flex: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.excel-data-table-container h4 {
-  margin: 1% 0 1% 5%;
-  text-wrap: nowrap;
-  width: 100%;
-}
-
-
-.excel-data-table-container table {
-  margin: 0 5% 1% 5%;
-  
-}
-
 .generator-row-container{
   flex: 1;
   display: flex;
@@ -412,50 +380,6 @@ input::-webkit-inner-spin-button {
   flex-direction: column;
   justify-content:center;
   align-items: center;
-}
-
-
-
-/*table*/
-.extracted-excel-data {
-  text-align: left;
-  border-collapse: collapse;
-  margin:1%;
-  font-size: 14px;
-  table-layout: fixed;
-  
-}
-
-
-.extracted-excel-data-key {
-  text-align: left;
-  padding: 0.5%;
-  width: 10%;
-  color: gray;
-  border-right-style: groove;
-} 
-
-.extracted-excel-data-value {
-  text-align: left;
-  padding: 0.5%;
-  width: 20%;
-  font-weight: bold;
-  border-right-style: groove;
-}
-
-.extracted-excel-data-status {
-  text-align: left;
-  padding: 0.5%;
-  width: 3%;
-  font-weight: bold;
-}
-
-.extracted-excel-data-status.accepted {
-  color: green;
-}
-
-.extracted-excel-data-status.failed {
-  color: red;
 }
 
 /*input */
