@@ -12,9 +12,9 @@ const StatusBar = ({keyprop, value , status, tips}) => {
                 <img alt = 'deleteIcon' src = {iconDelete}/>
             }
             
-            <h4>{keyprop}</h4>
+            <h5>{keyprop}</h5>
             <p>{value}</p>
-            <p>{status}</p>
+            
         </div>
     )
     

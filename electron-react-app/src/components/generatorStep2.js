@@ -197,7 +197,6 @@ function GeneratorStep2() {
         <>
         <div className = 'page'>
             <div className = 'sidebar-container'>
-                
                 <SideNavBar>
                 </SideNavBar>
             </div>
@@ -211,16 +210,6 @@ function GeneratorStep2() {
                             status = {status}
                         />
                      ))}
-                    
-                   
-                    {Object.keys(tips).length > 0 &&(
-                        <div className = 'user-manuel-container'>
-                            <h4>Tips </h4>
-                            {Object.entries(tips).map(([key,value] , index) => (
-                                <p>{index + 1}. {value}</p>
-                            ))}
-                        </div>
-                    )}
                 </div>
 
                 <div className = 'generatorstep2-container '>
