@@ -208,6 +208,7 @@ function GeneratorStep2() {
                             keyprop = {key}
                             value = {value} 
                             status = {status}
+                            tips = {tips}
                         />
                      ))}
                 </div>
