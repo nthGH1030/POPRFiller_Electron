@@ -7,38 +7,49 @@ import downArrow from '../image/chevron-down-solid.svg';
 
 const StatusBar = ({keyprop, value , status, tips}) => {
     const [tipVisible, setTipVisible] = useState(false);
-    const [buttonOn, setButtonOn] = useState(true);
+    const [buttonOn, setButtonOn] = useState(false);
 
     const toggleTips = () => {
         
         tipVisible ? setTipVisible(false): setTipVisible(true);
         buttonOn ? setButtonOn(false): setButtonOn(true)
-
     }
-
+    
+    useEffect(() => {
+        if(status === 'Failed') {
+            setTipVisible(true)
+            setButtonOn(true)
+        }
+    },[status])
+    
+    
     return (
-        <div className = 'status-bar-container'>
-            {status === 'Accepted' ?
-                <img alt = 'checkIcon' src = {iconCheck}/>:
-                <img alt = 'deleteIcon' src = {iconDelete}/>
-            }
-            <h5>{keyprop}</h5>
-            <p>{value}</p>
-
-            <button className = 'arrow-button' onClick={toggleTips}>
-                {buttonOn ?
-                
-                    <img alt = 'arrow button' src = {rightArrow}/>:
-                    <img alt = 'arrow button' src = {downArrow}/>
+        <div className = 'status-bar-tips-container'>
+            <div className = 'status-bar-container'>
+                {status === 'Accepted' ?
+                    <img alt = 'checkIcon' src = {iconCheck}/>:
+                    <img alt = 'deleteIcon' src = {iconDelete}/>
                 }
-            </button>
-            {tipVisible && tips[keyprop] && (
-                <div className = 'tips-container'>
-                    <p>{tips[keyprop]}</p>
-                </div>
-            )}
+                <h5>{keyprop}</h5>
+                <p>{value}</p>
+
+                <button className = 'arrow-button' onClick={toggleTips}>
+                    
+                    {buttonOn ?
+                        <img alt = 'arrow button' src = {downArrow}/>:
+                        <img alt = 'arrow button' src = {rightArrow}/>
+                    }
+                </button>
+
+            </div>
+                {tipVisible && tips[keyprop] && (
+                    <div className = 'tips-container'>
+                        <h5>Invalid Input</h5>
+                        <p> {tips[keyprop]}</p>
+                    </div>
+                )}
         </div>
-    )
+)
     
     //make a arrow that expand the bar and show tips
     //The arrow is auto expanded in the case of failure to show error message
