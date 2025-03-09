@@ -10,6 +10,7 @@ import {checkEntity, checkDate, checkNumber} from '../utils/checkUserExcelInput'
 import saveAs from 'file-saver'
 import SideNavBar from './sideNavBar';
 import StatusBar from './statusBar';
+import Loader from './loader';
 
 
 
@@ -19,6 +20,7 @@ function GeneratorStep2() {
     const [templateContent, setTemplateContent] = useState(null);
     const [excelData, setExcelData] = useState({});
     const [tips, setTips] = useState({});
+    const [loading, setLoading] = useState(false);
     let location = useLocation();
     const {state} = location;
     const {row, file} = state;
@@ -45,8 +47,10 @@ function GeneratorStep2() {
     useEffect(() => {
         setActiveStep(location.pathname);
         (async() => {
-            await loadTemplate(template);
+            setLoading(true)
+            await loadTemplate(template);   
             await getExcelData()
+            setLoading(false)
         })();
         
     }, [location.pathname, template])
@@ -201,7 +205,9 @@ function GeneratorStep2() {
                 </SideNavBar>
             </div>
             <div className = 'generatorstep2-wrapper-container'>
+                
                 <div className = 'generatorstep2-container'>
+                    {loading && <Loader/>}
                     {Object.entries(excelData).map(([key,{value, status}]) => (
                         <StatusBar
                             key = {key}   
