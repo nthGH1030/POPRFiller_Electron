@@ -207,7 +207,9 @@ function GeneratorStep2() {
             <div className = 'generatorstep2-wrapper-container'>
                 
                 <div className = 'generatorstep2-container'>
+                    
                     {loading && <Loader/>}
+                    {!loading && <h4 className = 'input-detail'> Data detail </h4>}
                     {Object.entries(excelData).map(([key,{value, status}]) => (
                         <StatusBar
                             key = {key}   

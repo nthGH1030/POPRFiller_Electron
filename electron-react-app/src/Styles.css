@@ -11,7 +11,7 @@
   padding: 0; /* Remove any default padding */
   font-family: 'Poppins', sans-serif;
   flex-grow: 1;
-  background-color: grey;
+  background-color: silver;
 }
 
 html, body {
@@ -27,29 +27,6 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-/*spinner*/
-.loader-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10%
-}
-
-.loader {
-  margin: 1%;
-  border: 16px solid lightgray; 
-  border-top: 16px solid midnightblue; 
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 
@@ -180,6 +157,13 @@ html, body {
   width: 100%;
 }
 
+.generatorstep2-container 
+.input-detail{
+  justify-content: flex-start;
+  margin: 2% 2% 2% 3%;
+  width: 90%;
+}
+
 .generator-row-container{
   flex: 1;
   display: flex;
@@ -299,7 +283,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
+  width: 90%;
   height: 40px;
   box-sizing: border-box
 }
@@ -673,4 +657,28 @@ input[type = 'file']{
 [data-tooltip]:hover::before {
   opacity: 1;
   visibility: visible;
+}
+
+
+/*spinner*/
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%
+}
+
+.loader {
+  margin: 1%;
+  border: 16px solid lightgray; 
+  border-top: 16px solid midnightblue; 
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
