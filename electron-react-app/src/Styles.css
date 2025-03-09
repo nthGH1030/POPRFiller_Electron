@@ -289,6 +289,15 @@ input::-webkit-inner-spin-button {
   font-size: 14px;
 }
 
+.status-bar-container .arrow-button {
+  margin: 0 5% 0 0;
+  flex: 1;
+  height: 60%;
+  object-fit: contain;
+  background: none;
+  border: none;
+}
+
 /* Styles for RaioBtn */
 .mode-label {
   border-radius: 5px;

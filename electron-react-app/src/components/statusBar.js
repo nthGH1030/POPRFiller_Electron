@@ -7,12 +7,12 @@ import downArrow from '../image/chevron-down-solid.svg';
 
 const StatusBar = ({keyprop, value , status, tips}) => {
     const [tipVisible, setTipVisible] = useState(false);
-    const [buttonArrow, setButtonArrow] = useState(true);
+    const [buttonOn, setButtonOn] = useState(true);
 
-    const onClick = () => {
+    const toggleTips = () => {
         
-        setTipVisible(true); 
-        buttonArrow ? setButtonArrow(false): setButtonArrow(true)
+        tipVisible ? setTipVisible(false): setTipVisible(true);
+        buttonOn ? setButtonOn(false): setButtonOn(true)
 
     }
 
@@ -24,10 +24,12 @@ const StatusBar = ({keyprop, value , status, tips}) => {
             }
             <h5>{keyprop}</h5>
             <p>{value}</p>
-            <button className = 'arrow-button' onClick={onClick}>
-                {buttonArrow ?
-                <img alt = 'arrow button' src = {rightArrow}/>:
-                <img alt = 'arrow button' src = {downArrow}/>
+
+            <button className = 'arrow-button' onClick={toggleTips}>
+                {buttonOn ?
+                
+                    <img alt = 'arrow button' src = {rightArrow}/>:
+                    <img alt = 'arrow button' src = {downArrow}/>
                 }
             </button>
             {tipVisible && tips[keyprop] && (
