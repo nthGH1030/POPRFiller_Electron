@@ -1,28 +1,23 @@
 import React from 'react';
-
-
 import '../Styles.css';
+import step1Icon from '../image/number-1-circle-svgrepo-com.svg';
+import step2Icon from '../image/number-circle-two-bold-svgrepo-com.svg';
+
 
 const StepIndicator = ({activeStep}) => {
 
     return (
-        <nav className = "StepIndicator">
-            <div className="StepIndicator-center">
-                <ul className = "nav-ul">
-                    <li  
-                        className={`nav-il ${activeStep === '/' ? 'active' : ''}`}
-                    >
-                        Step 1
-                    </li>
-                    <li 
-                        className={`nav-il ${activeStep === '/generatorStep2' ? 'active' : ''}`}
-                    >
-                        Step 2
-                    </li>
-                </ul>
-            </div>
+        <div className = "Stepindicator">
+            <img alt = 'step1 icon' src = {step1Icon} />
 
-        </nav>
+            <div className = 'Stepindicator-instruction'>
+                <p>Upload Central Excel</p>
+            </div>
+            
+            <img alt = 'step2 icon' src = {step2Icon} />
+            <p>Select template Type</p>
+
+        </div>
         
     )
 }
