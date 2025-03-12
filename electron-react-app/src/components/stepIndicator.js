@@ -11,16 +11,19 @@ const StepIndicator = ({activeStep}) => {
 
             {activeStep === '/' ?
                 <img alt = 'step1 icon' src = {step1Icon} />:
-                <img alt = 'step1 icon' src = {step1Icon} className = 'Stepindicator-container-img-faded'/>} 
-            <div className = 'stepindicator-description'>
-                <h4>Upload Central Excel</h4>
-            </div>
+                <img alt = 'step1 icon' src = {step1Icon} 
+                    className = 'Stepindicator-container-img-faded'/>} 
+            
+                <div className={`stepindicator-description ${activeStep === '/' ? '' : 'faded-filter' }`}>
+                    <h4>Upload Central Excel</h4>
+                </div> 
+            
             {activeStep === '/generatorStep2'? 
                 <img alt = 'step2 icon' src = {step2Icon} />:
-                <img alt = 'step2 icon' src = {step2Icon} className = 'Stepindicator-container-img-faded'/>
-            }
-            
-            <div className = 'stepindicator-description-no-line'>
+                <img alt = 'step2 icon' src = {step2Icon} 
+                    className = 'Stepindicator-container-img-faded'/>}
+
+             <div className={`stepindicator-description-no-line ${activeStep === '/generatorStep2' ? '' : 'faded-filter' }`}>
                 <h4>Select template Type</h4>
             </div>
         </div>
