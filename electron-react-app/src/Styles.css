@@ -85,8 +85,8 @@ html, body {
 .Stepindicator-container img {
 
   flex: 0 0 10%;
-  height: 30%;
-  max-width: 50px;
+  height: 20%;
+  max-width: 40px;
   object-fit: contain;
 }
 
@@ -104,6 +104,7 @@ html, body {
   display: flex;
   align-items: center; 
   text-wrap: nowrap;
+  margin: 1% 0 1% 0;
 }
 
 .stepindicator-description ::after{
@@ -123,7 +124,7 @@ html, body {
   display: flex;
   align-items: center; 
   text-wrap: nowrap;
-  
+  margin: 1% 0 1% 0;
 }
 
 
@@ -188,8 +189,8 @@ html, body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 1% 0 0 1% ;
-  padding: 0 1%  1%;
+  margin: .5% 0 0 .5% ;
+  padding: 0 .5% 0 .5%;
   border-radius: 10px;
   background-color: whitesmoke;
   width: 100%;
@@ -198,7 +199,7 @@ html, body {
 .generatorstep2-container 
 .input-detail{
   justify-content: flex-start;
-  margin: 2% 2% 2% 3%;
+  margin: 2% 2% 1.5% 3%;
   width: 90%;
 }
 
@@ -317,7 +318,7 @@ input::-webkit-inner-spin-button {
 .status-bar-container {
   background-color: white;
   border-radius: 5px;
-  margin: 1% 1% 0 1%;
+  margin: 0.5% 1% 0 1%;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -225,9 +225,6 @@ function GeneratorStep2() {
                 </div>
 
                 <div className = 'generatorstep2-container '>
-                    <StepIndicator
-                        activeStep = {activeStep}
-                    />
                     <div className = 'template-container'>
                         <h4>Select template type</h4>
                         <div className = 'template-btn-container'>
