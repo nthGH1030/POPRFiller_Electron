@@ -205,8 +205,9 @@ function GeneratorStep2() {
                 </SideNavBar>
             </div>
             <div className = 'generatorstep2-wrapper-container'>
-                <StepIndicator/>
-                
+                <div className = 'generatorstep2-container'>
+                    <StepIndicator/>
+                </div>
                 <div className = 'generatorstep2-container'>
                     
                     {loading && <Loader/>}

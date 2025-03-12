@@ -7,16 +7,16 @@ import step2Icon from '../image/number-circle-two-bold-svgrepo-com.svg';
 const StepIndicator = ({activeStep}) => {
 
     return (
-        <div className = "Stepindicator">
+        <div className = "Stepindicator-container">
+
             <img alt = 'step1 icon' src = {step1Icon} />
-
-            <div className = 'Stepindicator-instruction'>
-                <p>Upload Central Excel</p>
+            <div className = 'stepindicator-description'>
+                <h4>Upload Central Excel</h4>
             </div>
-            
             <img alt = 'step2 icon' src = {step2Icon} />
-            <p>Select template Type</p>
-
+            <div className = 'stepindicator-description-no-line'>
+                <h4>Select template Type</h4>
+            </div>
         </div>
         
     )
