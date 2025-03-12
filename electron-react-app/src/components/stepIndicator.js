@@ -9,11 +9,17 @@ const StepIndicator = ({activeStep}) => {
     return (
         <div className = "Stepindicator-container">
 
-            <img alt = 'step1 icon' src = {step1Icon} />
+            {activeStep === '/' ?
+                <img alt = 'step1 icon' src = {step1Icon} />:
+                <img alt = 'step1 icon' src = {step1Icon} className = 'Stepindicator-container-img-faded'/>} 
             <div className = 'stepindicator-description'>
                 <h4>Upload Central Excel</h4>
             </div>
-            <img alt = 'step2 icon' src = {step2Icon} />
+            {activeStep === '/generatorStep2'? 
+                <img alt = 'step2 icon' src = {step2Icon} />:
+                <img alt = 'step2 icon' src = {step2Icon} className = 'Stepindicator-container-img-faded'/>
+            }
+            
             <div className = 'stepindicator-description-no-line'>
                 <h4>Select template Type</h4>
             </div>

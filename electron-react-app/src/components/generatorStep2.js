@@ -46,6 +46,7 @@ function GeneratorStep2() {
     
     useEffect(() => {
         setActiveStep(location.pathname);
+        console.log('step name' , activeStep);
         (async() => {
             setLoading(true)
             await loadTemplate(template);   
@@ -206,7 +207,7 @@ function GeneratorStep2() {
             </div>
             <div className = 'generatorstep2-wrapper-container'>
                 <div className = 'generatorstep2-container'>
-                    <StepIndicator/>
+                    <StepIndicator  activeStep = {activeStep}/>
                 </div>
                 <div className = 'generatorstep2-container'>
                     
