@@ -2,7 +2,7 @@ import React from 'react';
 import '../Styles.css';
 import { Link } from "react-router-dom";
 
-const LinkToFeature = ({route, imagePath, currentRoute, tooltip}) => {
+const LinkToFeature = ({route, imagePath, currentRoute, tooltip, title}) => {
 
     const isActive = (route ==='/' && 
         (currentRoute === '/' || currentRoute === '/generatorStep2')) ||
@@ -19,7 +19,7 @@ const LinkToFeature = ({route, imagePath, currentRoute, tooltip}) => {
                     alt = 'Link to page'
                     src = {imagePath}
                 />
-                <h5>Link</h5>
+                <h6>{title}</h6>
             </div>
         </Link>
     </div>

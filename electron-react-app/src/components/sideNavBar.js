@@ -17,6 +17,7 @@ const SideNavBar = ({currentRoute}) => {
                 imagePath = {fileArrowDown }
                 currentRoute = {currentRoute}
                 tooltip = "Generate PO or PR"
+                title = 'Generator'
             >
             </LinkToFeature>
 
@@ -25,6 +26,7 @@ const SideNavBar = ({currentRoute}) => {
                 imagePath = {fileArrowUp}
                 currentRoute = {currentRoute}
                 tooltip = "Import new template"
+                title = 'My Templates'
             >
             </LinkToFeature>
 

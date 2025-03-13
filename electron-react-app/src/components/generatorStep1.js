@@ -96,10 +96,9 @@ function GeneratorStep1() {
 
           <div className = 'user-manuel-container'> 
             <h4>How to use</h4>
-            <p>Step 1. Upload a central excel</p>
-            <p>2. Input the row number that contains the payment information</p>
-            <p>3. Click "Next" button</p>
-            <p>4. Follow through Step 2</p>
+            <p>Step 1. Upload and input form data</p>
+            <p>Step 2. Confirm your input</p>
+
           </div>
 
           <div className = 'generatorstep1-container'>
