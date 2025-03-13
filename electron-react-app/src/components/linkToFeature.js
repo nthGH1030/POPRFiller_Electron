@@ -11,9 +11,14 @@ const LinkToFeature = ({route, imagePath, currentRoute, tooltip}) => {
     return (
     <div className = {divContainerClass} data-tooltip={tooltip}>
         <Link to = {route}>
-            <input type= 'image' className = 'image-icon' id = 'image' alt = 'icon'
-            src = {imagePath}>
-            </input>
+            <div className = 'link-To-Feature-Description'>
+                <img 
+                    className = 'image-icon'
+                    alt = 'Link to page'
+                    src = {imagePath}
+                />
+                <h5>Link</h5>
+            </div>
         </Link>
     </div>
     )

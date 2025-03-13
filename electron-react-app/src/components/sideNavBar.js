@@ -2,34 +2,29 @@ import React, {useState} from 'react';
 import '../Styles.css';
 import LinkToFeature from './linkToFeature.js'
 import fileArrowDown from '../image/file-arrow-down.svg';
-import fileImport from '../image/file-import.svg';
-import imageSelect from '../image/imageSelect.png';
+import fileArrowUp from '../image/file-arrow-up.svg';
+
 
 
 const SideNavBar = ({currentRoute}) => {
 
     return (
+        //App icon with name
+        // icon + description
         <div className = 'sidebar-container'>
             <LinkToFeature
-            route = "/"
-            imagePath = {fileArrowDown }
-            currentRoute = {currentRoute}
-            tooltip = "Download PO PR"
+                route = "/"
+                imagePath = {fileArrowDown }
+                currentRoute = {currentRoute}
+                tooltip = "Download PO PR"
             >
             </LinkToFeature>
 
             <LinkToFeature
                 route = "/replaceTemplate"
-                imagePath = {fileImport}
+                imagePath = {fileArrowUp}
                 currentRoute = {currentRoute}
                 tooltip = "Import template"
-            >
-            </LinkToFeature>
-
-            <LinkToFeature
-                route = "/selectTemplate"
-                imagePath = {imageSelect}
-                currentRoute = {currentRoute}
             >
             </LinkToFeature>
 

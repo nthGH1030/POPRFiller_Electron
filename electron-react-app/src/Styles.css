@@ -1,3 +1,9 @@
+/* Apply box-sizing: border-box to all elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 /*page*/
 .page{
@@ -32,30 +38,24 @@ html, body {
 
 /* sidebar style*/
 .sidebar-container {
-  min-width: 100px; /* Fixed width of the sidebar */
+  min-width: 200px; /* Fixed width of the sidebar */
   display:flex;
   flex-direction: column;
   align-items: stretch; /* Ensure it stretches to the full height */
   height: 100vh;
   background-color: white;
-  margin: 1%;
-  border-radius: 10px
+  margin: .5%;
+  border-radius: 10px;
 }
 
-.image-icon {
-  width: 60px;
-  height: 65px;
-}
 
 .link-To-Feature-Container{
-  border: solid transparent;
-  text-align: center;
-  margin: 10%;
-  padding: 3%;
-  box-sizing: border-box; 
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  margin: 1%;
+  padding: 1%;
 }
 
 .link-To-Feature-Container:hover{
@@ -68,6 +68,33 @@ html, body {
   box-sizing: border-box
 }
 
+.link-To-Feature-Description {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  padding: 10% 10% 0 10%;
+  width: 100%;
+}
+
+.link-To-Feature-Description img {
+  max-height: 30px;
+  object-fit: contain;
+}
+
+.link-To-Feature-Container a {
+  text-decoration: none; /* Remove underline */
+  width: 100%;
+}
+
+.link-To-Feature-Description h5 {
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  padding-left: 10%;
+  font-size: 14px;
+}
+
+
 /*Step-indicator*/
 .Stepindicator-container{
   display: flex;
@@ -77,6 +104,7 @@ html, body {
   border-radius: 10px;
   background-color: white;
   width: 100%;
+  padding: 1% 0 1% 0;
   
 }
 
