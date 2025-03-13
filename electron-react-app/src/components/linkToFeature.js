@@ -9,12 +9,11 @@ const LinkToFeature = ({route, imagePath, currentRoute, tooltip}) => {
         (route === '/replaceTemplate' && currentRoute === '/replaceTemplate')
 
     return (
-    <div className = 
-        {isActive ? 'link-To-Feature-Container': 
-            'link-To-Feature-Container Inactive'}
-            data-tooltip={tooltip}>
+    <div className = 'link-To-Feature-Container' data-tooltip={tooltip}>
         <Link to = {route}>
-            <div className = 'link-To-Feature-Description'>
+            <div className = {isActive ? 'link-To-Feature-Description' : 
+                'link-To-Feature-Description Inactive'
+            }>
                 <img 
                     className = 'image-icon'
                     alt = 'Link to page'
