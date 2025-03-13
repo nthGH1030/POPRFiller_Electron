@@ -102,7 +102,7 @@ html, body {
 [data-tooltip]::before {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 100%; /* Position above the element */
+  bottom: 50%; /* Position above the element */
   left: 75%;
   transform: translateX(-50%);
   background-color: black;
