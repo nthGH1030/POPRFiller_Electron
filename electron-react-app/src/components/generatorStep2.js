@@ -15,7 +15,6 @@ import Loader from './loader';
 
 
 function GeneratorStep2() {
-    const [template, setTemplate] = useState('PO');
     const [activeStep, setActiveStep] = useState('');
     const [templateContent, setTemplateContent] = useState(null);
     const [excelData, setExcelData] = useState({});
@@ -23,7 +22,7 @@ function GeneratorStep2() {
     const [loading, setLoading] = useState(false);
     let location = useLocation();
     const {state} = location;
-    const {row, file} = state;
+    const {row, file, type, staff} = state;
     
 
     const loadTemplate = async (template) => {
@@ -49,12 +48,12 @@ function GeneratorStep2() {
         console.log('step name' , activeStep);
         (async() => {
             setLoading(true)
-            await loadTemplate(template);   
+            await loadTemplate(type);   
             await getExcelData()
             setLoading(false)
         })();
         
-    }, [location.pathname, template])
+    }, [location.pathname])
 
     useEffect(() => {
         (async() => {
@@ -147,10 +146,6 @@ function GeneratorStep2() {
         if (file) {
             try {
                 
-                if(!localStorage.getItem('staff')) {
-                    alert('Please enter the name of the staff preparing the submission')
-                    return;
-                }
                 //extract data from uploaded excel file
                 const bufferArray = await readFileUpload(file)
                 const worksheet = await readExcelFile(bufferArray, 'POPR summary')
@@ -169,18 +164,18 @@ function GeneratorStep2() {
                     } 
                 }
                 //write the data into respective template
-                if (template === 'PO')
+                if (type === 'PO')
                     {
                         const templateWorksheet = await readExcelFile(templateContent, 'PO_Input')
-                        const { filename, buffer } = await writePOPR(data, templateWorksheet, template);
+                        const { filename, buffer } = await writePOPR(data, templateWorksheet, type);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
                     }
-                else if (template === 'PR')
+                else if (type === 'PR')
                     {
                         const templateWorksheet = await readExcelFile(templateContent, 'PR_Input')
-                        const { filename, buffer } = await writePOPR(data, templateWorksheet, template);
+                        const { filename, buffer } = await writePOPR(data, templateWorksheet, type);
                         const blob = new Blob([buffer], { 
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         saveAs(blob, filename);
@@ -193,10 +188,6 @@ function GeneratorStep2() {
               alert('You must pick a template type to use !');
             }
           };
-
-    const handleStaff = (e) => {
-        localStorage.setItem('staff', e.target.value)
-    }
 
     return (
         <>
@@ -226,28 +217,6 @@ function GeneratorStep2() {
                 </div>
 
                 <div className = 'generatorstep2-container '>
-                    <div className = 'template-container'>
-                        <h4>Select template type</h4>
-                        <div className = 'template-btn-container'>
-                            <ModeBtn 
-                                text = "Payment Order"
-                                onChange = {() => setTemplate('PO')}
-                                isChecked = {template === 'PO'}
-                            />
-                            <ModeBtn 
-                                text = "Payment Request"
-                                onChange = {() => setTemplate('PR')}
-                                isChecked = {template === 'PR'}
-                            />
-                        </div>
-                    </div>
-                    <div className = 'staff-input-container'>
-                        <h5>Applicant Name</h5>
-
-                        <input type = 'text' className = 'staff-name-input'
-                        placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
-                        onChange = {handleStaff}/>
-                    </div>
                     <div className = 'back-generator-button-container'>
                         
                         <button type = 'button' className = "button button-back" 

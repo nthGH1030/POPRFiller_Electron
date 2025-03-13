@@ -11,7 +11,8 @@ function GeneratorStep1() {
   const [file, setFile] = useState(null);
   const [activeStep, setActiveStep] = useState("/");
   const [row, setRow] = useState(null);
-  const [template, setTemplate] = useState('PO');
+  const [type, setTemplateType] = useState('PO');
+  const [staff, setStaff] = useState('');
   
   let location = useLocation();
   
@@ -38,18 +39,25 @@ function GeneratorStep1() {
 
   const handleStaff = (e) => {
     localStorage.setItem('staff', e.target.value)
+    setStaff(e)
 }
 
   //handle check on necessary input
-  const state = {'row': row, 'file' : file};
+  const state = {'row': row, 'file' : file, 'type': type, 'staff': staff};
+
   const handleCheckInput = () => {
     let allFieldFilled = true;
+
     if (!state.row) {
       alert('Please input the row number');
       allFieldFilled = false;
-    }
-    else if (!state.file) {
+
+    } else if (!state.file) {
       alert('Please upload the file');
+      allFieldFilled = false;
+
+    } else if (!state.staff) {
+      alert('Please enter the name of the staff preparing the submission')
       allFieldFilled = false;
     }
       return allFieldFilled
@@ -67,11 +75,12 @@ function GeneratorStep1() {
     useEffect(() => {
 
       setActiveStep(location.pathname)
+      setStaff(localStorage.getItem('staff'))
       //console.log(activeStep)
       console.log(file)
       //console.log(state)
 
-    },[location.pathname, file])
+    },[location.pathname, file, staff])
 
     return (
       <div className = 'page'>
@@ -127,13 +136,13 @@ function GeneratorStep1() {
                 <div className = 'template-btn-container'>
                     <ModeBtn 
                         text = "Payment Order"
-                        onChange = {() => setTemplate('PO')}
-                        isChecked = {template === 'PO'}
+                        onChange = {() => setTemplateType('PO')}
+                        isChecked = {type === 'PO'}
                     />
                     <ModeBtn 
                         text = "Payment Request"
-                        onChange = {() => setTemplate('PR')}
-                        isChecked = {template === 'PR'}
+                        onChange = {() => setTemplateType('PR')}
+                        isChecked = {type === 'PR'}
                     />
                 </div>
             </div>
