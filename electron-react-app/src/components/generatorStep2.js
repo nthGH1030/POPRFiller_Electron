@@ -214,10 +214,7 @@ function GeneratorStep2() {
                             tips = {tips}
                         />
                      ))}
-                </div>
-
-                <div className = 'generatorstep2-container '>
-                    <div className = 'back-generator-button-container'>
+                     <div className = 'back-generator-button-container'>
                         
                         <button type = 'button' className = "button button-back" 
                             onClick = {handleBackClick} >
