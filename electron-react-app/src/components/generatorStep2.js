@@ -207,7 +207,7 @@ function GeneratorStep2() {
                 />
             </div>
             <div className = 'generatorstep2-wrapper-container'>
-                <div className = 'generatorstep2-container'>
+                <div className = 'generatorstep2-stepindicator-container'>
                     <StepIndicator  activeStep = {activeStep}/>
                 </div>
                 <div className = 'generatorstep2-container'>

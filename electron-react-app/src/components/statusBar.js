@@ -51,10 +51,6 @@ const StatusBar = ({keyprop, value , status, tips}) => {
         </div>
 )
     
-    //make a arrow that expand the bar and show tips
-    //The arrow is auto expanded in the case of failure to show error message
-
-    //An loading animation for loading the status bar
 }
 
 

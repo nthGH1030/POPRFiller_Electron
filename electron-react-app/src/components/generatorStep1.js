@@ -4,13 +4,17 @@ import StepIndicator from './stepIndicator';
 import {useLocation, useNavigate} from 'react-router-dom';
 import SideNavBar from './sideNavBar';
 import FileUpload from './fileUpload';
+import ModeBtn from "./modeBtn";
 
 
 function GeneratorStep1() {
   const [file, setFile] = useState(null);
   const [activeStep, setActiveStep] = useState("/");
   const [row, setRow] = useState(null);
+  const [template, setTemplate] = useState('PO');
+  
   let location = useLocation();
+  
 
   const fileInputRef = useRef(null);
 
@@ -31,6 +35,10 @@ function GeneratorStep1() {
   const handleRowChange = (e) => {
     setRow(e.target.value);
   }
+
+  const handleStaff = (e) => {
+    localStorage.setItem('staff', e.target.value)
+}
 
   //handle check on necessary input
   const state = {'row': row, 'file' : file};
@@ -73,7 +81,7 @@ function GeneratorStep1() {
         </div>
 
         <div className = 'user-manual-and-generator-container'>
-          <div className = 'generatorstep2-container'>
+          <div className = 'generatorstep2-stepindicator-container'>
               <StepIndicator  activeStep = {activeStep}/>
           </div>
 
@@ -107,7 +115,28 @@ function GeneratorStep1() {
                 />
               </div>
             </div>
-          
+            <div className = 'staff-input-container'>
+                <h5>Applicant Name</h5>
+
+                <input type = 'text' className = 'staff-name-input'
+                placeholder={localStorage.getItem('staff') ? localStorage.getItem('staff') : 'John Doe, APM-PM'}
+                onChange = {handleStaff}/>
+            </div>
+            <div className = 'template-container'>
+                <h5>Select template type</h5>
+                <div className = 'template-btn-container'>
+                    <ModeBtn 
+                        text = "Payment Order"
+                        onChange = {() => setTemplate('PO')}
+                        isChecked = {template === 'PO'}
+                    />
+                    <ModeBtn 
+                        text = "Payment Request"
+                        onChange = {() => setTemplate('PR')}
+                        isChecked = {template === 'PR'}
+                    />
+                </div>
+            </div>
             <div className = 'next-btn-container'>
               <button 
                 type = 'button' 
@@ -119,7 +148,9 @@ function GeneratorStep1() {
             </div>
 
           </div>
+            
         </div>
+
       </div>
     );
 }
