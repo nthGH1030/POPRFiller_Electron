@@ -76,9 +76,7 @@ html, body {
   flex-direction: row;
   border-radius: 10px;
   background-color: white;
-  margin: 0.5% ;
   width: 100%;
-  height: 100%;
   
 }
 
@@ -86,7 +84,7 @@ html, body {
 
   flex: 0 0 10%;
   height: 20%;
-  max-width: 40px;
+  max-width: 35px;
   object-fit: contain;
 }
 
@@ -100,11 +98,11 @@ html, body {
   position: relative; 
 }
 
-.stepindicator-description.faded-filter h4{
+.stepindicator-description.faded-filter h5{
   opacity: 0.3;
 }
 
-.stepindicator-description h4 {
+.stepindicator-description h5 {
   display: flex;
   align-items: center; 
   text-wrap: nowrap;
@@ -124,20 +122,16 @@ html, body {
   width: 20%;
 }
 
-.stepindicator-description-no-line.faded-filter h4{
+.stepindicator-description-no-line.faded-filter h5{
   opacity: 0.3;
 }
 
-.stepindicator-description-no-line h4 {
+.stepindicator-description-no-line h5 {
   display: flex;
   align-items: center; 
   text-wrap: nowrap;
   margin: 1% 0 1% 0;
 }
-
-
-
-
 
 /*Generator */
 .user-manuel-container {
@@ -146,7 +140,7 @@ html, body {
   align-items: left;
   justify-content: left;
   flex-direction: column;
-  margin: 1% 1% 0 1%;
+  margin: .5%;
   border-radius: 10px;
   background-color: white;
   width: 100%;
@@ -167,6 +161,7 @@ html, body {
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  margin: 0 1% 1% 0;
 }
 
 .generatorstep1-container {
@@ -175,7 +170,7 @@ html, body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 1% 1% 1% 1%;
+  margin: 0 .5% .5% .5%;
   border-radius: 10px;
   background-color: white;
   width: 100%;
@@ -197,8 +192,7 @@ html, body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: .5% 0 0 .5% ;
-  padding: 0 .5% 0 .5%;
+  margin: .5% 0 0 0 ;
   border-radius: 10px;
   background-color: whitesmoke;
   width: 100%;
@@ -351,6 +345,7 @@ input::-webkit-inner-spin-button {
 .tips-container p{
   margin: 1% 0 1% 0;
   color: Dimgray;
+  font-size: 13px;
 }
 
 .status-bar-tips-container 
@@ -367,12 +362,14 @@ input::-webkit-inner-spin-button {
 }
 
 .status-bar-container h5 {
+  margin: 1% 0 1% 0;
   flex: 0 0 30%;
 }
 
 .status-bar-container p {
+  margin: 1% 0 1% 0;
   flex: 0 0 50%;
-  font-size: 14px;
+  font-size: 13px;
   color: Dimgray;
 }
 

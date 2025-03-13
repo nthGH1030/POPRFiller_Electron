@@ -73,10 +73,13 @@ function GeneratorStep1() {
         </div>
 
         <div className = 'user-manual-and-generator-container'>
-          
+          <div className = 'generatorstep2-container'>
+              <StepIndicator  activeStep = {activeStep}/>
+          </div>
+
           <div className = 'user-manuel-container'> 
             <h4>How to use</h4>
-            <p>1. Upload a central excel</p>
+            <p>Step 1. Upload a central excel</p>
             <p>2. Input the row number that contains the payment information</p>
             <p>3. Click "Next" button</p>
             <p>4. Follow through Step 2</p>
@@ -84,9 +87,7 @@ function GeneratorStep1() {
 
           <div className = 'generatorstep1-container'>
             <h3>Payment Form Generator</h3>
-            <StepIndicator
-              activeStep = {activeStep}
-            />
+            
             <div className = 'generator-row-container'>
               <FileUpload
                 file = {file}
