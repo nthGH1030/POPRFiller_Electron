@@ -202,8 +202,9 @@ function GeneratorStep2() {
         <>
         <div className = 'page'>
             <div className = 'sidebar-container'>
-                <SideNavBar>
-                </SideNavBar>
+                <SideNavBar 
+                    currentRoute={activeStep}
+                />
             </div>
             <div className = 'generatorstep2-wrapper-container'>
                 <div className = 'generatorstep2-container'>

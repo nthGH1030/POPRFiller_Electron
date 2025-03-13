@@ -7,7 +7,7 @@ import fileArrowUp from '../image/file-arrow-up.svg';
 
 
 const SideNavBar = ({currentRoute}) => {
-
+    
     return (
         //App icon with name
         // icon + description

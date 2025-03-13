@@ -3,10 +3,14 @@ import '../Styles.css';
 import { Link } from "react-router-dom";
 
 const LinkToFeature = ({route, imagePath, currentRoute, tooltip}) => {
-    
+
+    const isActive = (route ==='/' && 
+        (currentRoute === '/' || currentRoute === '/generatorStep2')) ||
+        (route === '/replaceTemplate' && currentRoute === '/replaceTemplate')
+
     return (
     <div className = 
-        {currentRoute === route ? 'link-To-Feature-Container': 
+        {isActive ? 'link-To-Feature-Container': 
             'link-To-Feature-Container Inactive'}
             data-tooltip={tooltip}>
         <Link to = {route}>
