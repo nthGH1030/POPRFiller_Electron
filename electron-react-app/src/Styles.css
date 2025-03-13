@@ -556,6 +556,18 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
+.file-drop-zone-container 
+.bold-text{
+  font-weight: bold;
+}
+
+.file-drop-zone-container 
+.instruction-container{
+  flex-direction: row;
+  padding: 5% 0 5% 0;
+}
+
+
 /*input */
 .row-input {
   border-radius: 10px;
