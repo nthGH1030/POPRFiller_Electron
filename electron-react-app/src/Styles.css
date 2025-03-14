@@ -12,10 +12,9 @@
   justify-content:left;
   align-items:flex-start;
   width: 100%; /* Ensure it occupies the full width */
-  min-height: 100vh;
+  height: auto;
   margin: 0; /* Remove any default margin */
   padding: 0; /* Remove any default padding */
-  font-family: 'Poppins', sans-serif;
   flex-grow: 1;
   background-color: silver;
 }
@@ -25,6 +24,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
 
@@ -42,8 +42,11 @@ html, body {
   display:flex;
   flex-direction: column;
   align-items: stretch; /* Ensure it stretches to the full height */
+  position: sticky;
+  top: .5%; /* Stick to the top of the viewport */
   height: 100vh;
   background-color: white;
+  box-sizing: border-box;
   margin: .5%;
   border-radius: 5px;
 }
@@ -211,7 +214,7 @@ html, body {
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  margin: 0 1% 1% 0;
+  margin: 0 .5% .5% 0;
 }
 
 .generatorstep1-container {
@@ -229,7 +232,7 @@ html, body {
 .generatorstep1-container h4 {
   justify-content: flex-start;
   width: 70%;
-  margin: 2% 0 2% 0;
+  margin: 3% 0 3% 0;
 }
 
 .generatorstep2-wrapper-container{
@@ -238,7 +241,7 @@ html, body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 0 1% 1% 0;
+  margin: 0 .5% .5% 0;
   width: 100%;
 }
 
