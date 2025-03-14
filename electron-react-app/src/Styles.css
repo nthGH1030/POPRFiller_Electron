@@ -204,26 +204,6 @@ html, body {
 }
 
 /*Generator */
-.user-manuel-container {
-  flex: 1;
-  display: flex;
-  align-items: left;
-  justify-content: left;
-  flex-direction: column;
-  margin: .5%;
-  border-radius: 10px;
-  background-color: white;
-  width: 100%;
-}
-
-.user-manuel-container h4 {
-  margin: 1% 1% 1% 1%
-}
-
-.user-manuel-container p {
-  margin: 0.5% 1% 0.5% 1%
-}
-
 .user-manual-and-generator-container{
   flex: 1;
   display: flex;
@@ -244,6 +224,12 @@ html, body {
   border-radius: 10px;
   background-color: white;
   width: 100%;
+}
+
+.generatorstep1-container h4 {
+  justify-content: flex-start;
+  width: 70%;
+  margin: 2% 0 2% 0;
 }
 
 .generatorstep2-wrapper-container{

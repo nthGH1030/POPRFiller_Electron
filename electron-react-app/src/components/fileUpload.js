@@ -51,9 +51,8 @@ const FileUpload = ({file, onFileChange, onFileDrop, onDropZoneClick, fileInputR
                 ) : (
                 <div className = 'file-drop-zone-container'>
                     <div className = 'instruction-container'>
-                    <span className = 'bold-text'>Drag&Drop</span>
+                    <span className = 'bold-text'>Drag & Drop</span>
                     <span className = 'normal text'> or </span>
-                    <span className = 'bold-text'>Click to select</span>
                     </div>
                     <span className='span-cursor'>Select a file</span>
                 </div>
