@@ -304,7 +304,7 @@ html, body {
   flex:1;
   justify-content: center ;
   align-items: flex-start;
-  width: 60%;
+  width: 70%;
   text-wrap: nowrap;
 }
 
@@ -343,7 +343,7 @@ html, body {
 }
 
 .next-btn-container .button{
-  margin-right: 10%;
+  margin-right: 15%;
 }
 
 /* button styles */
@@ -353,7 +353,7 @@ html, body {
   color: white;
   background-color: midnightblue;
   border-radius: 10px;
-  padding: 1.5% 2.5%;
+  padding: 2% 3%;
   border: none;
   font-size: 12px;
   width: auto;
@@ -381,7 +381,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: start;
   align-items: start;
-  width: 60%;
+  width: 70%;
 }
 .template-container h5{
   margin: 5% 0 1% 0
@@ -512,7 +512,7 @@ input::-webkit-inner-spin-button {
   border-radius: 10px;
   border: thick dashed;
   border-color: gray;
-  width:80%;
+  width:70%;
   display:flex;
   justify-content: center;
   align-items: center;
@@ -573,7 +573,7 @@ input::-webkit-inner-spin-button {
 .row-input {
   border-radius: 10px;
   padding: 2%;
-  width: 97%
+  width: 100%
 }
 
 input[type = 'file']{
@@ -587,7 +587,7 @@ input[type = 'file']{
   flex:1;
   justify-content: center ;
   align-items: flex-start;
-  width: 60%;
+  width: 70%;
   text-wrap: nowrap;
 }
 
@@ -599,7 +599,7 @@ input[type = 'file']{
   
   border-radius: 10px;
   padding: 2%;
-  width: 97%
+  width: 100%
 }
 
 .custom-file-upload {
