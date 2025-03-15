@@ -3,6 +3,7 @@ import '../Styles.css';
 import LinkToFeature from './linkToFeature.js'
 import fileArrowDown from '../image/file-arrow-down.svg';
 import fileArrowUp from '../image/file-arrow-up.svg';
+import appIcon from '../image/App-icon.png';
 
 
 
@@ -12,6 +13,10 @@ const SideNavBar = ({currentRoute}) => {
         //App icon with name
         // icon + description
         <div className = 'sidebar-container'>
+            <img
+                alt = 'App Icon'
+                src = {appIcon}
+            />
             <LinkToFeature
                 route = "/"
                 imagePath = {fileArrowDown }

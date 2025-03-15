@@ -85,9 +85,7 @@ function GeneratorStep1() {
     return (
       <div className = 'page'>
 
-        <div className = 'sidebar-container'>
           <SideNavBar currentRoute = {activeStep}/>
-        </div>
 
         <div className = 'user-manual-and-generator-container'>
           <div className = 'generatorstep2-stepindicator-container'>

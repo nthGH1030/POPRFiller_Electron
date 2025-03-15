@@ -41,7 +41,7 @@ html, body {
   flex: 0 0 20%; /* Fixed width of the sidebar */
   display:flex;
   flex-direction: column;
-  align-items: stretch; /* Ensure it stretches to the full height */
+  align-items: center; /* Ensure it stretches to the full height */
   position: sticky;
   top: .5%; /* Stick to the top of the viewport */
   height: 100vh;
@@ -51,14 +51,21 @@ html, body {
   border-radius: 5px;
 }
 
+.sidebar-container img{
+  width: 90%;
+  height: 100px;
+  object-fit: cover; 
+  object-position: center; 
+}
+
 
 .link-To-Feature-Container{
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin: 1%;
-  padding: 8% 8% 0 8%;
+  width: 100%;
+  padding: 6% 6% 0 6%;
 }
 
 
@@ -72,9 +79,8 @@ html, body {
   align-items: center;
   justify-content: start;
   width: 100%;
-  border-radius: 10px;
-  padding-left: 10%;
-  background-color: powderblue;
+  border-radius: 5px;
+  background-color: #F4FAFF;
 
 }
 
@@ -90,6 +96,7 @@ html, body {
 
 
 .link-To-Feature-Description img {
+  max-width: 45px;
   max-height: 30px;
   object-fit: contain;
 }
@@ -102,7 +109,6 @@ html, body {
 .link-To-Feature-Description h6 {
   font-family: 'Poppins', sans-serif;
   color: black;
-  padding-left: 10%;
   font-size: 14px;
   margin: 10% 0 10% 0;
   text-wrap: nowrap;
