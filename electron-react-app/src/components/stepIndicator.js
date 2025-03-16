@@ -15,7 +15,7 @@ const StepIndicator = ({activeStep}) => {
                     className = 'Stepindicator-container-img-faded'/>} 
             
                 <div className={`stepindicator-description ${activeStep === '/' ? '' : 'faded-filter' }`}>
-                    <h5>Upload Central Excel</h5>
+                    <h5>Upload Excel Table</h5>
                 </div> 
             
             {activeStep === '/generatorStep2'? 
@@ -24,7 +24,7 @@ const StepIndicator = ({activeStep}) => {
                     className = 'Stepindicator-container-img-faded'/>}
 
              <div className={`stepindicator-description-no-line ${activeStep === '/generatorStep2' ? '' : 'faded-filter' }`}>
-                <h5>Select template Type</h5>
+                <h5>Download Form</h5>
             </div>
         </div>
         
