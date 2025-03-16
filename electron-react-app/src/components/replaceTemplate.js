@@ -116,10 +116,8 @@ const ReplaceTemplate = () => {
 
     return (
         <div className = 'page'>
-            <div className = 'sidebar-container'>
                 <SideNavBar currentRoute = {activeStep}>
                 </SideNavBar>
-            </div>
             <div className = 'replaceTemplate-container'>
                 <div className = 'existing-template-container'>
                     <SelectTemplate/>
