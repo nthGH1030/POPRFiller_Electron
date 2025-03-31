@@ -62,7 +62,6 @@ function GeneratorStep2() {
     }, [excelData]) 
 
     const generateTips = async() => {
-        console.time('rendering tips message')
         const tipsMessage = {
             'Entity' : 'The Entity does not match any existing Entity, please check for typos',
             'Delivery date': 'The date must be either a date, N/A or empty',
@@ -85,12 +84,10 @@ function GeneratorStep2() {
         }
 
         setTips(filteredTips)
-        console.timeEnd('rendering tips message')
         console.log('tips is , ' , tips)
     }
     
     const getExcelData = async() => {
-        console.time('getExcelData')
         if(file) {
             try {
                 //extract data from uploaded excel file
@@ -129,7 +126,6 @@ function GeneratorStep2() {
                 }
 
                 setExcelData(dataWithChecked);
-                console.timeEnd('getExcelData')
                 
             } catch(error) {
                 console.error('Error:', error);
