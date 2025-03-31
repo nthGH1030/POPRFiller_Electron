@@ -54,7 +54,7 @@ export function checkDate(field, extractedObj) {
     return {isDateValid : true}
 }
 
-/*
+//There is a problem with the checking here
 // PO Change Date: Check if it is a valid date Object
 export async function checkPORequestDate(extractedObj) {
     const poChangeDate = Date.parse(extractedObj['PO Change Request Date'])
@@ -72,7 +72,7 @@ export async function checkPORequestDate(extractedObj) {
     } 
     return {isDateValid : true}
 }
-
+//There is a problem with the checking here
 //Devliery date : Check if it is a valid date Object
 export async function checkDeliveryDate(extractedObj) {    
 
@@ -93,7 +93,7 @@ export async function checkDeliveryDate(extractedObj) {
     }
     return {isDateValid : true}
 }
-*/
+
 
 //Payment related: Check if they are valid Numbers
 export function checkNumber(extractedObj) {

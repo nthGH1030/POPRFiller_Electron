@@ -205,7 +205,7 @@ function GeneratorStep2() {
                         <StatusBar
                             key = {key}   
                             keyprop = {key}
-                            value = {value} 
+                            value = {toString.value} 
                             status = {status}
                             tips = {tips}
                         />
